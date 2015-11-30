@@ -1,0 +1,2 @@
+var blog = {};
+blog.articles = [];
