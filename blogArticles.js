@@ -1,3 +1,5 @@
+var library = [];
+
 // Article constructor creates a new article object from the blog raw data
 function Article (props) {
   this.title = props.title;
@@ -6,6 +8,8 @@ function Article (props) {
   this.authorUrl = props.authorUrl;
   this.publishedOn = props.publishedOn;
   this.body = props.body;
+  this.age = this.postAge(this.publishedOn);
+  library.push(this);
 }
 // Article method to calculate age of blog post
 Article.prototype.postAge = function(date) {
@@ -29,7 +33,7 @@ Article.prototype.postAge = function(date) {
 Article.prototype.toHTML = function () {
   var age = this.postAge(this.publishedOn);
   var $clonedArticle = $('article#post').clone();
-  $clonedArticle.removeAttr('id');
+  $clonedArticle.removeAttr('id');  // essential so that you only clone the original template
   $clonedArticle.find('h1.title').html(this.title);
   $clonedArticle.find('p.author').html('<p> By <a href="' + this.authorUrl + '">' + this.author + '</a>' + ' published on ' + this.publishedOn + ' (about ' + age + ' days ago)</p>');
   $clonedArticle.find('p.body').html(this.body);
@@ -209,6 +213,11 @@ var blog = {
     }
   ],
   createAll: function() {
+    this.rawData.sort(function (a, b) {
+    if (a.publishedOn > b.publishedOn) {return 1;}
+    if (a.publishedOn < b.publishedOn) {return -1;}
+    return 0;
+    });
     for (var i = 0; i < this.rawData.length; i++) {
       var temp = new Article(this.rawData[i]);
       temp.toHTML();
