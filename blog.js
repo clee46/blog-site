@@ -23,10 +23,30 @@ blog.truncateArticles = function() {
  });
 };
 
+// blog.filterByCategory = function() {
+//
+// }
 $(document).ready(function() {
   blog.createAll();
   $('#post').remove();    // remove the original article template
   blog.truncateArticles();
+
+
+
+  $('select[id="category"]').change(function(){
+    $('#author').find('option:first').attr('selected', 'selected');
+    $('main').find('article').show();
+    console.log($(this).val());
+    $('main').find('article:not(.' + $(this).val() + ')').hide();
+  });
+
+  $('select[id="author"]').change(function(){
+    $('#category').find('option:first').attr('selected', 'selected');
+    $('main').find('article').show();
+    console.log($(this).val());
+    $("article:not(:contains(" + $(this).val() + "))").hide();
+    // $('main').find('article:not(p.postAuthor:contains(' + $(this).val() + '))').hide;
+  });
 });
 
 // hide P elements (blog.truncateArticles)
