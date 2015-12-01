@@ -30,9 +30,9 @@ Article.prototype.toHTML = function () {
   var age = this.postAge(this.publishedOn);
   var $clonedArticle = $('article#post').clone();
   $clonedArticle.removeAttr('id');
-  $clonedArticle.find('h1.title').html('<h1>' + this.title + '</h1>');
+  $clonedArticle.find('h1.title').html(this.title);
   $clonedArticle.find('p.author').html('<p> By <a href="' + this.authorUrl + '">' + this.author + '</a>' + ' published on ' + this.publishedOn + ' (about ' + age + ' days ago)</p>');
-  $clonedArticle.find('p.body').html('<p>' + this.body + '</p>');
+  $clonedArticle.find('p.body').html(this.body);
   $('main').append($clonedArticle);
 }
 // Blog object literal to store blog raw data and display methods
