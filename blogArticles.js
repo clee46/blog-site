@@ -214,8 +214,8 @@ var blog = {
   ],
   createAll: function() {
     this.rawData.sort(function (a, b) {
-    if (a.publishedOn > b.publishedOn) {return 1;}
-    if (a.publishedOn < b.publishedOn) {return -1;}
+    if (a.publishedOn > b.publishedOn) {return -1;}
+    if (a.publishedOn < b.publishedOn) {return 1;}
     return 0;
     });
     for (var i = 0; i < this.rawData.length; i++) {
