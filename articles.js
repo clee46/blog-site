@@ -31,7 +31,7 @@ Article.prototype.toHTML = function () {
   var age = this.postAge(this.publishedOn);
   var $clonedArticle = $('article#post').clone();
   $clonedArticle.removeAttr('id');  // essential so that you only clone the original template
-  $clonedArticle.attr('class',this.category);
+  // $clonedArticle.attr('class',this.category);
   $clonedArticle.find('h1.postTitle').html(this.title);
   $clonedArticle.find('p.postAuthor').html('<p> By <a href="' + this.authorUrl + '">' + this.author + '</a>' + ' published on ' + this.publishedOn + ' (about ' + age + ' days ago)</p>');
   $clonedArticle.find('p.postCategory').html("Category: " + this.category);
@@ -49,7 +49,6 @@ Article.prototype.tagsDropDown = function() {
   if ($("#catFilter select").find('option[value="' + this.category + '"]').length === 0) {
     $('#catFilter select').append($clonedMenuItem1);
   }
-
   // Populate the authors menu
   var $clonedMenuItem2 = $('.authMenuItem').clone();
   $clonedMenuItem2.removeAttr('class');  // essential so that you only clone the original template

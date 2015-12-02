@@ -19,7 +19,6 @@ blog.truncateArticles = function() {
   $('main').on('click', '.read-on', function(event) {
    event.preventDefault();
    $('article .postBody p:not(:first-child)').toggle();
-  //  $(this).hid();
  });
 };
 
@@ -29,17 +28,18 @@ $(document).ready(function() {
   blog.truncateArticles();
 
   $('select[id="category"]').change(function(){
-    $('#author').find('option:first').attr('selected', 'selected');
+    $('#author').find('option:first').attr('selected', 'selected'); // reset other menu
     $('main').find('article').show();
     console.log($(this).val());
-    $('main').find('article:not(.' + $(this).val() + ')').hide();
+    // if ($(this).val() !== 'none'){$('main').find('article:not(.' + $(this).val() + ')').hide();}
+    if ($(this).val() !== 'none'){$('.postCategory:not(:contains(' + $(this).val() + '))').parent().hide();}
   });
 
   $('select[id="author"]').change(function(){
-    $('#category').find('option:first').attr('selected', 'selected');
+    $('#category').find('option:first').attr('selected', 'selected'); // reset other menu
     $('main').find('article').show();
     console.log($(this).val());
-    $("article:not(:contains(" + $(this).val() + "))").hide();
+    if ($(this).val() !== 'none'){$("article:not(:contains(" + $(this).val() + "))").hide();}
     // $('main').find('article:not(p.postAuthor:contains(' + $(this).val() + '))').hide;
   });
 
