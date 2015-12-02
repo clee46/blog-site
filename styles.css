@@ -1,3 +1,6 @@
+body {
+  font-family: 'Oswald', sans-serif;
+}
 article {
   padding: 0px 20px 20px 20px;
   border-bottom: 1px solid #000;
@@ -11,8 +14,11 @@ img {
   height: 300px;
 }
 header {
-  background-color: #fafdad;
+  background-color: #414CD2;
 }
-form {
+form, select {
   width: 800px;
+}
+option {
+  text-align: center;
 }
