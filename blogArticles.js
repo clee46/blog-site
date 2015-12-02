@@ -1,47 +1,4 @@
-var library = [];
-
-// Article constructor creates a new article object from the blog raw data
-function Article (props) {
-  this.title = props.title;
-  this.category = props.category;
-  this.author = props.author;
-  this.authorUrl = props.authorUrl;
-  this.publishedOn = props.publishedOn;
-  this.body = props.body;
-  this.age = this.postAge(this.publishedOn);
-  library.push(this);
-}
-// Article method to calculate age of blog post
-Article.prototype.postAge = function(date) {
-  var today = new Date();
-  var dd = parseInt(today.getDate());
-  var mm = parseInt(today.getMonth()+1); //January is 0!
-  var yyyy = parseInt(today.getFullYear());
-
-  var year = parseInt(date.slice(0,4));
-  var month = parseInt(date.slice(5,7));
-  var day = parseInt(date.slice(8,10));
-
-  var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
-  var firstDate = new Date(year,month,day); // publish date
-  var secondDate = new Date(yyyy,mm,dd);    // today's date
-
-  var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
-  return diffDays;
-}
-// Article method to display a blog post to the DOM
-Article.prototype.toHTML = function () {
-  var age = this.postAge(this.publishedOn);
-  var $clonedArticle = $('article#post').clone();
-  $clonedArticle.removeAttr('id');  // essential so that you only clone the original template
-  $clonedArticle.find('h1.title').html(this.title);
-  $clonedArticle.find('p.author').html('<p> By <a href="' + this.authorUrl + '">' + this.author + '</a>' + ' published on ' + this.publishedOn + ' (about ' + age + ' days ago)</p>');
-  $clonedArticle.find('p.body').html(this.body);
-  $('main').append($clonedArticle);
-}
-// Blog object literal to store blog raw data and display methods
-var blog = {
-  rawData: [
+blog.rawData = [
     {
       title:       'Bacon Ipsum',
       category:    'food',
@@ -53,7 +10,7 @@ var blog = {
     {
       title:       'Baseball Ipsum',
       category:    'sports',
-      author:      'Felxi Hernandez',
+      author:      'Felix Hernandez',
       authorUrl:   'http://www.baseball-reference.com/players/h/hernafe02.shtml',
       publishedOn: '2015-11-04',
       body:        '<p>Baseball ipsum dolor sit amet base on balls full count leadoff. National pastime stance pine tar dribbler rookie dodgers hardball plate. <img src="http://lorempixel.com/400/200/" class="pull-left" >Club sidearm shift red sox ground rule double, left fielder pennant good eye rubber game. Steal petey center field blue wins arm visitors. Out rope base cookie grass bandbox error. Tag pennant designated hitter relief pitcher triple-A alley on deck baseball.</p><p>Dribbler left on base arm curve bag, slider around the horn disabled list. Pennant catcher gapper rope screwball home cork foul. Nubber slide rake relief pitcher wrigley choke up cup of coffee cycle bench. Loss strikeout bandbox cardinals second base practice gap center fielder. Screwball fielder\'s choice play baseline rubber game warning track bleeder. Mustard inning in the hole astroturf alley fielder\'s choice left fielder.</p><p>Home grand slam suicide squeeze breaking ball batter\'s box flyout starting pitcher. Baseball card basehit double switch save batting average losses tossed umpire batter\'s box. Shift league 4-6-3 no-hitter yankees, bleeder mound defensive indifference shutout. Squeeze mound butcher boy loss rip chin music cracker jack. Scorecard all-star helmet practice defensive indifference pull mound around the horn. Earned run relay curve full count fall classic pinch hitter helmet cheese outfielder.</p><p>Foul pitchout moneyball all-star runs left on base fielder\'s choice. Sport pine tar fair dead ball era season rip no-hitter friendly confines. Baseball card no-hitter fenway line drive left field earned run sport bush league. Tossed walk off dodgers error streak, center fielder tossed chin music. Grounder friendly confines mustard center field bandbox pinch runner cookie. Alley left on base bat second baseman passed ball foul error cy young.</p><p>No-hitter breaking ball stadium doubleheader rubber fair team rake. Error leather left fielder outs at-bat leadoff cork hit by pitch rally. Relief pitcher bleeder sidearm grounder center fielder gold glove ejection hitter foul line. Error 4-6-3 gold glove knuckleball dead ball era, save pine tar. Robbed reliever cellar alley stretch club starter leather. Red sox dead red pull no-hitter assist can of corn manager error play.</p>'
@@ -211,18 +168,4 @@ var blog = {
       body:        '<p>And practical explanations. And practical explanations. And practical explanations. And practical explanations. This is a very special technique that I have never seen. And practical explanations. This is a very special technique that I have never seen. And practical explanations. In less than three weeks you can be looking at things differently, more creatively, if you. And practical explanations.</p><p><img src="http://lorempixel.com/400/200/animals/" class="pull-left">To discourage you by telling. -And Gain Power By Learning Ways To Become Peaceful. -And Gain Power By Learning Ways To Become Peaceful. The real goal of any talk or speech. To discourage you by telling. -And Gain Power By Learning Ways To Become Peaceful. The real goal of any talk or speech. To discourage you by telling. The real goal of any talk or speech. -And Gain Power By Learning Ways To Become Peaceful. -And Gain Power By Learning Ways To Become Peaceful. <img src="http://lorempixel.com/400/300/animals/" class="pull-right">The real goal of any talk or speech.</p><p>-And Gain Power By Learning Ways To Become Peaceful. Don\'t stubbornly. To discourage you by telling. To discourage you by telling. Don\'t stubbornly. Don\'t stubbornly. Space in your house How to sell faster than your neighbors How to make a strategic use. <img src="http://lorempixel.com/400/200/animals/" class="pull-left">To discourage you by telling. To discourage you by telling. Don\'t stubbornly. Don\'t stubbornly. -And Gain Power By Learning Ways To Become Peaceful. Don\'t stubbornly. Don\'t stubbornly. Don\'t stubbornly. Don\'t stubbornly. Don\'t stubbornly. To discourage you by telling. Don\'t stubbornly. Don\'t stubbornly.</p><p>-And Gain Power By Learning Ways To Become Peaceful. I m going to outline 14 different ways that I ve found you. To discourage you by telling. To discourage you by telling. To discourage you by telling. Space in your house How to sell faster than your neighbors How to make a strategic use. To discourage you by telling. To discourage you by telling. To discourage you by telling. -And Gain Power By Learning Ways To Become Peaceful. The real goal of any talk or speech. To discourage you by telling.</p><p>Then I decided to try an experiment and put all of my hard work to the test. The next morning I got up and walked straight to my computer.. And practical explanations. And practical explanations. And practical explanations. Why many people achieve very little despite spending most of their time. This is a very special technique that I have never seen. And practical explanations. Why many people achieve very little despite spending most of their time. And practical explanations.</p>'
 
     }
-  ],
-  createAll: function() {
-    this.rawData.sort(function (a, b) {
-    if (a.publishedOn > b.publishedOn) {return -1;}
-    if (a.publishedOn < b.publishedOn) {return 1;}
-    return 0;
-    });
-    for (var i = 0; i < this.rawData.length; i++) {
-      var temp = new Article(this.rawData[i]);
-      temp.toHTML();
-    }
-  }
-};
-
-blog.createAll();
+  ]
