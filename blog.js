@@ -18,20 +18,15 @@ blog.truncateArticles = function() {
   $('article .postBody p:not(:first-child)').hide();
   $('main').on('click', '.read-on', function(event) {
    event.preventDefault();
-   $(this).parent().find('p').show();
-   $(this).hide();
+   $('article .postBody p:not(:first-child)').toggle();
+  //  $(this).hid();
  });
 };
 
-// blog.filterByCategory = function() {
-//
-// }
 $(document).ready(function() {
   blog.createAll();
   $('#post').remove();    // remove the original article template
   blog.truncateArticles();
-
-
 
   $('select[id="category"]').change(function(){
     $('#author').find('option:first').attr('selected', 'selected');
@@ -47,20 +42,6 @@ $(document).ready(function() {
     $("article:not(:contains(" + $(this).val() + "))").hide();
     // $('main').find('article:not(p.postAuthor:contains(' + $(this).val() + '))').hide;
   });
+
+  $('#navBar').accordion();
 });
-
-// hide P elements (blog.truncateArticles)
-// $('article p:not:first-child').hide();
-// $('main').on('click', '.read-on', function(event) {
-//  event.preventDefault();
-//  $(this.parent()).find('p').show();
-//  $(this).hide();
-// })
-// read A elements
-// .on('click')
-// .reveal();
-
-
-// icomoon.io
-// .hide();
-// $('#' + $(this).data('content')).fadeIn();
