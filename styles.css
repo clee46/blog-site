@@ -1,23 +1,28 @@
 body {
   font-family: 'Oswald', sans-serif;
+  width: 95%;
 }
 article {
   padding: 0px 20px 20px 20px;
   border-bottom: 1px solid #000;
   overflow: auto;
-  width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
 }
 img {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  height: 300px;
+  width: 95%;
 }
 header {
   background-color: #414CD2;
 }
 form, select {
-  width: 800px;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
 }
 option {
   text-align: center;
@@ -101,3 +106,10 @@ li {
 .tab-content.hide{
   display: none;
 }
+
+
+/* Default styles first then media queries */
+@media screen and (min-width: 400px)  {}
+@media screen and (min-width: 600px)  {}
+@media screen and (min-width: 1000px) {}
+@media screen and (min-width: 1400px) {}
