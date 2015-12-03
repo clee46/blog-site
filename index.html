@@ -8,9 +8,13 @@
   </head>
   <body>
     <header>
-      <h1>Code Fellows 301 Blog</h1>
       <nav>
-        <div>
+        <h1>Code Fellows 301 Blog</h1>
+        <div class="hamburgerMenu">
+          <button class="hamburger">&#9776;</button>
+          <button class="cross">&#735;</button>
+        </div>
+        <div class="tabMenu">
             <ul class="nav nav-tabs">
                 <li class="active">
                     <a href="#tab1">Home</a>
@@ -25,9 +29,15 @@
         </div>
       </nav>
     </header>
+    <div class="menu">
+      <ul>
+        <li class="active"><a href="#tab1">Home</a></li>
+        <li><a href="#tab2">About</a></li>
+      </ul>
+    </div>
     <main>
       <section id="tab1" class="tab-content active">
-          <div>
+          <div id="filters">
             <form id="catFilter">
               <select id="category">
               <option class="catMenuItem" value="none">Filter by category</option>
@@ -55,7 +65,6 @@
           </div>
       </section>
       <section id="tab3" class="tab-content hide">
-
       </section>
     </main>
     <footer>
