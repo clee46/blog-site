@@ -36,7 +36,7 @@ Article.prototype.toHTML = function () {
   $clonedArticle.find('p.postAuthor').html('<p> By <a href="' + this.authorUrl + '">' + this.author + '</a>' + ' published on ' + this.publishedOn + ' (about ' + age + ' days ago)</p>');
   $clonedArticle.find('p.postCategory').html("Category: " + this.category);
   $clonedArticle.find('p.postBody').html(this.body);
-  $('main').append($clonedArticle);
+  $('.articlePosts').append($clonedArticle);
 }
 
 // Article method to populate drop down menu
