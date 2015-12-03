@@ -32,6 +32,8 @@ Article.prototype.toHTML = function () {
   var $clonedArticle = $('article#post').clone();
   $clonedArticle.removeAttr('id');  // essential so that you only clone the original template
   // $clonedArticle.attr('class',this.category);
+  // var sourceText = $('#article-template').text();
+  // var template = Handlebars.compile(sourceText);
   $clonedArticle.find('h1.postTitle').html(this.title);
   $clonedArticle.find('p.postAuthor').html('<p> By <a href="' + this.authorUrl + '">' + this.author + '</a>' + ' published on ' + this.publishedOn + ' (about ' + age + ' days ago)</p>');
   $clonedArticle.find('p.postCategory').html("Category: " + this.category);
