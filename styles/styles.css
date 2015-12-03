@@ -2,12 +2,9 @@ body {
   font-family: 'Oswald', sans-serif;
   width: 100%;
   margin: 0;
-  /*padding: 0;*/
 }
 article {
-  /*padding: 0px 20px 20px 20px;*/
   border-bottom: 1px solid #000;
-  /*overflow: auto;*/
   margin-left: auto;
   margin-right: auto;
   width: 95%;
@@ -25,19 +22,11 @@ header {
   height: 112px;
   width: 100%;
   z-index:999999;
-  /*margin-bottom: 112px;*/
 }
-/*#filterContainer {
-  background-color: #fff;
-  position: fixed;
-  z-index: 999999;
-}*/
 #filters {
   background-color: #fff;
   width: 100%;
   margin-top: 92px;
-  /*margin-left: auto;
-  margin-right: auto;*/
   position: fixed;
   z-index: 999999;
 }
@@ -51,16 +40,12 @@ header {
 }
 form, select {
   width: 95%;
-  /*margin-left: auto;*/
-  /*margin-right: auto;*/
 }
 option {
   text-align: center;
 }
 /** Start: to style navigation tab **/
 .nav {
-  /*margin-bottom: 18px;*/
-  /*margin-left: 0;*/
   list-style: none;
 }
 .nav > li > a {
@@ -122,20 +107,13 @@ option {
   display: none;
 }
 @media screen and (max-width: 400px)  {
-  /*body{
-    font-family: 'Noto Sans', sans-serif;
-  	margin:0;
-  }*/
   #filters {
     margin-top: 80px;
-    /*margin-left: auto;
-    margin-right: auto;*/
     position: fixed;
     z-index: 999999;
   }
   header{
   	width:100%;
-  	/*background:#1d1f20;*/
     position: fixed;
   	height:100px;
   	line-height:50px;
@@ -192,13 +170,9 @@ option {
   .hamburgerMenu {
     display: block;
   }
-
-
 }
 @media screen and (min-width: 800px)  {
   article, form {
     width: 600px;
   }
 }
-@media screen and (min-width: 1000px) {}
-@media screen and (min-width: 1400px) {}
