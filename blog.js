@@ -66,6 +66,8 @@ $(document).ready(function() {
   		var target_tab_selector = $(this).attr('href');
   		$(target_tab_selector).removeClass('hide');
   		$(target_tab_selector).addClass('active');
+      $( ".cross" ).hide();
+      $( ".hamburger" ).show();
       $( ".menu" ).hide();
   });
 

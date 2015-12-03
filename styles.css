@@ -20,22 +20,39 @@ img {
 }
 header {
   background-color: #414CD2;
-  /*position:absolute;*/
-  /*top:0;
-  height: 150px;*/
+  position:fixed;
+  top:0;
+  height: 112px;
   width: 100%;
   z-index:999999;
+  /*margin-bottom: 112px;*/
 }
-main {
-  z-index: 100;
+/*#filterContainer {
+  background-color: #fff;
+  position: fixed;
+  z-index: 999999;
+}*/
+#filters {
+  background-color: #fff;
+  width: 100%;
+  margin-top: 92px;
+  /*margin-left: auto;
+  margin-right: auto;*/
+  position: fixed;
+  z-index: 999999;
 }
-nav {
-  /*height: 150px;*/
+#filters form {
+  margin-left: auto;
+  margin-right: auto;
+}
+.articlePosts, .aboutMe {
+  position: relative;
+  top: 200px;
 }
 form, select {
   width: 95%;
-  margin-left: auto;
-  margin-right: auto;
+  /*margin-left: auto;*/
+  /*margin-right: auto;*/
 }
 option {
   text-align: center;
@@ -109,12 +126,20 @@ option {
     font-family: 'Noto Sans', sans-serif;
   	margin:0;
   }*/
+  #filters {
+    margin-top: 80px;
+    /*margin-left: auto;
+    margin-right: auto;*/
+    position: fixed;
+    z-index: 999999;
+  }
   header{
   	width:100%;
   	/*background:#1d1f20;*/
-    /*position: fixed;*/
-  	height:50px;
+    position: fixed;
+  	height:100px;
   	line-height:50px;
+    border-bottom: 1px solid #1d1f20;
   }
   .hamburger{
     display:block;
@@ -147,8 +172,8 @@ option {
     outline:none;
     z-index:10000000000000;
   }
-  .menu{z-index:1000000; font-weight:bold; font-size:0.8em; width:100%; background:#131313;  position:absolute; text-align:center;}
-  .menu ul {margin: 0; padding: 0; list-style-type: none; list-style-image: none;}
+  .menu{z-index:1000; font-weight:bold; font-size:0.8em; width:100%; background:#414CD2;  position:relative; margin-top: 100px; text-align:center;}
+  .menu ul {margin: 0; padding: 0; list-style-type: none; list-style-image: none; }
   .menu li {display: block;   padding:15px 0 15px 0; border-bottom:#1d1f20 1px solid;}
   .menu li:hover{display: block;    background:#181818; padding:15px 0 15px 0; border-bottom:#1d1f20 1px solid;}
   .menu ul li a { text-decoration:none;  margin: 0px; color:#fff;}
