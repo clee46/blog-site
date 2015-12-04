@@ -10,6 +10,9 @@ header {
   width: 100%;
   z-index:999999;
 }
+header h1 {
+  padding-left: 35%;
+}
 article {
   border-bottom: 1px solid #000;
   margin-left: auto;
@@ -24,14 +27,15 @@ img {
   width: 95%;
 }
 #filters {
-  background-color: #fff;
+  background-color: #414CD2;;
   width: 100%;
   margin-top: 92px;
   position: fixed;
   z-index: 999999;
-  padding-top: 10px;
+  padding-top: 5px;
   padding-bottom: 10px;
   padding-left: 25%;
+  border-top: 1px solid #000;
   border-bottom: 1px solid #000;
 }
 #filters form {
@@ -47,7 +51,8 @@ img {
 }
 .articlePosts, .aboutMe {
   position: relative;
-  top: 150px;
+  top: 100px;
+  z-index: 100;
 }
 option {
   text-align: center;

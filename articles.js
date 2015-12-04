@@ -29,16 +29,33 @@ Article.prototype.postAge = function(date) {
 // Article method to display a blog post to the DOM
 Article.prototype.toHTML = function () {
   var age = this.postAge(this.publishedOn);
-  var $clonedArticle = $('article#post').clone();
-  $clonedArticle.removeAttr('id');  // essential so that you only clone the original template
+  // var $clonedArticle = $('article#post').clone();
+  // $clonedArticle.removeAttr('id');  // essential so that you only clone the original template
   // $clonedArticle.attr('class',this.category);
-  // var sourceText = $('#article-template').text();
+
+  // var sourceText = $('#entry-template').text();
   // var template = Handlebars.compile(sourceText);
-  $clonedArticle.find('h1.postTitle').html(this.title);
-  $clonedArticle.find('p.postAuthor').html('<p> By <a href="' + this.authorUrl + '">' + this.author + '</a>' + ' published on ' + this.publishedOn + ' (about ' + age + ' days ago)</p>');
-  $clonedArticle.find('p.postCategory').html("Category: " + this.category);
-  $clonedArticle.find('p.postBody').html(this.body);
-  $('.articlePosts').append($clonedArticle);
+
+  console.log('creating ' + this.author + "'s article" );
+  var appTemplate = $('#entry-template').html();
+  // console.log(appTemplate);
+  var compiledTemplate = Handlebars.compile(appTemplate);
+  // console.log(compiledTemplate);
+  var html = compiledTemplate(this);
+  console.log(html);
+  $('#app').append(html);
+  // var temp = document.getElementById('app');
+  // temp.appendChild(html);
+
+  // $(html).appendTo('#app');
+
+
+
+  // $clonedArticle.find('h1.postTitle').html(this.title);
+  // $clonedArticle.find('p.postAuthor').html('<p> By <a href="' + this.authorUrl + '">' + this.author + '</a>' + ' published on ' + this.publishedOn + ' (about ' + age + ' days ago)</p>');
+  // $clonedArticle.find('p.postCategory').html("Category: " + this.category);
+  // $clonedArticle.find('p.postBody').html(this.body);
+  // $('.articlePosts').append($clonedArticle);
 }
 
 // Article method to populate drop down menu

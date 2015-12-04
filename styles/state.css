@@ -1,16 +1,24 @@
 @media screen and (max-width: 400px)  {
   #filters {
-    margin-top: 80px;
+    margin-top: 30px;
+    padding-left: 20%;
     position: fixed;
     z-index: 999999;
+    border-top: 1px solid #1d1f20;
   }
   header{
   	width:100%;
     position: fixed;
-  	height:100px;
+  	height:50px;
   	line-height:50px;
     border-bottom: 1px solid #1d1f20;
   }
+  header h1 {
+    padding-left: 20%;
+    margin-top: 1px;
+    margin-bottom: 5px;
+  }
+
   .hamburger{
     display:block;
     background:none;
@@ -18,7 +26,7 @@
     top:0;
     right:0;
     line-height:45px;
-    padding: 20px 15px 0px 15px;
+    padding: 1px 15px 0px 15px;
     color:#fff;
     border:0;
     font-size:1.4em;
@@ -32,7 +40,7 @@
     position:absolute;
     top:0px;
     right:0;
-    padding: 27px 15px 0px 15px;
+    padding: 10px 15px 0px 15px;
     color:#fff;
     border:0;
     font-size:3em;
@@ -42,29 +50,16 @@
     outline:none;
     z-index:10000000000000;
   }
-  .menu{z-index:1000; font-weight:bold; font-size:0.8em; width:100%; background:#414CD2;  position:relative; margin-top: 100px; margin-bottom: -100px; text-align:center;}
-  .menu ul {margin: 0; padding: 0; list-style-type: none; list-style-image: none;}
-  .menu li {display: block;   padding:15px 0 15px 0; border-bottom:#1d1f20 1px solid;}
+  .menu{z-index:1000; font-weight:bold; font-size:0.8em; width:100%; background:#414CD2;  position:relative; margin-top: 50px; margin-bottom: -50px; text-align:center;}
+  .menu ul {z-index:10000000000000; margin: 0; padding: 0; list-style-type: none; list-style-image: none;}
+  .menu li {display: block; padding:15px 0 15px 0; border-bottom:#1d1f20 1px solid;}
   .menu li:hover{display: block;    background:#181818; padding:15px 0 15px 0; border-bottom:#1d1f20 1px solid;}
   .menu ul li a { text-decoration:none;  margin: 0px; color:#fff;}
   .menu ul li a:hover {  color: #fff; text-decoration:none;}
   .menu a{text-decoration:none; color:white;}
   .menu a:hover{text-decoration:none; color:white;}
-  .glyphicon-home{
-    color:white;
-    font-size:1.5em;
-    margin-top:5px;
-    margin:0 auto;
-  }
-  .tabMenu {
-    display:none;
-  }
-  .hamburgerMenu {
-    display: block;
-  }
+  .glyphicon-home{color:white; font-size:1.5em; margin-top:5px; margin:0 auto;}
+  .tabMenu {display:none;}
+  .hamburgerMenu {display: block;}
 }
-@media screen and (min-width: 800px)  {
-  article, form {
-    width: 600px;
-  }
-}
+@media screen and (min-width: 800px)  {article, form {width: 600px;}}
