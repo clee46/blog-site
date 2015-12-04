@@ -24,7 +24,7 @@ blog.truncateArticles = function() {
 
 $(document).ready(function() {
   blog.createAll();
-  $('#post').remove();    // remove the original article template
+  // $('#post').remove();    // remove the original article template
   blog.truncateArticles();
 
   $( ".cross" ).hide();
@@ -35,12 +35,20 @@ $(document).ready(function() {
       $( ".hamburger" ).hide();
       $( ".cross" ).show();
     });
+    $( "#filters" ).css('position', 'relative');
+    $( "#filters" ).css('margin-top', '49px');
+    $( "#filters" ).css('z-index', '1');
+    $( ".articlePosts").css('top', '12px');
   });
 
   $( ".cross" ).click(function() {
     $( ".menu" ).slideToggle( "slow", function() {
       $( ".cross" ).hide();
       $( ".hamburger" ).show();
+      $( "#filters" ).css('position', 'fixed');
+      $( "#filters" ).css('margin-top', '30px');
+      $( "#filters" ).css('z-index', '999999');
+      $( ".articlePosts").css('top', '100px');
     });
   });
 

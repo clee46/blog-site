@@ -1,0 +1,10 @@
+body {
+  font-family: 'Oswald', sans-serif;
+}
+.read-on {
+  text-decoration: none;
+  color: #414CD2;
+}
+.read-on:hover {
+  color: #000;
+}

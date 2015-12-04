@@ -1,10 +1,31 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title></title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, target-densitydpi=device-dpi, initial-scale=1">
+    <title>Code Fellows 301 Blog</title>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js" charset="utf-8"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.js" charset="utf-8"></script>
+
     <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="styles/styles.css">
+    <link rel="stylesheet" type="text/css" href="styles/base.css">
+    <link rel="stylesheet" type="text/css" href="styles/layout.css">
+    <link rel="stylesheet" type="text/css" href="styles/module.css">
+    <link rel="stylesheet" type="text/css" href="styles/state.css">
+    <link rel="stylesheet" type="text/css" href="styles/theme.css">
+
+    <script id="entry-template" type="text/x-handlebars-template">
+      <div class="articlePosts">
+        <article id="post">
+          <h1 class="postTitle">{{title}}</h1>
+          <p class="postAuthor">By <a href="{{authorUrl}}">{{author}}</a> published on {{publishedOn}} (about {{age}} days ago)</p>
+          <p class="postCategory">Category: {{category}}</p>
+          <div class="postBody">{{{body}}}</div>
+          <a href="#" class="read-on">Show/Hide</a>
+        </article>
+      </div>
+    </script>
   </head>
   <body>
     <header>
@@ -16,15 +37,9 @@
         </div>
         <div class="tabMenu">
             <ul class="nav nav-tabs">
-                <li class="active">
-                    <a href="#tab1">Home</a>
-                </li>
-                <li>
-                    <a href="#tab2">About</a>
-                </li>
-                <li>
-                    <a href="#tab3">Filter</a>
-                </li>
+                <li class="active"><a href="#tab1">Home</a></li>
+                <li><a href="#tab2">About</a></li>
+                <li><a href="#tab3">Filter</a></li>
             </ul>
         </div>
       </nav>
@@ -41,17 +56,19 @@
           <div id="filters">
             <form id="catFilter">
               <select id="category">
-              <option class="catMenuItem" value="none">Filter by category</option>
+                <option class="catMenuItem" value="none">Filter by category</option>
               </select>
             </form>
             <form id="authFilter">
               <select id="author">
-              <option class="authMenuItem" value="none">Filter by author</option>
+                <option class="authMenuItem" value="none">Filter by author</option>
               </select>
             </form>
           </div>
         </div>
-          <div class="articlePosts">
+          <div id="app">
+          </div>
+          <!-- <div class="articlePosts">
             <article id="post">
               <h1 class="postTitle"></h1>
               <p class="postAuthor"></p>
@@ -59,7 +76,7 @@
               <p class="postBody"></p>
               <a href="#" class="read-on">Show/Hide</a>
             </article>
-          </div>
+          </div> -->
       </section>
       <section id="tab2" class="tab-content hide">
           <div class="aboutMe">
@@ -71,7 +88,7 @@
     </main>
     <footer>
     </footer>
-    <script src="jquery-2.1.4.js"></script>
+    <script src="jquery-2.1.4.js" type="text/javascript"></script>
     <script src="articles.js" type="text/javascript"></script>
     <script src="blog.js" type="text/javascript"></script>
     <script src="blogArticles.js" type="text/javascript"></script>
