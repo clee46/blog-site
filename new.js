@@ -8,7 +8,7 @@ $('#new-form').change(function() {
   newEntry.author = $('#article-author').val();
   newEntry.authorUrl = $('#article-author-url').val();
   newEntry.publishedOn = new Date();
-  newEntry.articleBody = $('#article-body').val();
+  newEntry.articleBody = marked($('#article-body').val());
 
   var previewTemplateScript = $('#entry-template').html();
   var previewTemplate = Handlebars.compile(previewTemplateScript);
