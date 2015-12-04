@@ -9,4 +9,11 @@ $('#new-form').change(function() {
   newEntry.authorUrl = $('#article-author-url').val();
   newEntry.publishedOn = new Date();
   newEntry.articleBody = $('#article-body').val();
+
+  var previewTemplateScript = $('#entry-template').html();
+  var previewTemplate = Handlebars.compile(previewTemplateScript);
+  var previewHTML = previewTemplate(newEntry);
+
+  $('#articles').empty().append(previewHTML);
+
 });
