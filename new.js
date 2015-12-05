@@ -15,6 +15,9 @@ $('#new-form').change(function() {
   var previewHTML = previewTemplate(newEntry);
 
   $('#articles').empty().append(previewHTML);
+  $('pre code').each(function (i, block){
+    hljs.highlightBlock(block);
+  });
 
   var newArticle = JSON.stringify(newEntry);
   $('#article-json').val(newArticle);
