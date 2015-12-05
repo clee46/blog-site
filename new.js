@@ -16,4 +16,7 @@ $('#new-form').change(function() {
 
   $('#articles').empty().append(previewHTML);
 
+  var newArticle = JSON.stringify(newEntry);
+  $('#article-json').val(newArticle);
+
 });
