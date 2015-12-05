@@ -10,19 +10,13 @@ function Article (props) {
 }
 // Article method to calculate age of blog post
 Article.prototype.postAge = function(date) {
-  var today = new Date();
-  var dd = parseInt(today.getDate());
-  var mm = parseInt(today.getMonth()+1); //January is 0!
-  var yyyy = parseInt(today.getFullYear());
-
-  var year = parseInt(date.slice(0,4));
-  var month = parseInt(date.slice(5,7));
-  var day = parseInt(date.slice(8,10));
-
-  var firstDate = new Date(year,month,day); // publish date
-  var secondDate = new Date(yyyy,mm,dd);    // today's date
-
-  return Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(24*60*60*1000)));
+  var d1 = parseInt(new Date().getDate());
+  var m1 = parseInt(new Date().getMonth()+1); //January is 0!
+  var y1 = parseInt(new Date().getFullYear());
+  var d2 = parseInt(date.slice(8,10));
+  var m2 = parseInt(date.slice(5,7));
+  var y2 = parseInt(date.slice(0,4));
+  return Math.round(Math.abs((new Date(y2,m2,d2).getTime() - new Date(y1,m1,d1).getTime())/(24*60*60*1000)));
 }
 // Article method to display a blog post to the DOM
 Article.prototype.toHTML = function () {
