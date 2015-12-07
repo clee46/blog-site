@@ -1,31 +1,32 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>Code Fellows 301 Blog</title>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, target-densitydpi=device-dpi, initial-scale=1">
-    <title>Code Fellows 301 Blog</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js" charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/highlight.min.js"></script>
 
     <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="styles/new.css">
-    <link rel="stylesheet" type="text/css" href="styles/default.css">
-    <!-- <link rel="stylesheet" type="text/css" href="styles/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/styles/default.min.css">
+    <link rel="stylesheet" type="text/css" href="styles/styles.css">
     <link rel="stylesheet" type="text/css" href="styles/base.css">
     <link rel="stylesheet" type="text/css" href="styles/layout.css">
     <link rel="stylesheet" type="text/css" href="styles/module.css">
     <link rel="stylesheet" type="text/css" href="styles/state.css">
-    <link rel="stylesheet" type="text/css" href="styles/theme.css"> -->
+    <link rel="stylesheet" type="text/css" href="styles/theme.css">
 
     <script id="entry-template" type="text/x-handlebars-template">
-      <div class="articlePosts">
-        <article id="post">
-          <h1 class="postTitle">{{articleTitle}}</h1>
+      <div class="livePreview">
+        <article id="live">
+          <h1 class="postTitle">{{title}}</h1>
           <p class="postAuthor">By <a href="{{authorUrl}}">{{author}}</a> published on {{publishedOn}}</p>
           <p class="postCategory">Category: {{category}}</p>
-          <div class="postBody">{{{articleBody}}}</div>
-          <a href="#" class="read-on">Show/Hide</a>
+          <div class="postBody">{{{body}}}</div>
         </article>
       </div>
     </script>
@@ -34,34 +35,17 @@
     <header>
       <nav>
         <h1>Code Fellows 301 Blog</h1>
-        <div class="hamburgerMenu">
-          <button class="hamburger">&#9776;</button>
-          <button class="cross">&#735;</button>
-        </div>
-        <div class="tabMenu">
-            <ul class="nav nav-tabs">
-                <li class="active"><a href="#tab1">Home</a></li>
-                <li><a href="#tab2">About</a></li>
-                <li><a href="#tab3">Filter</a></li>
-            </ul>
-        </div>
       </nav>
     </header>
-    <div class="menu">
-      <ul>
-        <li class="active"><a href="#tab1">Home</a></li>
-        <li><a href="#tab2">About</a></li>
-      </ul>
-    </div>
-
-    <main class="clearfix">
-      <section id="write" class="tab-content">
-        <h1>New Article</h1>
+    <main class="new">
+      <div class="wrapper">
+      <section id="write">
+        <h3>New Post</h3>
         <form action="#" id="new-form">
           <label>
             <input type="text" id="article-title" placeholder="Article title" required>
           </label>
-          <textarea id="article-body" rows="8" cols="40" required></textarea>
+          <textarea id="article-body" placeholder="Article content" rows="8" cols="40" required></textarea>
           <label>
             <input type="text" id="article-author" placeholder="Author Name" required>
           </label>
@@ -71,14 +55,17 @@
           <label>
             <input type="text" id="article-category" placeholder="Category" required>
           </label>
-          <!--<label>
+          <label>
             <input type="checkbox" id="article-published"> Published
-          </label>-->
+          </label>
         </form>
       </section>
-      <section id="articles" class="tab-content">
+      <h3 id="preview">Live Preview</h3>
+      <section id="articles">
+
         <!-- Preview will load here based on the above template-->
       </section>
+    </div>
       <section id="article-export">
         <label id="export-field" for="article-json" class="pull-right">
           <input type="text"  id="article-json">
@@ -86,14 +73,8 @@
         </label>
       </section>
     </main>
-
-
     <footer>
     </footer>
-    <script src="highlight.pack.js" type="text/javascript"></script>
     <script src="new.js" type="text/javascript"></script>
-    <!--<script src="articles.js" type="text/javascript"></script>
-    <script src="blog.js" type="text/javascript"></script>
-    <script src="blogArticles.js" type="text/javascript"></script>-->
   </body>
 </html>

@@ -10,54 +10,22 @@ function Article (props) {
 }
 // Article method to calculate age of blog post
 Article.prototype.postAge = function(date) {
-  var today = new Date();
-  var dd = parseInt(today.getDate());
-  var mm = parseInt(today.getMonth()+1); //January is 0!
-  var yyyy = parseInt(today.getFullYear());
-
-  var year = parseInt(date.slice(0,4));
-  var month = parseInt(date.slice(5,7));
-  var day = parseInt(date.slice(8,10));
-
-  var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
-  var firstDate = new Date(year,month,day); // publish date
-  var secondDate = new Date(yyyy,mm,dd);    // today's date
-
-  var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
-  return diffDays;
+  var d1 = parseInt(new Date().getDate());
+  var m1 = parseInt(new Date().getMonth()+1); //January is 0!
+  var y1 = parseInt(new Date().getFullYear());
+  var d2 = parseInt(date.slice(8,10));
+  var m2 = parseInt(date.slice(5,7));
+  var y2 = parseInt(date.slice(0,4));
+  return Math.round(Math.abs((new Date(y2,m2,d2).getTime() - new Date(y1,m1,d1).getTime())/(24*60*60*1000)));
 }
 // Article method to display a blog post to the DOM
 Article.prototype.toHTML = function () {
   var age = this.postAge(this.publishedOn);
-  // var $clonedArticle = $('article#post').clone();
-  // $clonedArticle.removeAttr('id');  // essential so that you only clone the original template
-  // $clonedArticle.attr('class',this.category);
-
-  // var sourceText = $('#entry-template').text();
-  // var template = Handlebars.compile(sourceText);
-
-  console.log('creating ' + this.author + "'s article" );
   var appTemplate = $('#entry-template').html();
-  // console.log(appTemplate);
   var compiledTemplate = Handlebars.compile(appTemplate);
-  // console.log(compiledTemplate);
   var html = compiledTemplate(this);
-  console.log(html);
   $('#app').append(html);
-  // var temp = document.getElementById('app');
-  // temp.appendChild(html);
-
-  // $(html).appendTo('#app');
-
-
-
-  // $clonedArticle.find('h1.postTitle').html(this.title);
-  // $clonedArticle.find('p.postAuthor').html('<p> By <a href="' + this.authorUrl + '">' + this.author + '</a>' + ' published on ' + this.publishedOn + ' (about ' + age + ' days ago)</p>');
-  // $clonedArticle.find('p.postCategory').html("Category: " + this.category);
-  // $clonedArticle.find('p.postBody').html(this.body);
-  // $('.articlePosts').append($clonedArticle);
 }
-
 // Article method to populate drop down menu
 Article.prototype.tagsDropDown = function() {
   // Populate the category menu
@@ -76,4 +44,4 @@ Article.prototype.tagsDropDown = function() {
   if ($("#authFilter select").find('option[value="' + this.author + '"]').length === 0) {
     $('#authFilter select').append($clonedMenuItem2);
   }
-};
+}

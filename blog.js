@@ -21,12 +21,7 @@ blog.truncateArticles = function() {
   $(this).siblings('.postBody').find('p:not(:first-child)').toggle();
  });
 };
-
-$(document).ready(function() {
-  blog.createAll();
-  // $('#post').remove();    // remove the original article template
-  blog.truncateArticles();
-
+blog.hamburgerHandler = function() {
   $( ".cross" ).hide();
   $( ".menu" ).hide();
 
@@ -51,7 +46,6 @@ $(document).ready(function() {
       $( ".articlePosts").css('top', '100px');
     });
   });
-
   // event handler for hamburger menu
   $('.menu > ul > li > a').click(function(event){
   		event.preventDefault();//stop browser to take action for clicked anchor
@@ -78,7 +72,8 @@ $(document).ready(function() {
       $( ".hamburger" ).show();
       $( ".menu" ).hide();
   });
-
+};
+blog.tabHandler = function() {
   // event handler for tab menu
   $('.nav-tabs > li > a').click(function(event){
   		event.preventDefault();//stop browser to take action for clicked anchor
@@ -102,6 +97,8 @@ $(document).ready(function() {
   		$(target_tab_selector).removeClass('hide');
   		$(target_tab_selector).addClass('active');
   });
+};
+blog.filterHandler = function() {
   // event handler for category filter menu
   $('select[id="category"]').change(function(){
     $('#author').find('option:first').attr('selected', 'selected'); // reset other menu
@@ -118,4 +115,11 @@ $(document).ready(function() {
       $("article:not(:contains(" + $(this).val() + "))").hide();
     }
   });
+};
+$(document).ready(function() {
+  blog.createAll();
+  blog.truncateArticles();
+  blog.hamburgerHandler();
+  blog.tabHandler();
+  blog.filterHandler();
 });
