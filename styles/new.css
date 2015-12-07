@@ -9,7 +9,7 @@ main{
   width: 60%;
 }
 #articles {
-  min-height: 100px;
+  min-height: 45px;
   width: 65%;
   word-wrap: break-word;
 }
@@ -22,7 +22,7 @@ main{
   padding-left: 10%;
   padding-right: 10%;
 }
-#write h2 {
+#write h3 {
   border-bottom: 1px solid #000;
   width: 65%;
 }
