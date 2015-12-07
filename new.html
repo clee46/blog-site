@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Code Fellows 301 Blog</title>
-    
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, target-densitydpi=device-dpi, initial-scale=1">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js" charset="utf-8"></script>
@@ -21,13 +21,12 @@
     <link rel="stylesheet" type="text/css" href="styles/theme.css">
 
     <script id="entry-template" type="text/x-handlebars-template">
-      <div class="articlePosts">
-        <article id="post">
-          <h1 class="postTitle">{{articleTitle}}</h1>
+      <div class="livePreview">
+        <article id="live">
+          <h1 class="postTitle">{{title}}</h1>
           <p class="postAuthor">By <a href="{{authorUrl}}">{{author}}</a> published on {{publishedOn}}</p>
           <p class="postCategory">Category: {{category}}</p>
-          <div class="postBody">{{{articleBody}}}</div>
-          <a href="#" class="read-on">Show/Hide</a>
+          <div class="postBody">{{{body}}}</div>
         </article>
       </div>
     </script>
@@ -36,29 +35,12 @@
     <header>
       <nav>
         <h1>Code Fellows 301 Blog</h1>
-        <div class="hamburgerMenu">
-          <button class="hamburger">&#9776;</button>
-          <button class="cross">&#735;</button>
-        </div>
-        <div class="tabMenu">
-            <ul class="nav nav-tabs">
-                <li class="active"><a href="#tab1">Home</a></li>
-                <li><a href="#tab2">About</a></li>
-                <li><a href="#tab3">Filter</a></li>
-            </ul>
-        </div>
       </nav>
     </header>
-    <div class="menu">
-      <ul>
-        <li class="active"><a href="#tab1">Home</a></li>
-        <li><a href="#tab2">About</a></li>
-      </ul>
-    </div>
-
-    <main class="clearfix">
-      <section id="write" class="tab-content">
-        <h1>New Article</h1>
+    <main class="new">
+      <div class="wrapper">
+      <section id="write">
+        <h2>New Article</h2>
         <form action="#" id="new-form">
           <label>
             <input type="text" id="article-title" placeholder="Article title" required>
@@ -78,9 +60,12 @@
           </label>
         </form>
       </section>
-      <section id="articles" class="tab-content">
+      <h2 id="preview">Live Preview</h2>
+      <section id="articles">
+
         <!-- Preview will load here based on the above template-->
       </section>
+    </div>
       <section id="article-export">
         <label id="export-field" for="article-json" class="pull-right">
           <input type="text"  id="article-json">
