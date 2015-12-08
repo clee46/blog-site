@@ -6,7 +6,8 @@ function Article (props) {
   this.authorUrl = props.authorUrl;
   this.publishedOn = props.publishedOn;
   this.body = props.body;
-  this.age = this.postAge(this.publishedOn);
+  // this.template = function() {};
+  // this.age = this.postAge(this.publishedOn);
 }
 // Article method to calculate age of blog post
 Article.prototype.postAge = function(date) {
@@ -21,11 +22,10 @@ Article.prototype.postAge = function(date) {
 // Article method to display a blog post to the DOM
 Article.prototype.toHTML = function () {
   var age = this.postAge(this.publishedOn);
-  var appTemplate = $('#entry-template').html();
-  var compiledTemplate = Handlebars.compile(appTemplate);
-  var html = compiledTemplate(this);
+  var html = this.handlebarTest(this);
   $('#app').append(html);
 }
+
 // Article method to populate drop down menu
 Article.prototype.tagsDropDown = function() {
   // Populate the category menu
