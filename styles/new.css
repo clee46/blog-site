@@ -17,7 +17,7 @@ main{
   width: 65%;
   border-bottom: 1px solid #000;
 }
-#live {
+#post {
   width: 95%;
   padding-left: 10%;
   padding-right: 10%;
@@ -63,7 +63,7 @@ textarea, #new-form input:not(#article-published) {
   #article-export, #articles {
     width: 65%;
   }
-  .livePreview {
+  .articlePosts {
     margin-left: 0%;
   }
 }

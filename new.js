@@ -1,25 +1,36 @@
 
 var newEntry = {};
+var temp = new Article(newEntry);
+console.log(temp);
 
-$('#new-form').change(function() {
 
-  newEntry.title = $('#article-title').val();
-  newEntry.category = $('#article-category').val();
-  newEntry.author = $('#article-author').val();
-  newEntry.authorUrl = $('#article-author-url').val();
-  newEntry.publishedOn = new Date();
-  newEntry.body = marked($('#article-body').val());
 
-  var previewTemplateScript = $('#entry-template').html();
-  var previewTemplate = Handlebars.compile(previewTemplateScript);
-  var previewHTML = previewTemplate(newEntry);
 
-  $('#articles').empty().append(previewHTML);
-  $('pre code').each(function (i, block){
-    hljs.highlightBlock(block);
+$.get('template-handlebars.html', function(data) {
+  Article.prototype.handlebarTest = Handlebars.compile(data);
+}).done(function() {
+  $('#new-form').change(function() {
+
+    temp.title = $('#article-title').val();
+    temp.category = $('#article-category').val();
+    temp.author = $('#article-author').val();
+    temp.authorUrl = $('#article-author-url').val();
+    temp.publishedOn = new Date();
+    // temp.age = temp.postAge(new Date());
+    temp.body = marked($('#article-body').val());
+
+    var previewTemplateScript = $('#entry-template').html();
+    var previewTemplate = Handlebars.compile(previewTemplateScript);
+    var previewHTML = previewTemplate(temp);
+
+    $('#articles').empty().append(previewHTML);
+    $('pre code').each(function (i, block){
+      hljs.highlightBlock(block);
+    });
+
+    var newArticle = JSON.stringify(newEntry);
+    $('#article-json').val(newArticle);
+
   });
-
-  var newArticle = JSON.stringify(newEntry);
-  $('#article-json').val(newArticle);
 
 });
