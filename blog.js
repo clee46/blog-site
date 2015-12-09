@@ -1,5 +1,5 @@
 var blog = {};
-blog.library = [];
+blog.articles = [];
 
 blog.createAll = function() {
   this.rawData.sort(function (a, b) {
@@ -9,7 +9,7 @@ blog.createAll = function() {
   });
   for (var i = 0; i < this.rawData.length; i++) {
     var temp = new Article(this.rawData[i]);
-    this.library.push(temp);
+    this.articles.push(temp);
     temp.toHTML();
     temp.tagsDropDown();
   }
@@ -116,19 +116,131 @@ blog.filterHandler = function() {
     }
   });
 };
+blog.exportJSON = function() {
+  console.log('exportJSON');
+  $('#export-field').show();
+  var output = '';
+  blog.articles.forEach(function(article) {
+    output += JSON.stringify(article) + ",\n";
+  });
+  $('#article-json').val('[' + output + '{"markdown":""}]');
+};
+// blog.fetchFromDB = function(callback) {
+//   callback = callback || function() {};
+//
+//   // Fetch all articles from db.
+//   webDB.execute(
+//     // TODO: Add SQL here...
+//     ,
+//     function (resultArray) {
+//       resultArray.forEach(function(ele) {
+//         blog.articles.push(new Article(ele));
+//       });
+//
+//       // blog.initArticles();
+//       // blog.createAll();
+//       // blog.truncateArticles();
+//       // blog.hamburgerHandler();
+//       // blog.tabHandler();
+//       // blog.filterHandler();
+//       callback();
+//     }
+//   );
+// };
+
+blog.clearAndFetch = function () {
+  blog.articles = [];
+  blog.fetchFromDB(blog.exportJSON);
+};
+
+
+// blog.handleAddButton = function () {
+//   $('#add-article-btn').on('click', function (e) {
+//     var article = blog.buildArticle()
+//     // Insert this new record into the DB, then callback to blog.clearAndFetch
+//     // TODO: Trigger SQL here...
+//
+//   });
+// };
+
+// blog.handleUpdateButton = function () {
+//   $('#update-article-btn').on('click', function () {
+//     var id = $(this).data('article-id');
+//     var article = blog.buildArticle();
+//     article.id = id;
+//
+//     // Save changes to the DB:
+//     // TODO: Trigger SQL here...
+//
+//     blog.clearAndFetch();
+//   });
+// };
+
+// blog.handleDeleteButton = function () {
+//   $('#delete-article-btn').on('click', function () {
+//     var id = $(this).data('article-id');
+//     // Remove this record from the DB:
+//     webDB.execute(
+//       // TODO: Add SQL here...
+//       , blog.clearAndFetch);
+//     blog.clearNewForm();
+//   });
+// };
+
+
+// blog.loadArticleById = function (id) {
+//   // Grab just the one article from the DB
+//   webDB.execute(
+//     // TODO: Add SQL here...
+//
+//     ,
+//     function (resultArray) {
+//       if (resultArray.length === 1) {
+//         blog.fillFormWithArticle(resultArray[0]);
+//       }
+//     }
+//   );
+// };
+
+// blog.fetchArticles = function(data, message, xhr) {
+//   var eTag = xhr.getResponseHeader('eTag');
+//   if (typeof localStorage.articlesEtag == 'undefined' || localStorage.articlesEtag != eTag) {
+//     console.log('cache miss!');
+//     localStorage.articlesEtag = eTag;
+//
+//     // Remove all prior articles from the DB, and from blog:
+//     blog.articles = [];
+//     webDB.execute(
+//       // TODO: Add SQL here...
+//       , blog.fetchJSON);
+//   } else {
+//     console.log('cache hit!');
+//     blog.fetchFromDB();
+//   }
+// };
+
+
+
 
 $(document).ready(function() {
-  $.get('hackerIpsum.json').done(function(data) {
-    blog.rawData = data;
-    localStorage.setItem('rawData', JSON.stringify(blog.rawData));
-    $.get('template.handlebars', function(data) {
-      Article.prototype.handlebarTest = Handlebars.compile(data);})
-      .done(function() {
-        blog.createAll();
-        blog.truncateArticles();
-        blog.hamburgerHandler();
-        blog.tabHandler();
-        blog.filterHandler();
-      });
+  webDB.init(); // open database
+  webDB.execute('DROP TABLE articles', function() { // delete existing table
+      // on success
+      console.log('Successfully deleted articles table.');
     });
+  webDB.setupTables();  // set up new empty table
+  webDB.importArticlesFrom('hackerIpsum.json'); // populate empty table with articles
+  // $.get('hackerIpsum.json').done(function(data) {
+  //   blog.rawData = data;
+  //   localStorage.setItem('rawData', JSON.stringify(blog.rawData));
+  //   $.get('template.handlebars', function(data) {
+  //     Article.prototype.handlebarTest = Handlebars.compile(data);})
+  //     .done(function() {
+  //       blog.createAll();
+  //       blog.truncateArticles();
+  //       blog.hamburgerHandler();
+  //       blog.tabHandler();
+  //       blog.filterHandler();
+  //     });
+  //   });
 });
