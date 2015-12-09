@@ -118,17 +118,17 @@ blog.filterHandler = function() {
 };
 
 $(document).ready(function() {
-  $.get('template.handlebars', function(data) {
-    Article.prototype.handlebarTest = Handlebars.compile(data);
-  }).done(function() {
-    blog.createAll();
-    blog.truncateArticles();
-    blog.hamburgerHandler();
-    blog.tabHandler();
-    blog.filterHandler();
-  });
-
-  localStorage.setItem('rawData', JSON.stringify(blog.rawData));
-  var fromLS = JSON.parse(localStorage.getItem('rawData'));
-
+  $.get('hackerIpsum.json').done(function(data) {
+    blog.rawData = data;
+    localStorage.setItem('rawData', JSON.stringify(blog.rawData));
+    $.get('template.handlebars', function(data) {
+      Article.prototype.handlebarTest = Handlebars.compile(data);})
+      .done(function() {
+        blog.createAll();
+        blog.truncateArticles();
+        blog.hamburgerHandler();
+        blog.tabHandler();
+        blog.filterHandler();
+      });
+    });
 });
