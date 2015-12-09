@@ -3,9 +3,6 @@ var newEntry = {};
 var temp = new Article(newEntry);
 console.log(temp);
 
-
-
-
 $.get('template-handlebars.html', function(data) {
   Article.prototype.handlebarTest = Handlebars.compile(data);
 }).done(function() {

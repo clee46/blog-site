@@ -8,6 +8,8 @@ function Article (props) {
   this.body = props.body;
   // this.template = function() {};
   // this.age = this.postAge(this.publishedOn);
+  this.markdown = props.markdown;
+  this.body = props.body || marked(this.markdown);
 }
 // Article method to calculate age of blog post
 Article.prototype.postAge = function(date) {
