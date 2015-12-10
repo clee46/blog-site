@@ -43,18 +43,28 @@ webDB.setupTables = function () {
   );
 };
 
-webDB.execute = function (sql, callback) {
-  callback = callback || function() {};
-  html5sql.process(
-    sql,
-    function (tx, result, resultArray) {
-      callback(resultArray);
-    }
-  );
-};
+// webDB.execute = function (sql, callback) {
+//   callback = callback || function() {};
+//   html5sql.process(
+//     sql,
+//     function (tx, result, resultArray) {
+//       console.log(resultArray);
+//       callback(resultArray);
+//     }
+//   );
+// };
 webDB.importArticlesFrom = function (path) {
   // Import articles from JSON file
-  $.getJSON(path, webDB.insertAllRecords);
+  $.getJSON(path, webDB.insertAllRecords).done(function() {
+    console.log('Filled database, now fetching articles!');
+    blog.fetchFromDB();})
+    // .done(function() {
+    // blog.createAll();
+    // blog.truncateArticles();
+    // blog.hamburgerHandler();
+    // blog.tabHandler();
+    // blog.filterHandler();
+  // });
 };
 webDB.insertAllRecords = function (articles) {
   articles.forEach(webDB.insertRecord);
@@ -78,6 +88,10 @@ webDB.execute = function (sql, callback) {
   html5sql.process(
     sql,
     function (tx, result, resultArray) {
+      console.log('Woohoo!');
+      // console.log(tx);
+      // console.log(result);
+      console.log(resultArray);
       callback(resultArray);
     }
   );
