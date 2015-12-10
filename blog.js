@@ -1,5 +1,6 @@
 var blog = {};
-blog.library = [];
+// blog.articles = [];
+blog.rawData = [];
 
 blog.createAll = function() {
   this.rawData.sort(function (a, b) {
@@ -7,11 +8,12 @@ blog.createAll = function() {
     if (a.publishedOn < b.publishedOn) {return 1;}
     return 0;
   });
-  for (var i = 0; i < this.rawData.length; i++) {
-    var temp = new Article(this.rawData[i]);
-    this.library.push(temp);
-    temp.toHTML();
-    temp.tagsDropDown();
+  for (var i = 0; i < blog.rawData.length; i++) {
+    // var temp = new Article(this.rawData[i]);
+    // this.articles.push(temp);
+    console.log('executing toHTML');
+    blog.rawData[i].toHTML();
+    blog.rawData[i].tagsDropDown();
   }
 };
 blog.truncateArticles = function() {
@@ -116,19 +118,226 @@ blog.filterHandler = function() {
     }
   });
 };
+// blog.exportJSON = function() {
+//   console.log('exportJSON');
+//   $('#export-field').show();
+//   var output = '';
+//   blog.articles.forEach(function(article) {
+//     output += JSON.stringify(article) + ",\n";
+//   });
+//   $('#article-json').val('[' + output + '{"markdown":""}]');
+// };
+blog.fetchFromDB = function(callback) {
+  callback = callback || function() {};
+
+  // Fetch all articles from db.
+  webDB.execute(
+    'SELECT * FROM articles ORDER BY publishedOn DESC;',
+    function (resultArray) {
+      // console.log('ResultArray is: ' + resultArray);
+      resultArray.forEach(function(ele) {
+        var temp = new Article(ele);
+        // console.log('ele is ' + ele);
+        // console.log('blog.rawData: ' + blog.rawData);
+        blog.rawData.push(temp);
+        console.log('executing toHTML');
+        temp.toHTML();
+        console.log('executing tagsDropDown');
+        temp.tagsDropDown();
+      });
+
+      // blog.initArticles();
+      // blog.createAll();
+      // blog.truncateArticles();
+      // blog.hamburgerHandler();
+      // blog.tabHandler();
+      // blog.filterHandler();
+      callback();
+    }
+  );
+};
+
+// blog.clearAndFetch = function () {
+//   blog.articles = [];
+//   // blog.fetchFromDB(blog.exportJSON);
+//   blog.fetchFromDB();
+// };
+
+
+// blog.handleAddButton = function () {
+//   $('#add-article-btn').on('click', function (e) {
+//     var article = blog.buildArticle()
+//     // Insert this new record into the DB, then callback to blog.clearAndFetch
+//     // TODO: Trigger SQL here...
+//
+//   });
+// };
+
+// blog.handleUpdateButton = function () {
+//   $('#update-article-btn').on('click', function () {
+//     var id = $(this).data('article-id');
+//     var article = blog.buildArticle();
+//     article.id = id;
+//
+//     // Save changes to the DB:
+//     // TODO: Trigger SQL here...
+//
+//     blog.clearAndFetch();
+//   });
+// };
+
+// blog.handleDeleteButton = function () {
+//   $('#delete-article-btn').on('click', function () {
+//     var id = $(this).data('article-id');
+//     // Remove this record from the DB:
+//     webDB.execute(
+//       // TODO: Add SQL here...
+//       , blog.clearAndFetch);
+//     blog.clearNewForm();
+//   });
+// };
+
+
+// blog.loadArticleById = function (id) {
+//   // Grab just the one article from the DB
+//   webDB.execute(
+//     // TODO: Add SQL here...
+//
+//     ,
+//     function (resultArray) {
+//       if (resultArray.length === 1) {
+//         blog.fillFormWithArticle(resultArray[0]);
+//       }
+//     }
+//   );
+// };
+
+// blog.fetchArticles = function(data, message, xhr) {
+//   var eTag = xhr.getResponseHeader('eTag');
+//   if (typeof localStorage.articlesEtag == 'undefined' || localStorage.articlesEtag != eTag) {
+//     console.log('cache miss!');
+//     localStorage.articlesEtag = eTag;
+//
+//     // Remove all prior articles from the DB, and from blog:
+//     blog.articles = [];
+//     webDB.execute(
+//       // TODO: Add SQL here...
+//       , blog.fetchJSON);
+//   } else {
+//     console.log('cache hit!');
+//     blog.fetchFromDB();
+//   }
+// };
+
+
+
 
 $(document).ready(function() {
-  $.get('hackerIpsum.json').done(function(data) {
-    blog.rawData = data;
-    localStorage.setItem('rawData', JSON.stringify(blog.rawData));
-    $.get('template.handlebars', function(data) {
-      Article.prototype.handlebarTest = Handlebars.compile(data);})
-      .done(function() {
-        blog.createAll();
-        blog.truncateArticles();
-        blog.hamburgerHandler();
-        blog.tabHandler();
-        blog.filterHandler();
+  // webDB.init(); // open database
+  // webDB.execute('DROP TABLE articles', function() { // delete existing table
+  //     // on success
+  //     console.log('Successfully deleted articles table.');
+  //   });
+  // webDB.setupTables();  // set up new empty table
+  // webDB.importArticlesFrom('hackerIpsum.json'); // populate empty table with articles
+
+
+  $.get('template.handlebars', function(data) {
+    console.log('1 template received!');
+      Article.prototype.handlebarTest = Handlebars.compile(data);
+    })
+    .done(function() {
+      console.log('2 Executing .init()');
+      webDB.init(); // open database
+      console.log('3 Database initialized');
+    })
+    .done(function() {
+      console.log('4 Beginning to delete articles table');
+      webDB.execute('DROP TABLE articles;', function() { // delete existing table
+          // on success
+          console.log('5 deleted table!');
+          console.log('6 Executing .setupTables()');
+          webDB.setupTables();
+          console.log('7 created table!');
+          console.log('8 executing importArticlesFrom');
+          webDB.importArticlesFrom('hackerIpsum.json');
+          console.log('9 imported articles!');
+          console.log('10 executing fetchFromDB');
+          // blog.fetchFromDB();
+          console.log('11 fetched articles from database!');
+          console.log('12 Rendering blog!');
+          // blog.createAll();
+          blog.truncateArticles();
+          blog.hamburgerHandler();
+          blog.tabHandler();
+          blog.filterHandler();
+        });
       });
-    });
+    // .done(function() {
+    //     console.log('6 Executing .setupTables()');
+    //   webDB.setupTables();  // set up new empty table
+    //   console.log('7 created table!');
+    // })
+    // .done(function() {
+    //   console.log('8 executing importArticlesFrom');
+    //   webDB.importArticlesFrom('hackerIpsum.json'); // populate empty table with articles
+    //   console.log('9 imported articles!');
+    // })
+    // .done(function() {
+    //   console.log('10 executing fetchFromDB');
+    //   blog.fetchFromDB();
+    //   console.log('11 fetched articles from database!');
+    // })
+      // .done(function(){
+      //   console.log('12 Rendering blog!');
+      //   // blog.articles = blog.rawData;
+      //   blog.createAll();
+      //   blog.truncateArticles();
+      //   blog.hamburgerHandler();
+      //   blog.tabHandler();
+      //   blog.filterHandler();
+      // });
+
+
+      //  ETAG STUFF
+      // $.get(templates/article.handlebars)
+      // .done(checkForNewArticles)
+      //
+      // blog.checkForNewArticles = function() {
+      // 	$.ajax({TYPE:’HEAD’, url: ‘scripts/hackerIpsum.json’, success: blog.fetchArticles})
+      //     .done(function(data, msg, xhr) {
+      //       if (forEach(xhr.responseHeader[‘eTag’])) {
+      //         localStorage.articleTag = 'eTag';
+      //         $.getJSON('scripts/hackerIpsum.json')
+      //
+      // }
+      // }
+      // }
+
+
+
+
+
+
+
+
+  // blog.createAll();
+  // blog.truncateArticles();
+  // blog.hamburgerHandler();
+  // blog.tabHandler();
+  // blog.filterHandler();
+  // blog.fetchFromDB();
+  // $.get('hackerIpsum.json').done(function(data) {
+  //   blog.rawData = data;
+  //   localStorage.setItem('rawData', JSON.stringify(blog.rawData));
+  //   $.get('template.handlebars', function(data) {
+  //     Article.prototype.handlebarTest = Handlebars.compile(data);})
+  //     .done(function() {
+  //       blog.createAll();
+  //       blog.truncateArticles();
+  //       blog.hamburgerHandler();
+  //       blog.tabHandler();
+  //       blog.filterHandler();
+  //     });
+  //   });
 });

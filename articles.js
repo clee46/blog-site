@@ -1,15 +1,21 @@
 // Article constructor creates a new article object from the blog raw data
-function Article (props) {
-  this.title = props.title;
-  this.category = props.category;
-  this.author = props.author;
-  this.authorUrl = props.authorUrl;
-  this.publishedOn = props.publishedOn;
-  this.body = props.body;
-  // this.template = function() {};
-  // this.age = this.postAge(this.publishedOn);
-  this.markdown = props.markdown;
-  this.body = props.body || marked(this.markdown);
+// function Article (props) {
+//   this.title = props.title;
+//   this.category = props.category;
+//   this.author = props.author;
+//   this.authorUrl = props.authorUrl;
+//   this.publishedOn = props.publishedOn;
+//   this.body = props.body;
+//   // this.template = function() {};
+//   // this.age = this.postAge(this.publishedOn);
+//   this.markdown = props.markdown;
+//   this.body = props.body || marked(this.markdown);
+// }
+function Article (opts) {
+  Object.keys(opts).forEach(function(e,index,keys) {
+    this[e] = opts[e];
+  },this);
+  this.body = opts.body || marked(this.markdown);
 }
 // Article method to calculate age of blog post
 Article.prototype.postAge = function(date) {
@@ -27,6 +33,43 @@ Article.prototype.toHTML = function () {
   var html = this.handlebarTest(this);
   $('#app').append(html);
 }
+
+// Article.prototype.insertRecord = function(callback) {
+//   // insert article record into database
+//   webDB.execute(
+//     // TODO: Add SQL here...
+//     {'sql':'INSERT INTO articles (author, title, authorUrl, publishedOn, category, markdown)'}]
+//
+//      ,
+//     callback
+//   );
+// };
+// Article.prototype.updateRecord = function(callback) {
+//   //update article record in databse
+//   webDB.execute(
+//     // TODO: Add SQL here...
+//     ,
+//     callback
+//   );
+// };
+//
+// Article.prototype.deleteRecord = function(callback) {
+//   // Delete article record in database
+//   webDB.execute(
+//     // TODO: Add SQL here...
+//     ,
+//     callback
+//   );
+// };
+//
+// Article.prototype.truncateTable = function(callback) {
+//   // Delete all records from given table.
+//   webDB.execute(
+//     'DELETE * FROM articles'
+//     ,
+//     callback
+//   );
+// };
 
 // Article method to populate drop down menu
 Article.prototype.tagsDropDown = function() {

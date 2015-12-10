@@ -19,6 +19,7 @@ function uniqueCategories(collection) {
   });
   return seen;
 }
+//regex    /\b\w+/g
 function wordCount(collection) {
   var all = pluck('markdown', collection);
   var count = [];
