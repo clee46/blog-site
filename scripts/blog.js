@@ -1,5 +1,4 @@
 var blog = {};
-// blog.articles = [];
 blog.rawData = [];
 
 blog.createAll = function() {
@@ -9,9 +8,6 @@ blog.createAll = function() {
     return 0;
   });
   for (var i = 0; i < blog.rawData.length; i++) {
-    // var temp = new Article(this.rawData[i]);
-    // this.articles.push(temp);
-    console.log('executing toHTML');
     blog.rawData[i].toHTML();
     blog.rawData[i].tagsDropDown();
   }
@@ -129,29 +125,18 @@ blog.filterHandler = function() {
 // };
 blog.fetchFromDB = function(callback) {
   callback = callback || function() {};
-
   // Fetch all articles from db.
   webDB.execute(
     'SELECT * FROM articles ORDER BY publishedOn DESC;',
     function (resultArray) {
-      // console.log('ResultArray is: ' + resultArray);
       resultArray.forEach(function(ele) {
         var temp = new Article(ele);
-        // console.log('ele is ' + ele);
-        // console.log('blog.rawData: ' + blog.rawData);
         blog.rawData.push(temp);
-        console.log('executing toHTML');
+        // console.log('executing toHTML');
         temp.toHTML();
-        console.log('executing tagsDropDown');
+        // console.log('executing tagsDropDown');
         temp.tagsDropDown();
       });
-
-      // blog.initArticles();
-      // blog.createAll();
-      // blog.truncateArticles();
-      // blog.hamburgerHandler();
-      // blog.tabHandler();
-      // blog.filterHandler();
       callback();
     }
   );
@@ -229,20 +214,8 @@ blog.fetchFromDB = function(callback) {
 //   }
 // };
 
-
-
-
 $(document).ready(function() {
-  // webDB.init(); // open database
-  // webDB.execute('DROP TABLE articles', function() { // delete existing table
-  //     // on success
-  //     console.log('Successfully deleted articles table.');
-  //   });
-  // webDB.setupTables();  // set up new empty table
-  // webDB.importArticlesFrom('hackerIpsum.json'); // populate empty table with articles
-
-
-  $.get('template.handlebars', function(data) {
+  $.get('templates/template.handlebars', function(data) {
     console.log('1 template received!');
       Article.prototype.handlebarTest = Handlebars.compile(data);
     })
@@ -254,51 +227,19 @@ $(document).ready(function() {
     .done(function() {
       console.log('4 Beginning to delete articles table');
       webDB.execute('DROP TABLE articles;', function() { // delete existing table
-          // on success
           console.log('5 deleted table!');
           console.log('6 Executing .setupTables()');
           webDB.setupTables();
           console.log('7 created table!');
           console.log('8 executing importArticlesFrom');
-          webDB.importArticlesFrom('hackerIpsum.json');
+          webDB.importArticlesFrom('data/hackerIpsum.json');
           console.log('9 imported articles!');
-          console.log('10 executing fetchFromDB');
-          // blog.fetchFromDB();
-          console.log('11 fetched articles from database!');
-          console.log('12 Rendering blog!');
-          // blog.createAll();
           blog.truncateArticles();
           blog.hamburgerHandler();
           blog.tabHandler();
           blog.filterHandler();
         });
       });
-    // .done(function() {
-    //     console.log('6 Executing .setupTables()');
-    //   webDB.setupTables();  // set up new empty table
-    //   console.log('7 created table!');
-    // })
-    // .done(function() {
-    //   console.log('8 executing importArticlesFrom');
-    //   webDB.importArticlesFrom('hackerIpsum.json'); // populate empty table with articles
-    //   console.log('9 imported articles!');
-    // })
-    // .done(function() {
-    //   console.log('10 executing fetchFromDB');
-    //   blog.fetchFromDB();
-    //   console.log('11 fetched articles from database!');
-    // })
-      // .done(function(){
-      //   console.log('12 Rendering blog!');
-      //   // blog.articles = blog.rawData;
-      //   blog.createAll();
-      //   blog.truncateArticles();
-      //   blog.hamburgerHandler();
-      //   blog.tabHandler();
-      //   blog.filterHandler();
-      // });
-
-
       //  ETAG STUFF
       // $.get(templates/article.handlebars)
       // .done(checkForNewArticles)
@@ -313,31 +254,4 @@ $(document).ready(function() {
       // }
       // }
       // }
-
-
-
-
-
-
-
-
-  // blog.createAll();
-  // blog.truncateArticles();
-  // blog.hamburgerHandler();
-  // blog.tabHandler();
-  // blog.filterHandler();
-  // blog.fetchFromDB();
-  // $.get('hackerIpsum.json').done(function(data) {
-  //   blog.rawData = data;
-  //   localStorage.setItem('rawData', JSON.stringify(blog.rawData));
-  //   $.get('template.handlebars', function(data) {
-  //     Article.prototype.handlebarTest = Handlebars.compile(data);})
-  //     .done(function() {
-  //       blog.createAll();
-  //       blog.truncateArticles();
-  //       blog.hamburgerHandler();
-  //       blog.tabHandler();
-  //       blog.filterHandler();
-  //     });
-  //   });
 });

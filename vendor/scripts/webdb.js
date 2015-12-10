@@ -88,10 +88,10 @@ webDB.execute = function (sql, callback) {
   html5sql.process(
     sql,
     function (tx, result, resultArray) {
-      console.log('Woohoo!');
+      // console.log('Woohoo!');
       // console.log(tx);
       // console.log(result);
-      console.log(resultArray);
+      // console.log(resultArray);
       callback(resultArray);
     }
   );
