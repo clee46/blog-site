@@ -36,35 +36,14 @@ webDB.setupTables = function () {
   console.log('Attempting to create table');
   html5sql.process(
     'CREATE TABLE IF NOT EXISTS articles (id INTEGER PRIMARY KEY, title VARCHAR(255) NOT NULL, author VARCHAR(255) NOT NULL, authorUrl VARCHAR (255), category VARCHAR(20), publishedOn DATETIME, markdown TEXT NOT NULL);',
-    function() {
-      // on success
-      console.log('Success setting up tables.');
-    }
+    function() {}
   );
 };
-
-// webDB.execute = function (sql, callback) {
-//   callback = callback || function() {};
-//   html5sql.process(
-//     sql,
-//     function (tx, result, resultArray) {
-//       console.log(resultArray);
-//       callback(resultArray);
-//     }
-//   );
-// };
 webDB.importArticlesFrom = function (path) {
   // Import articles from JSON file
   $.getJSON(path, webDB.insertAllRecords).done(function() {
-    console.log('Filled database, now fetching articles!');
-    blog.fetchFromDB();})
-    // .done(function() {
-    // blog.createAll();
-    // blog.truncateArticles();
-    // blog.hamburgerHandler();
-    // blog.tabHandler();
-    // blog.filterHandler();
-  // });
+    blog.fetchFromDB(blog.truncateArticles);
+  });
 };
 webDB.insertAllRecords = function (articles) {
   articles.forEach(webDB.insertRecord);
@@ -78,21 +57,13 @@ webDB.insertRecord = function (a) {
         'data': [a.title, a.author, a.authorUrl, a.category, a.publishedOn, a.markdown],
       }
     ],
-    function () {
-      // console.log('Success inserting record for ' + a.title);
-    }
+    function () {}
   );
 };
 webDB.execute = function (sql, callback) {
   callback = callback || function() {};
   html5sql.process(
     sql,
-    function (tx, result, resultArray) {
-      // console.log('Woohoo!');
-      // console.log(tx);
-      // console.log(result);
-      // console.log(resultArray);
-      callback(resultArray);
-    }
+    function (tx, result, resultArray) {callback(resultArray);}
   );
 };

@@ -13,11 +13,13 @@ blog.createAll = function() {
   }
 };
 blog.truncateArticles = function() {
-  $('article .postBody p:not(:first-child)').hide();  // hides all posts
-  $('main').on('click', '.read-on', function(event) {
-   event.preventDefault();
-  $(this).siblings('.postBody').find('p:not(:first-child)').toggle();
- });
+  $('.postBody h2:not(:first-child)').hide();  // hides all posts
+  $('.postBody p:not(:nth-child(2))').hide();  // hides all posts
+  $('.read-on').on('click', function(event) {
+    event.preventDefault();
+    $(this).siblings('.postBody').find('h2:not(:first-child)').toggle();
+    $(this).siblings('.postBody').find('p:not(:nth-child(2))').toggle();
+  });
 };
 blog.hamburgerHandler = function() {
   $( ".cross" ).hide();
@@ -136,6 +138,7 @@ blog.fetchFromDB = function(callback) {
         temp.toHTML();
         // console.log('executing tagsDropDown');
         temp.tagsDropDown();
+        // blog.truncateArticles();
       });
       callback();
     }
@@ -234,12 +237,13 @@ $(document).ready(function() {
           console.log('8 executing importArticlesFrom');
           webDB.importArticlesFrom('data/hackerIpsum.json');
           console.log('9 imported articles!');
-          blog.truncateArticles();
+        });
+      })
+        .done(function() {
           blog.hamburgerHandler();
           blog.tabHandler();
           blog.filterHandler();
         });
-      });
       //  ETAG STUFF
       // $.get(templates/article.handlebars)
       // .done(checkForNewArticles)
