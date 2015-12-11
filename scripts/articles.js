@@ -1,20 +1,10 @@
 // Article constructor creates a new article object from the blog raw data
-// function Article (props) {
-//   this.title = props.title;
-//   this.category = props.category;
-//   this.author = props.author;
-//   this.authorUrl = props.authorUrl;
-//   this.publishedOn = props.publishedOn;
-//   this.body = props.body;
-//   // this.template = function() {};
-//   // this.age = this.postAge(this.publishedOn);
-//   this.markdown = props.markdown;
-//   this.body = props.body || marked(this.markdown);
-// }
 function Article (opts) {
   Object.keys(opts).forEach(function(e,index,keys) {
     this[e] = opts[e];
   },this);
+  this.authorUrl = opts.authorUrl;
+  this.age = this.postAge(this.publishedOn);
   this.body = opts.body || marked(this.markdown);
 }
 // Article method to calculate age of blog post
@@ -29,8 +19,10 @@ Article.prototype.postAge = function(date) {
 }
 // Article method to display a blog post to the DOM
 Article.prototype.toHTML = function () {
+  // console.log(this);
   var age = this.postAge(this.publishedOn);
   var html = this.handlebarTest(this);
+  // console.log(html);
   $('#app').append(html);
 }
 

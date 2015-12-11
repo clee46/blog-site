@@ -1,5 +1,4 @@
 var blog = {};
-// blog.articles = [];
 blog.rawData = [];
 
 blog.createAll = function() {
@@ -9,19 +8,18 @@ blog.createAll = function() {
     return 0;
   });
   for (var i = 0; i < blog.rawData.length; i++) {
-    // var temp = new Article(this.rawData[i]);
-    // this.articles.push(temp);
-    console.log('executing toHTML');
     blog.rawData[i].toHTML();
     blog.rawData[i].tagsDropDown();
   }
 };
 blog.truncateArticles = function() {
-  $('article .postBody p:not(:first-child)').hide();  // hides all posts
-  $('main').on('click', '.read-on', function(event) {
-   event.preventDefault();
-  $(this).siblings('.postBody').find('p:not(:first-child)').toggle();
- });
+  $('.postBody h2:not(:first-child)').hide();  // hides all posts
+  $('.postBody p:not(:nth-child(2))').hide();  // hides all posts
+  $('.read-on').on('click', function(event) {
+    event.preventDefault();
+    $(this).siblings('.postBody').find('h2:not(:first-child)').toggle();
+    $(this).siblings('.postBody').find('p:not(:nth-child(2))').toggle();
+  });
 };
 blog.hamburgerHandler = function() {
   $( ".cross" ).hide();
@@ -118,6 +116,38 @@ blog.filterHandler = function() {
     }
   });
 };
+
+// blog.loadArticles = function() {
+//   $.ajax({
+//     type: 'HEAD',
+//     url: 'data/hackerIpsum.json',
+//     success: blog.fetchArticles
+//   });
+//   // .done(function(data, msg, xhr) {
+//   //     if (forEach(xhr.responseHeader[‘eTag’])) {
+//   //       localStorage.articleTag = 'eTag';
+//   //       $.getJSON('scripts/hackerIpsum.json');
+//   //     }
+//   // })
+// }
+// blog.fetchArticles = function(data, message, xhr) {
+//   var eTag = xhr.getResponseHeader('eTag');
+//   if (typeof localStorage.articlesEtag == 'undefined' || localStorage.articlesEtag != eTag) {
+//     console.log('cache miss!');
+//     localStorage.articlesEtag = eTag;
+//
+//     // Remove all prior articles from the DB, and from blog:
+//     blog.articles = [];
+//     webDB.execute(
+//       // TODO: Add SQL here...
+//       , blog.fetchJSON);
+//   }
+//   else {
+//     console.log('cache hit!');
+//     blog.fetchFromDB();
+//   }
+// };
+
 // blog.exportJSON = function() {
 //   console.log('exportJSON');
 //   $('#export-field').show();
@@ -129,33 +159,26 @@ blog.filterHandler = function() {
 // };
 blog.fetchFromDB = function(callback) {
   callback = callback || function() {};
-
   // Fetch all articles from db.
   webDB.execute(
     'SELECT * FROM articles ORDER BY publishedOn DESC;',
     function (resultArray) {
-      // console.log('ResultArray is: ' + resultArray);
       resultArray.forEach(function(ele) {
         var temp = new Article(ele);
-        // console.log('ele is ' + ele);
-        // console.log('blog.rawData: ' + blog.rawData);
         blog.rawData.push(temp);
-        console.log('executing toHTML');
+        // console.log('executing toHTML');
         temp.toHTML();
-        console.log('executing tagsDropDown');
+        // console.log('executing tagsDropDown');
         temp.tagsDropDown();
+        // blog.truncateArticles();
       });
-
-      // blog.initArticles();
-      // blog.createAll();
-      // blog.truncateArticles();
-      // blog.hamburgerHandler();
-      // blog.tabHandler();
-      // blog.filterHandler();
       callback();
     }
   );
 };
+
+
+
 
 // blog.clearAndFetch = function () {
 //   blog.articles = [];
@@ -212,132 +235,35 @@ blog.fetchFromDB = function(callback) {
 //   );
 // };
 
-// blog.fetchArticles = function(data, message, xhr) {
-//   var eTag = xhr.getResponseHeader('eTag');
-//   if (typeof localStorage.articlesEtag == 'undefined' || localStorage.articlesEtag != eTag) {
-//     console.log('cache miss!');
-//     localStorage.articlesEtag = eTag;
-//
-//     // Remove all prior articles from the DB, and from blog:
-//     blog.articles = [];
-//     webDB.execute(
-//       // TODO: Add SQL here...
-//       , blog.fetchJSON);
-//   } else {
-//     console.log('cache hit!');
-//     blog.fetchFromDB();
-//   }
-// };
-
-
 
 
 $(document).ready(function() {
-  // webDB.init(); // open database
-  // webDB.execute('DROP TABLE articles', function() { // delete existing table
-  //     // on success
-  //     console.log('Successfully deleted articles table.');
-  //   });
-  // webDB.setupTables();  // set up new empty table
-  // webDB.importArticlesFrom('hackerIpsum.json'); // populate empty table with articles
-
-
-  $.get('template.handlebars', function(data) {
-    console.log('1 template received!');
+  $.get('templates/template.handlebars', function(data) {
       Article.prototype.handlebarTest = Handlebars.compile(data);
+      // blog.loadArticles();
     })
     .done(function() {
-      console.log('2 Executing .init()');
       webDB.init(); // open database
-      console.log('3 Database initialized');
     })
     .done(function() {
-      console.log('4 Beginning to delete articles table');
       webDB.execute('DROP TABLE articles;', function() { // delete existing table
-          // on success
-          console.log('5 deleted table!');
-          console.log('6 Executing .setupTables()');
           webDB.setupTables();
-          console.log('7 created table!');
-          console.log('8 executing importArticlesFrom');
-          webDB.importArticlesFrom('hackerIpsum.json');
-          console.log('9 imported articles!');
-          console.log('10 executing fetchFromDB');
-          // blog.fetchFromDB();
-          console.log('11 fetched articles from database!');
-          console.log('12 Rendering blog!');
-          // blog.createAll();
-          blog.truncateArticles();
+          webDB.importArticlesFrom('data/hackerIpsum.json');
+        });
+      })
+        .done(function() {
           blog.hamburgerHandler();
           blog.tabHandler();
           blog.filterHandler();
+
+          // $('pre code').each(function(i, block) {
+          //   hljs.highlightBlock(block);
+          // });
+
         });
-      });
-    // .done(function() {
-    //     console.log('6 Executing .setupTables()');
-    //   webDB.setupTables();  // set up new empty table
-    //   console.log('7 created table!');
-    // })
-    // .done(function() {
-    //   console.log('8 executing importArticlesFrom');
-    //   webDB.importArticlesFrom('hackerIpsum.json'); // populate empty table with articles
-    //   console.log('9 imported articles!');
-    // })
-    // .done(function() {
-    //   console.log('10 executing fetchFromDB');
-    //   blog.fetchFromDB();
-    //   console.log('11 fetched articles from database!');
-    // })
-      // .done(function(){
-      //   console.log('12 Rendering blog!');
-      //   // blog.articles = blog.rawData;
-      //   blog.createAll();
-      //   blog.truncateArticles();
-      //   blog.hamburgerHandler();
-      //   blog.tabHandler();
-      //   blog.filterHandler();
-      // });
-
-
       //  ETAG STUFF
       // $.get(templates/article.handlebars)
       // .done(checkForNewArticles)
       //
-      // blog.checkForNewArticles = function() {
-      // 	$.ajax({TYPE:’HEAD’, url: ‘scripts/hackerIpsum.json’, success: blog.fetchArticles})
-      //     .done(function(data, msg, xhr) {
-      //       if (forEach(xhr.responseHeader[‘eTag’])) {
-      //         localStorage.articleTag = 'eTag';
-      //         $.getJSON('scripts/hackerIpsum.json')
-      //
-      // }
-      // }
-      // }
 
-
-
-
-
-
-
-
-  // blog.createAll();
-  // blog.truncateArticles();
-  // blog.hamburgerHandler();
-  // blog.tabHandler();
-  // blog.filterHandler();
-  // blog.fetchFromDB();
-  // $.get('hackerIpsum.json').done(function(data) {
-  //   blog.rawData = data;
-  //   localStorage.setItem('rawData', JSON.stringify(blog.rawData));
-  //   $.get('template.handlebars', function(data) {
-  //     Article.prototype.handlebarTest = Handlebars.compile(data);})
-  //     .done(function() {
-  //       blog.createAll();
-  //       blog.truncateArticles();
-  //       blog.hamburgerHandler();
-  //       blog.tabHandler();
-  //       blog.filterHandler();
-  //     });
-  //   });
 });
