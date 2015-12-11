@@ -19,10 +19,10 @@ Article.prototype.postAge = function(date) {
 }
 // Article method to display a blog post to the DOM
 Article.prototype.toHTML = function () {
-  console.log(this);
+  // console.log(this);
   var age = this.postAge(this.publishedOn);
   var html = this.handlebarTest(this);
-  console.log(html);
+  // console.log(html);
   $('#app').append(html);
 }
 

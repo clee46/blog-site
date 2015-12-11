@@ -116,6 +116,38 @@ blog.filterHandler = function() {
     }
   });
 };
+
+// blog.loadArticles = function() {
+//   $.ajax({
+//     type: 'HEAD',
+//     url: 'data/hackerIpsum.json',
+//     success: blog.fetchArticles
+//   });
+//   // .done(function(data, msg, xhr) {
+//   //     if (forEach(xhr.responseHeader[‘eTag’])) {
+//   //       localStorage.articleTag = 'eTag';
+//   //       $.getJSON('scripts/hackerIpsum.json');
+//   //     }
+//   // })
+// }
+// blog.fetchArticles = function(data, message, xhr) {
+//   var eTag = xhr.getResponseHeader('eTag');
+//   if (typeof localStorage.articlesEtag == 'undefined' || localStorage.articlesEtag != eTag) {
+//     console.log('cache miss!');
+//     localStorage.articlesEtag = eTag;
+//
+//     // Remove all prior articles from the DB, and from blog:
+//     blog.articles = [];
+//     webDB.execute(
+//       // TODO: Add SQL here...
+//       , blog.fetchJSON);
+//   }
+//   else {
+//     console.log('cache hit!');
+//     blog.fetchFromDB();
+//   }
+// };
+
 // blog.exportJSON = function() {
 //   console.log('exportJSON');
 //   $('#export-field').show();
@@ -144,6 +176,9 @@ blog.fetchFromDB = function(callback) {
     }
   );
 };
+
+
+
 
 // blog.clearAndFetch = function () {
 //   blog.articles = [];
@@ -200,62 +235,35 @@ blog.fetchFromDB = function(callback) {
 //   );
 // };
 
-// blog.fetchArticles = function(data, message, xhr) {
-//   var eTag = xhr.getResponseHeader('eTag');
-//   if (typeof localStorage.articlesEtag == 'undefined' || localStorage.articlesEtag != eTag) {
-//     console.log('cache miss!');
-//     localStorage.articlesEtag = eTag;
-//
-//     // Remove all prior articles from the DB, and from blog:
-//     blog.articles = [];
-//     webDB.execute(
-//       // TODO: Add SQL here...
-//       , blog.fetchJSON);
-//   } else {
-//     console.log('cache hit!');
-//     blog.fetchFromDB();
-//   }
-// };
+
 
 $(document).ready(function() {
   $.get('templates/template.handlebars', function(data) {
-    console.log('1 template received!');
       Article.prototype.handlebarTest = Handlebars.compile(data);
+      // blog.loadArticles();
     })
     .done(function() {
-      console.log('2 Executing .init()');
       webDB.init(); // open database
-      console.log('3 Database initialized');
     })
     .done(function() {
-      console.log('4 Beginning to delete articles table');
       webDB.execute('DROP TABLE articles;', function() { // delete existing table
-          console.log('5 deleted table!');
-          console.log('6 Executing .setupTables()');
           webDB.setupTables();
-          console.log('7 created table!');
-          console.log('8 executing importArticlesFrom');
           webDB.importArticlesFrom('data/hackerIpsum.json');
-          console.log('9 imported articles!');
         });
       })
         .done(function() {
           blog.hamburgerHandler();
           blog.tabHandler();
           blog.filterHandler();
+
+          // $('pre code').each(function(i, block) {
+          //   hljs.highlightBlock(block);
+          // });
+
         });
       //  ETAG STUFF
       // $.get(templates/article.handlebars)
       // .done(checkForNewArticles)
       //
-      // blog.checkForNewArticles = function() {
-      // 	$.ajax({TYPE:’HEAD’, url: ‘scripts/hackerIpsum.json’, success: blog.fetchArticles})
-      //     .done(function(data, msg, xhr) {
-      //       if (forEach(xhr.responseHeader[‘eTag’])) {
-      //         localStorage.articleTag = 'eTag';
-      //         $.getJSON('scripts/hackerIpsum.json')
-      //
-      // }
-      // }
-      // }
+
 });
