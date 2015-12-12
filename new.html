@@ -13,12 +13,12 @@
     <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="styles/new.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/styles/default.min.css">
-    <link rel="stylesheet" type="text/css" href="styles/styles.css">
+    <!-- <link rel="stylesheet" type="text/css" href="styles/styles.css">
     <link rel="stylesheet" type="text/css" href="styles/base.css">
     <link rel="stylesheet" type="text/css" href="styles/layout.css">
     <link rel="stylesheet" type="text/css" href="styles/module.css">
     <link rel="stylesheet" type="text/css" href="styles/state.css">
-    <link rel="stylesheet" type="text/css" href="styles/theme.css">
+    <link rel="stylesheet" type="text/css" href="styles/theme.css"> -->
 
   </head>
   <body>
@@ -55,13 +55,22 @@
 
         <!-- Preview will load here based on the above template-->
       </section>
-    </div>
       <section id="article-export">
+        <button id="add-article-btn" class="pull-left">Add to Database</button>
+        <button id="update-article-btn" class="pull-left" style="display: none;">Update Article</button>
+        <button id="delete-article-btn" class="pull-left" style="display: none;">Delete Article</button>
+        <label id="export-field" for="article-json" class="pull-right">
+          <input type="text" id="article-json"></textarea>
+          When finalized, copy the above JSON, and paste into blogArticles.js
+        </label>
+      </section>
+    </div>
+      <!-- <section id="article-export">
         <label id="export-field" for="article-json" class="pull-right">
           <input type="text"  id="article-json">
           When finalized, copy the above JSON, and paste into blogArticles.js
         </label>
-      </section>
+      </section> -->
     </main>
     <footer>
     </footer>

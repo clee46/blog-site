@@ -193,43 +193,20 @@ blog.buildArticle = function() {
   });
 };
 blog.buildPreview = function() {
-  // var newEntry = {};
-  var temp = {};
-  // new Article(newEntry);
   $('#new-form').change(function() {
-    console.log('change detected');
-    var article = blog.buildArticle();
-      // temp.title = $('#article-title').val();
-      // temp.category = $('#article-category').val();
-      // temp.author = $('#article-author').val();
-      // temp.authorUrl = $('#article-author-url').val();
-      // temp.publishedOn = util.today();
-      // // console.log(util.today());
-      // // temp.age = temp.postAge(new Date());
-      // temp.body = marked($('#article-body').val());
-      // var newEntry = new Article(temp);
-      console.log(article);
-      // var previewTemplateScript = $('.articlePosts').html();
-      // var previewTemplate = Handlebars.compile(previewTemplateScript);
-      // var previewHTML = article.handlebarTest(article);
-      // console.log(previewHTML);
+      var article = blog.buildArticle();
       $('#articles').empty().append(article.toHTML());
       $('pre code').each(function (i, block){
         hljs.highlightBlock(block);
       });
-
       // var newArticle = JSON.stringify(newEntry);
       // $('#article-json').val(newArticle);
-
     });
-
-  var article = blog.buildArticle();
-  $('#articles').html(article.toHTML());
-  $('pre code').each(function (i, block){
-    hljs.highlightBlock(block);
-  });
-
-
+    var article = blog.buildArticle();
+    $('#articles').html(article.toHTML());
+    $('pre code').each(function (i, block){
+      hljs.highlightBlock(block);
+    });
 };
 blog.fillFormWithArticle = function (a) {
   var checked = a.publishedOn ? true : false;
@@ -298,39 +275,45 @@ blog.initArticleEditorPage = function() {
 // };
 
 
-// blog.handleAddButton = function () {
-//   $('#add-article-btn').on('click', function (e) {
-//     var article = blog.buildArticle()
-//     // Insert this new record into the DB, then callback to blog.clearAndFetch
-//     // TODO: Trigger SQL here...
-//
-//   });
-// };
+blog.handleAddButton = function () {
+  console.log('add loaded correctly');
+  $('#add-article-btn').on('click', function (e) {
+    console.log('add button clicked');
+    var article = blog.buildArticle()
+    // Insert this new record into the DB, then callback to blog.clearAndFetch
+    // TODO: Trigger SQL here...
 
-// blog.handleUpdateButton = function () {
-//   $('#update-article-btn').on('click', function () {
-//     var id = $(this).data('article-id');
-//     var article = blog.buildArticle();
-//     article.id = id;
-//
-//     // Save changes to the DB:
-//     // TODO: Trigger SQL here...
-//
-//     blog.clearAndFetch();
-//   });
-// };
+  });
+};
 
-// blog.handleDeleteButton = function () {
-//   $('#delete-article-btn').on('click', function () {
-//     var id = $(this).data('article-id');
+blog.handleUpdateButton = function () {
+  console.log('update loaded correctly');
+  $('#update-article-btn').on('click', function () {
+    console.log('update button clicked');
+    var id = $(this).data('article-id');
+    var article = blog.buildArticle();
+    article.id = id;
 
-        // article.id = id;
-        // article.deleteRecord(blog.clearAndFetch);
+    // Save changes to the DB:
+    // TODO: Trigger SQL here...
 
-//     // Remove this record from the DB:
+    blog.clearAndFetch();
+  });
+};
 
-//     webDB.execute('DELETE FROM articles WHERE id=' + id
-//       , blog.clearAndFetch);
-//     blog.clearNewForm();
-//   });
-// };
+blog.handleDeleteButton = function () {
+  console.log('delete loaded correctly');
+  $('#delete-article-btn').on('click', function () {
+    console.log('delete button works');
+    var id = $(this).data('article-id');
+
+        article.id = id;
+        article.deleteRecord(blog.clearAndFetch);
+
+    // Remove this record from the DB:
+
+    webDB.execute('DELETE FROM articles WHERE id=' + id
+      , blog.clearAndFetch);
+    blog.clearNewForm();
+  });
+};
