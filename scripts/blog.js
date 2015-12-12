@@ -182,8 +182,24 @@ blog.fetchFromDB = function(callback) {
     }
   );
 };
+blog.buildArticle = function() {
+  return new Article({
+    title: $('#article-title').val(),
+    author: $('#article-author').val(),
+    authorUrl: $('#article-author-url').val(),
+    category: $('#article-category').val(),
+    markdown: $('#article-body').val(),
+    publishedOn: $('#article-published:checked').length ? util.today() : null
+  });
+};
+blog.buildPreview = function() {
+  var article = blog.buildArticle();
+  $('#articles').html(article.toHTML());
 
-
+  $('pre code').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+};
 blog.fillFormWithArticle = function (a) {
   var checked = a.publishedOn ? true : false;
   $('#articles').empty();
@@ -193,7 +209,7 @@ blog.fillFormWithArticle = function (a) {
   $('#article-category').val(a.category);
   $('#article-body').val(a.markdown);
   $('#article-published').attr('checked', checked);
-  // blog.buildPreview(); // Show the initial preview
+  blog.buildPreview(); // Show the initial preview
 };
 blog.loadArticleById = function (id) {
   // Grab just the one article from the DB
@@ -210,7 +226,6 @@ blog.loadArticleById = function (id) {
 blog.checkForEditArticle = function () {
   if (util.getParameterByKey('id')) {
     var id = util.getParameterByKey('id');
-    console.log('Retrieved article id# ' + id);
     blog.loadArticleById(id);
     $('#add-article-btn').hide();
     $('#update-article-btn').show().data('article-id', id);
@@ -221,16 +236,15 @@ blog.checkForEditArticle = function () {
   }
 };
 blog.initArticleEditorPage = function() {
-  // $.get('template/article.handlebars', function(data, msg, xhr) {
-  //   Article.prototype.template = Handlebars.compile(data);
-  // });
-
-  $('.tab-content').show();
-  $('#export-field').hide();
-  $('#article-json').on('focus', function(){
-    this.select();
+  $.get('template/template.handlebars', function(data, msg, xhr) {
+    Article.prototype.handlebarTest = Handlebars.compile(data);
   });
-  blog.checkForEditArticle();
+    $('.tab-content').show();
+    $('#export-field').hide();
+    $('#article-json').on('focus', function(){
+      this.select();
+    });
+    blog.checkForEditArticle();
   // blog.watchNewForm();
 };
 // blog.initNewArticlePage = function() {

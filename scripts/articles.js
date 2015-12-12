@@ -7,6 +7,7 @@ function Article (opts) {
   this.age = this.postAge(this.publishedOn);
   this.body = opts.body || marked(this.markdown);
 }
+// Article.prototype.template = '';
 // Article method to calculate age of blog post
 Article.prototype.postAge = function(date) {
   var d1 = parseInt(new Date().getDate());
@@ -24,6 +25,7 @@ Article.prototype.toHTML = function () {
   var html = this.handlebarTest(this);
   // console.log(html);
   $('#app').append(html);
+  return html;
 }
 
 // Article.prototype.insertRecord = function(callback) {
