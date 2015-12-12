@@ -2,6 +2,9 @@
   <article id="post">
     <h1 class="postTitle">{{title}}</h1>
     <p class="postAuthor">By <a href="{{authorUrl}}">{{author}}</a> published on {{publishedOn}} (about {{age}} days ago)</p>
+    {{#if_admin}}
+      <a href="new.html?id={{id}}&amp;admin=true" class="edit-btn">Edit</a>
+    {{/if_admin}}
     <p class="postCategory">Category: {{category}}</p>
     <div class="postBody">{{{body}}}</div>
     <a href="#" class="read-on">Show/Hide</a>

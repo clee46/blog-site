@@ -116,7 +116,13 @@ blog.filterHandler = function() {
     }
   });
 };
-
+blog.isAdmin = function () {
+  var admin = util.getParameterByKey('admin');
+  if (admin === 'true') {
+    return true;
+  }
+  return false;
+};
 // blog.loadArticles = function() {
 //   $.ajax({
 //     type: 'HEAD',
@@ -212,9 +218,13 @@ blog.fetchFromDB = function(callback) {
 // blog.handleDeleteButton = function () {
 //   $('#delete-article-btn').on('click', function () {
 //     var id = $(this).data('article-id');
+
+        // article.id = id;
+        // article.deleteRecord(blog.clearAndFetch);
+
 //     // Remove this record from the DB:
-//     webDB.execute(
-//       // TODO: Add SQL here...
+
+//     webDB.execute('DELETE FROM articles WHERE id=' + id
 //       , blog.clearAndFetch);
 //     blog.clearNewForm();
 //   });
@@ -238,7 +248,7 @@ blog.fetchFromDB = function(callback) {
 
 
 $(document).ready(function() {
-  $.get('templates/template.handlebars', function(data) {
+  $.get('template/template.handlebars', function(data) {
       Article.prototype.handlebarTest = Handlebars.compile(data);
       // blog.loadArticles();
     })

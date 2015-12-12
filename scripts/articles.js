@@ -45,10 +45,18 @@ Article.prototype.toHTML = function () {
 //   );
 // };
 //
+// Article.getAll = function(callback) {
+  // webDB.execute('SELECT * FROM articles ORDER BY publishedOn;');
+  // callback
+// }
+
 // Article.prototype.deleteRecord = function(callback) {
 //   // Delete article record in database
 //   webDB.execute(
 //     // TODO: Add SQL here...
+
+//      'sql': DELETE FROM articles WHERE id = ?;''
+//      'data': [this.id]
 //     ,
 //     callback
 //   );
