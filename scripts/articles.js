@@ -10,6 +10,7 @@ function Article (opts) {
 // Article.prototype.template = '';
 // Article method to calculate age of blog post
 Article.prototype.postAge = function(date) {
+  // console.log(date);
   var d1 = parseInt(new Date().getDate());
   var m1 = parseInt(new Date().getMonth()+1); //January is 0!
   var y1 = parseInt(new Date().getFullYear());

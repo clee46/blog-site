@@ -193,12 +193,43 @@ blog.buildArticle = function() {
   });
 };
 blog.buildPreview = function() {
+  // var newEntry = {};
+  var temp = {};
+  // new Article(newEntry);
+  $('#new-form').change(function() {
+    console.log('change detected');
+    var article = blog.buildArticle();
+      // temp.title = $('#article-title').val();
+      // temp.category = $('#article-category').val();
+      // temp.author = $('#article-author').val();
+      // temp.authorUrl = $('#article-author-url').val();
+      // temp.publishedOn = util.today();
+      // // console.log(util.today());
+      // // temp.age = temp.postAge(new Date());
+      // temp.body = marked($('#article-body').val());
+      // var newEntry = new Article(temp);
+      console.log(article);
+      // var previewTemplateScript = $('.articlePosts').html();
+      // var previewTemplate = Handlebars.compile(previewTemplateScript);
+      // var previewHTML = article.handlebarTest(article);
+      // console.log(previewHTML);
+      $('#articles').empty().append(article.toHTML());
+      $('pre code').each(function (i, block){
+        hljs.highlightBlock(block);
+      });
+
+      // var newArticle = JSON.stringify(newEntry);
+      // $('#article-json').val(newArticle);
+
+    });
+
   var article = blog.buildArticle();
   $('#articles').html(article.toHTML());
-
-  $('pre code').each(function(i, block) {
+  $('pre code').each(function (i, block){
     hljs.highlightBlock(block);
   });
+
+
 };
 blog.fillFormWithArticle = function (a) {
   var checked = a.publishedOn ? true : false;
