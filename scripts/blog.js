@@ -184,38 +184,34 @@ blog.fetchFromDB = function(callback) {
 };
 
 
-// blog.fillFormWithArticle = function (a) {
-//   var checked = a.publishedOn ? true : false;
-//   $('#articles').empty();
-//   $('#article-title').val(a.title);
-//   $('#article-author').val(a.author);
-//   $('#article-author-url').val(a.authorUrl);
-//   $('#article-category').val(a.category);
-//   $('#article-body').val(a.markdown);
-//   $('#article-published').attr('checked', checked);
-//   // blog.buildPreview(); // Show the initial preview
-// };
-// blog.loadArticleById = function (id) {
-//   // Grab just the one article from the DB
-//   webDB.execute(
-//     // TODO: Add SQL here...
-//     [{
-//       "sql": ''
-//       "data":
-//     }]
-//     ,
-//     function (resultArray) {
-//       if (resultArray.length === 1) {
-//         blog.fillFormWithArticle(resultArray[0]);
-//       }
-//     }
-//   );
-// };
+blog.fillFormWithArticle = function (a) {
+  var checked = a.publishedOn ? true : false;
+  $('#articles').empty();
+  $('#article-title').val(a.title);
+  $('#article-author').val(a.author);
+  $('#article-author-url').val(a.authorUrl);
+  $('#article-category').val(a.category);
+  $('#article-body').val(a.markdown);
+  $('#article-published').attr('checked', checked);
+  // blog.buildPreview(); // Show the initial preview
+};
+blog.loadArticleById = function (id) {
+  // Grab just the one article from the DB
+  webDB.execute(
+    'SELECT * FROM articles WHERE id=' + id +';'
+    ,
+    function (resultArray) {
+      if (resultArray.length === 1) {
+        blog.fillFormWithArticle(resultArray[0]);
+      }
+    }
+  );
+};
 blog.checkForEditArticle = function () {
   if (util.getParameterByKey('id')) {
     var id = util.getParameterByKey('id');
     console.log('Retrieved article id# ' + id);
-    // blog.loadArticleById(id);
+    blog.loadArticleById(id);
     $('#add-article-btn').hide();
     $('#update-article-btn').show().data('article-id', id);
     $('#delete-article-btn').show().data('article-id', id);

@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  webDB.init();
   blog.initArticleEditorPage();
 });
 
