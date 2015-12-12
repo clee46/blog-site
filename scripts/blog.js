@@ -184,8 +184,72 @@ blog.fetchFromDB = function(callback) {
 };
 
 
+// blog.fillFormWithArticle = function (a) {
+//   var checked = a.publishedOn ? true : false;
+//   $('#articles').empty();
+//   $('#article-title').val(a.title);
+//   $('#article-author').val(a.author);
+//   $('#article-author-url').val(a.authorUrl);
+//   $('#article-category').val(a.category);
+//   $('#article-body').val(a.markdown);
+//   $('#article-published').attr('checked', checked);
+//   // blog.buildPreview(); // Show the initial preview
+// };
+// blog.loadArticleById = function (id) {
+//   // Grab just the one article from the DB
+//   webDB.execute(
+//     // TODO: Add SQL here...
+//     [{
+//       "sql": ''
+//       "data":
+//     }]
+//     ,
+//     function (resultArray) {
+//       if (resultArray.length === 1) {
+//         blog.fillFormWithArticle(resultArray[0]);
+//       }
+//     }
+//   );
+// };
+blog.checkForEditArticle = function () {
+  if (util.getParameterByKey('id')) {
+    var id = util.getParameterByKey('id');
+    console.log('Retrieved article id# ' + id);
+    // blog.loadArticleById(id);
+    $('#add-article-btn').hide();
+    $('#update-article-btn').show().data('article-id', id);
+    $('#delete-article-btn').show().data('article-id', id);
+    console.log('Found article to edit.');
+  } else {
+    console.log('No article to edit.');
+  }
+};
+blog.initArticleEditorPage = function() {
+  // $.get('template/article.handlebars', function(data, msg, xhr) {
+  //   Article.prototype.template = Handlebars.compile(data);
+  // });
 
-
+  $('.tab-content').show();
+  $('#export-field').hide();
+  $('#article-json').on('focus', function(){
+    this.select();
+  });
+  blog.checkForEditArticle();
+  // blog.watchNewForm();
+};
+// blog.initNewArticlePage = function() {
+//   $.get('templates/article.handlebars', function(data, msg, xhr) {
+//     Article.prototype.template = Handlebars.compile(data);
+//   });
+//
+//   $('.tab-content').show();
+//   $('#export-field').hide();
+//   $('#article-json').on('focus', function(){
+//     this.select();
+//   });
+//   // blog.checkForEditArticle();
+//   // blog.watchNewForm();
+// };
 // blog.clearAndFetch = function () {
 //   blog.articles = [];
 //   // blog.fetchFromDB(blog.exportJSON);
@@ -229,51 +293,3 @@ blog.fetchFromDB = function(callback) {
 //     blog.clearNewForm();
 //   });
 // };
-
-
-// blog.loadArticleById = function (id) {
-//   // Grab just the one article from the DB
-//   webDB.execute(
-//     // TODO: Add SQL here...
-//
-//     ,
-//     function (resultArray) {
-//       if (resultArray.length === 1) {
-//         blog.fillFormWithArticle(resultArray[0]);
-//       }
-//     }
-//   );
-// };
-
-
-
-$(document).ready(function() {
-  $.get('template/template.handlebars', function(data) {
-      Article.prototype.handlebarTest = Handlebars.compile(data);
-      // blog.loadArticles();
-    })
-    .done(function() {
-      webDB.init(); // open database
-    })
-    .done(function() {
-      webDB.execute('DROP TABLE articles;', function() { // delete existing table
-          webDB.setupTables();
-          webDB.importArticlesFrom('data/hackerIpsum.json');
-        });
-      })
-        .done(function() {
-          blog.hamburgerHandler();
-          blog.tabHandler();
-          blog.filterHandler();
-
-          // $('pre code').each(function(i, block) {
-          //   hljs.highlightBlock(block);
-          // });
-
-        });
-      //  ETAG STUFF
-      // $.get(templates/article.handlebars)
-      // .done(checkForNewArticles)
-      //
-
-});
