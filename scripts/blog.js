@@ -124,7 +124,7 @@ blog.isAdmin = function () {
   return false;
 };
 blog.loadArticles = function() {
-  $.get('templates/article.handlebars', function(data, message, xhr) {
+  $.get('template/template.handlebars', function(data, message, xhr) {
     Article.prototype.handlebarTest = Handlebars.compile(data);
     $.ajax({
       type: 'HEAD',
@@ -134,6 +134,7 @@ blog.loadArticles = function() {
   });
 };
 blog.fetchArticles = function(data, message, xhr) {
+  console.log('fetching articles');
   var eTag = xhr.getResponseHeader('eTag');
   if (typeof localStorage.articlesEtag == 'undefined' || localStorage.articlesEtag != eTag) {
     console.log('cache miss!');
@@ -146,7 +147,10 @@ blog.fetchArticles = function(data, message, xhr) {
   }
   else {
     console.log('cache hit!');
-    blog.fetchFromDB();
+    webDB.execute('DROP TABLE articles;', function() { // delete existing table
+        webDB.setupTables();
+        webDB.importArticlesFrom('data/hackerIpsum.json');
+    });
   }
 };
 
@@ -170,19 +174,21 @@ blog.fetchFromDB = function(callback) {
         blog.rawData.push(temp);
         temp.toHTML();
         temp.tagsDropDown();
-        // blog.truncateArticles();
       });
-      var fromLS = blog.rawData;
-      $('#stats').append('Number of articles: ' + fromLS.length);
-      $('#stats').append('<br/>Number of authors: ' + uniqueAuthors(fromLS).length);
-      $('#stats').append('<br/>Number of categories: ' + uniqueCategories(fromLS).length);
-      $('#stats').append('<br/>Number of words: ' + wordCount(fromLS));
-      $('#stats').append('<br/>Average characters per word: ' + averageWordLength(fromLS));
-      $('#stats').append('<br/>Average words per post per author: ' + getPostsByAuthor(fromLS));
+      blog.getStats();
       callback();
-    }
-  );
+    });
 };
+blog.getStats = function() {
+  var fromLS = blog.rawData;
+  console.log('length is: ' + fromLS.length);
+  $('#stats').append('Number of articles: ' + fromLS.length);
+  $('#stats').append('<br/>Number of authors: ' + uniqueAuthors(fromLS).length);
+  $('#stats').append('<br/>Number of categories: ' + uniqueCategories(fromLS).length);
+  $('#stats').append('<br/>Number of words: ' + wordCount(fromLS));
+  $('#stats').append('<br/>Average characters per word: ' + averageWordLength(fromLS));
+  $('#stats').append('<br/>Average words per post per author: ' + getPostsByAuthor(fromLS));
+}
 blog.clearAndFetch = function () {
   blog.rawData = [];
   blog.fetchFromDB(blog.exportJSON);
