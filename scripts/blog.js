@@ -173,12 +173,17 @@ blog.fetchFromDB = function(callback) {
       resultArray.forEach(function(ele) {
         var temp = new Article(ele);
         blog.rawData.push(temp);
-        // console.log('executing toHTML');
         temp.toHTML();
-        // console.log('executing tagsDropDown');
         temp.tagsDropDown();
         // blog.truncateArticles();
       });
+      var fromLS = blog.rawData;
+      $('#stats').append('Number of articles: ' + fromLS.length);
+      $('#stats').append('<br/>Number of authors: ' + uniqueAuthors(fromLS).length);
+      $('#stats').append('<br/>Number of categories: ' + uniqueCategories(fromLS).length);
+      $('#stats').append('<br/>Number of words: ' + wordCount(fromLS));
+      $('#stats').append('<br/>Average characters per word: ' + averageWordLength(fromLS));
+      $('#stats').append('<br/>Average words per post per author: ' + getPostsByAuthor(fromLS));
       callback();
     }
   );

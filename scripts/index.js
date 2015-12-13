@@ -10,21 +10,15 @@ $(document).ready(function() {
       webDB.execute('DROP TABLE articles;', function() { // delete existing table
           webDB.setupTables();
           webDB.importArticlesFrom('data/hackerIpsum.json');
-        });
-      })
-        .done(function() {
+      });
+    })
+    .done(function() {
           blog.hamburgerHandler();
           blog.tabHandler();
           blog.filterHandler();
-
-          // $('pre code').each(function(i, block) {
-          //   hljs.highlightBlock(block);
-          // });
-
         });
-      //  ETAG STUFF
-      // $.get(templates/article.handlebars)
-      // .done(checkForNewArticles)
-      //
-
 });
+//  ETAG STUFF
+// $.get(templates/article.handlebars)
+// .done(checkForNewArticles)
+//

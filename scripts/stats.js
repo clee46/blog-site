@@ -80,12 +80,29 @@ function getPostsByAuthor(collection) {
     });
   return msg;
 }
-$(document).ready(function() {
-  var fromLS = JSON.parse(localStorage.getItem('rawData'));
-  $('#stats').append('Number of articles: ' + fromLS.length);
-  $('#stats').append('<br/>Number of authors: ' + uniqueAuthors(fromLS).length);
-  $('#stats').append('<br/>Number of categories: ' + uniqueCategories(fromLS).length);
-  $('#stats').append('<br/>Number of words: ' + wordCount(fromLS));
-  $('#stats').append('<br/>Average characters per word: ' + averageWordLength(fromLS));
-  $('#stats').append('<br/>Average words per post per author: ' + getPostsByAuthor(fromLS));
-});
+// $(document).ready(function() {
+//   webDB.execute('SELECT * FROM articles ORDER BY publishedOn DESC;',
+//   function (resultArray) {
+//     resultArray.forEach(function(ele) {
+//       var temp = new Article(ele);
+//       blog.rawData.push(temp);
+//       // console.log('executing toHTML');
+//       // temp.toHTML();
+//       // console.log('executing tagsDropDown');
+//       // temp.tagsDropDown();
+//       // blog.truncateArticles();
+//     });
+//     var fromLS = blog.rawData;
+//     console.log(fromLS);
+//     $('#stats').append('Number of articles: ' + fromLS.length);
+//     $('#stats').append('<br/>Number of authors: ' + uniqueAuthors(fromLS).length);
+//     $('#stats').append('<br/>Number of categories: ' + uniqueCategories(fromLS).length);
+//     $('#stats').append('<br/>Number of words: ' + wordCount(fromLS));
+//     $('#stats').append('<br/>Average characters per word: ' + averageWordLength(fromLS));
+//     $('#stats').append('<br/>Average words per post per author: ' + getPostsByAuthor(fromLS));
+//   });
+//     // console.log(fromLS);
+//   // var fromLS = JSON.parse(localStorage.getItem('rawData'));
+//
+//
+// });
