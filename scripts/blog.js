@@ -123,37 +123,32 @@ blog.isAdmin = function () {
   }
   return false;
 };
-
-// blog.loadArticles = function() {
-//   $.ajax({
-//     type: 'HEAD',
-//     url: 'data/hackerIpsum.json',
-//     success: blog.fetchArticles
-//   });
-//   // .done(function(data, msg, xhr) {
-//   //     if (forEach(xhr.responseHeader[‘eTag’])) {
-//   //       localStorage.articleTag = 'eTag';
-//   //       $.getJSON('scripts/hackerIpsum.json');
-//   //     }
-//   // })
-// }
-// blog.fetchArticles = function(data, message, xhr) {
-//   var eTag = xhr.getResponseHeader('eTag');
-//   if (typeof localStorage.articlesEtag == 'undefined' || localStorage.articlesEtag != eTag) {
-//     console.log('cache miss!');
-//     localStorage.articlesEtag = eTag;
-//
-//     // Remove all prior articles from the DB, and from blog:
-//     blog.articles = [];
-//     webDB.execute(
-//       // TODO: Add SQL here...
-//       , blog.fetchJSON);
-//   }
-//   else {
-//     console.log('cache hit!');
-//     blog.fetchFromDB();
-//   }
-// };
+blog.loadArticles = function() {
+  $.get('templates/article.handlebars', function(data, message, xhr) {
+    Article.prototype.handlebarTest = Handlebars.compile(data);
+    $.ajax({
+      type: 'HEAD',
+      url: 'data/hackerIpsum.json',
+      success: blog.fetchArticles
+    });
+  });
+};
+blog.fetchArticles = function(data, message, xhr) {
+  var eTag = xhr.getResponseHeader('eTag');
+  if (typeof localStorage.articlesEtag == 'undefined' || localStorage.articlesEtag != eTag) {
+    console.log('cache miss!');
+    localStorage.articlesEtag = eTag;
+    // Remove all prior articles from the DB, and from blog:
+    // blog.articles = [];
+    // webDB.execute(
+    //   // TODO: Add SQL here...
+    //   , blog.fetchJSON);
+  }
+  else {
+    console.log('cache hit!');
+    blog.fetchFromDB();
+  }
+};
 
 blog.exportJSON = function() {
   console.log('exportJSON');
