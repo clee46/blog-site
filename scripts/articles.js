@@ -7,8 +7,10 @@ function Article (opts) {
   this.age = this.postAge(this.publishedOn);
   this.body = opts.body || marked(this.markdown);
 }
+// Article.prototype.template = '';
 // Article method to calculate age of blog post
 Article.prototype.postAge = function(date) {
+  // console.log(date);
   var d1 = parseInt(new Date().getDate());
   var m1 = parseInt(new Date().getMonth()+1); //January is 0!
   var y1 = parseInt(new Date().getFullYear());
@@ -24,35 +26,47 @@ Article.prototype.toHTML = function () {
   var html = this.handlebarTest(this);
   // console.log(html);
   $('#app').append(html);
+  return html;
 }
 
-// Article.prototype.insertRecord = function(callback) {
-//   // insert article record into database
-//   webDB.execute(
-//     // TODO: Add SQL here...
-//     {'sql':'INSERT INTO articles (author, title, authorUrl, publishedOn, category, markdown)'}]
-//
-//      ,
-//     callback
-//   );
-// };
-// Article.prototype.updateRecord = function(callback) {
-//   //update article record in databse
-//   webDB.execute(
-//     // TODO: Add SQL here...
-//     ,
-//     callback
-//   );
-// };
-//
-// Article.prototype.deleteRecord = function(callback) {
-//   // Delete article record in database
-//   webDB.execute(
-//     // TODO: Add SQL here...
-//     ,
-//     callback
-//   );
-// };
+Article.prototype.insertRecord = function(callback) {
+  // insert article record into database
+  webDB.insertRecord(this);
+  // webDB.execute(
+  //   // TODO: Add SQL here...
+  //   {
+  //     'sql':'INSERT INTO articles (author, title, authorUrl, publishedOn, category, markdown)'}]
+  //
+  //    ,
+  //   callback
+  // );
+};
+Article.prototype.updateRecord = function(callback) {
+  //update article record in databse
+  webDB.execute(
+    "UPDATE articles SET title='" + this.title + "', author='" + this.author + "', authorUrl='" + this.authorUrl + "', category='" + this.category + "', publishedOn='" + this.publishedOn + "', markdown='" + this.markdown + "' WHERE id='" + this.id + "';"
+    ,
+    callback
+  );
+};
+
+// Article.getAll = function(callback) {
+//   webDB.execute('SELECT * FROM articles ORDER BY publishedOn;');
+//   callback
+// }
+
+Article.prototype.deleteRecord = function(callback) {
+  // Delete article record in database
+  console.log('deleting record from database');
+  webDB.execute(
+    [{
+     'sql': 'DELETE FROM articles WHERE id = ?;',
+     'data': [this.id]
+   }]
+    ,
+    callback
+  );
+};
 //
 // Article.prototype.truncateTable = function(callback) {
 //   // Delete all records from given table.
