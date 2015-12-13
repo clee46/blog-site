@@ -123,6 +123,7 @@ blog.isAdmin = function () {
   }
   return false;
 };
+
 // blog.loadArticles = function() {
 //   $.ajax({
 //     type: 'HEAD',
@@ -154,15 +155,15 @@ blog.isAdmin = function () {
 //   }
 // };
 
-// blog.exportJSON = function() {
-//   console.log('exportJSON');
-//   $('#export-field').show();
-//   var output = '';
-//   blog.articles.forEach(function(article) {
-//     output += JSON.stringify(article) + ",\n";
-//   });
-//   $('#article-json').val('[' + output + '{"markdown":""}]');
-// };
+blog.exportJSON = function() {
+  console.log('exportJSON');
+  $('#export-field').show();
+  var output = '';
+  blog.rawData.forEach(function(article) {
+    output += JSON.stringify(article) + ",\n";
+  });
+  $('#article-json').val('[' + output + '{"markdown":""}]');
+};
 blog.fetchFromDB = function(callback) {
   callback = callback || function() {};
   // Fetch all articles from db.
@@ -182,6 +183,10 @@ blog.fetchFromDB = function(callback) {
     }
   );
 };
+blog.clearAndFetch = function () {
+  blog.rawData = [];
+  blog.fetchFromDB(blog.exportJSON);
+};
 blog.buildArticle = function() {
   return new Article({
     title: $('#article-title').val(),
@@ -194,7 +199,9 @@ blog.buildArticle = function() {
 };
 blog.buildPreview = function() {
   $('#new-form').change(function() {
+      console.log('form updated');
       var article = blog.buildArticle();
+      console.log(article);
       $('#articles').empty().append(article.toHTML());
       $('pre code').each(function (i, block){
         hljs.highlightBlock(block);
@@ -202,11 +209,11 @@ blog.buildPreview = function() {
       // var newArticle = JSON.stringify(newEntry);
       // $('#article-json').val(newArticle);
     });
-    var article = blog.buildArticle();
-    $('#articles').html(article.toHTML());
-    $('pre code').each(function (i, block){
-      hljs.highlightBlock(block);
-    });
+    // var article = blog.buildArticle();
+    // $('#articles').html(article.toHTML());
+    // $('pre code').each(function (i, block){
+    //   hljs.highlightBlock(block);
+    // });
 };
 blog.fillFormWithArticle = function (a) {
   var checked = a.publishedOn ? true : false;
@@ -255,33 +262,35 @@ blog.initArticleEditorPage = function() {
     blog.checkForEditArticle();
   // blog.watchNewForm();
 };
-// blog.initNewArticlePage = function() {
-//   $.get('templates/article.handlebars', function(data, msg, xhr) {
-//     Article.prototype.template = Handlebars.compile(data);
-//   });
-//
-//   $('.tab-content').show();
-//   $('#export-field').hide();
-//   $('#article-json').on('focus', function(){
-//     this.select();
-//   });
-//   // blog.checkForEditArticle();
-//   // blog.watchNewForm();
-// };
+blog.initNewArticlePage = function() {
+  $.get('template/template.handlebars', function(data, msg, xhr) {
+    Article.prototype.handlebarTest = Handlebars.compile(data);
+  });
+
+  $('.tab-content').show();
+  $('#export-field').hide();
+  $('#article-json').on('focus', function(){
+    this.select();
+  });
+  blog.buildPreview();
+  // blog.checkForEditArticle();
+  // blog.watchNewForm();
+};
 // blog.clearAndFetch = function () {
 //   blog.articles = [];
 //   // blog.fetchFromDB(blog.exportJSON);
 //   blog.fetchFromDB();
 // };
 
-
+//
 blog.handleAddButton = function () {
   console.log('add loaded correctly');
   $('#add-article-btn').on('click', function (e) {
     console.log('add button clicked');
     var article = blog.buildArticle()
+    article.insertRecord(article);
     // Insert this new record into the DB, then callback to blog.clearAndFetch
-    // TODO: Trigger SQL here...
+
 
   });
 };
@@ -291,11 +300,11 @@ blog.handleUpdateButton = function () {
   $('#update-article-btn').on('click', function () {
     console.log('update button clicked');
     var id = $(this).data('article-id');
+    console.log(id);
     var article = blog.buildArticle();
     article.id = id;
-
+    article.updateRecord();
     // Save changes to the DB:
-    // TODO: Trigger SQL here...
 
     blog.clearAndFetch();
   });
@@ -306,14 +315,15 @@ blog.handleDeleteButton = function () {
   $('#delete-article-btn').on('click', function () {
     console.log('delete button works');
     var id = $(this).data('article-id');
-
+    console.log(id);
+      var article = blog.buildArticle();
         article.id = id;
         article.deleteRecord(blog.clearAndFetch);
 
     // Remove this record from the DB:
 
-    webDB.execute('DELETE FROM articles WHERE id=' + id
-      , blog.clearAndFetch);
+    // webDB.execute('DELETE FROM articles WHERE id=' + id
+    //   , blog.clearAndFetch);
     blog.clearNewForm();
   });
 };

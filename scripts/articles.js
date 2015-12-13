@@ -29,41 +29,44 @@ Article.prototype.toHTML = function () {
   return html;
 }
 
-// Article.prototype.insertRecord = function(callback) {
-//   // insert article record into database
-//   webDB.execute(
-//     // TODO: Add SQL here...
-//     {'sql':'INSERT INTO articles (author, title, authorUrl, publishedOn, category, markdown)'}]
-//
-//      ,
-//     callback
-//   );
-// };
-// Article.prototype.updateRecord = function(callback) {
-//   //update article record in databse
-//   webDB.execute(
-//     // TODO: Add SQL here...
-//     ,
-//     callback
-//   );
-// };
-//
+Article.prototype.insertRecord = function(callback) {
+  // insert article record into database
+  webDB.insertRecord(this);
+  // webDB.execute(
+  //   // TODO: Add SQL here...
+  //   {
+  //     'sql':'INSERT INTO articles (author, title, authorUrl, publishedOn, category, markdown)'}]
+  //
+  //    ,
+  //   callback
+  // );
+};
+Article.prototype.updateRecord = function(callback) {
+  //update article record in databse
+  webDB.execute(
+    "UPDATE articles SET title='" + this.title + "', author='" + this.author + "', authorUrl='" + this.authorUrl + "', category='" + this.category + "', publishedOn='" + this.publishedOn + "', markdown='" + this.markdown + "' WHERE id='" + this.id + "';"
+    ,
+    callback
+  );
+};
+
 // Article.getAll = function(callback) {
-  // webDB.execute('SELECT * FROM articles ORDER BY publishedOn;');
-  // callback
+//   webDB.execute('SELECT * FROM articles ORDER BY publishedOn;');
+//   callback
 // }
 
-// Article.prototype.deleteRecord = function(callback) {
-//   // Delete article record in database
-//   webDB.execute(
-//     // TODO: Add SQL here...
-
-//      'sql': DELETE FROM articles WHERE id = ?;''
-//      'data': [this.id]
-//     ,
-//     callback
-//   );
-// };
+Article.prototype.deleteRecord = function(callback) {
+  // Delete article record in database
+  console.log('deleting record from database');
+  webDB.execute(
+    [{
+     'sql': 'DELETE FROM articles WHERE id = ?;',
+     'data': [this.id]
+   }]
+    ,
+    callback
+  );
+};
 //
 // Article.prototype.truncateTable = function(callback) {
 //   // Delete all records from given table.
