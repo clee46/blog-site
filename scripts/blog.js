@@ -176,19 +176,13 @@ blog.fetchFromDB = function(callback) {
         temp.toHTML();
         temp.tagsDropDown();
       });
-      // blog.getStats();
-      // blog.hamburgerHandler();
-      // blog.tabHandler();
-      // blog.filterHandler();
       callback();
     });
 };
 blog.getStats = function() {
   console.log('-> blog.getStats');
   var fromLS = Article.all;
-  // var fromLS = blog.rawData;
-  console.log('length is: ' + fromLS.length);
-  $('#stats').append('Number of articles: ' + fromLS.length);
+  $('#stats').empty().append('Number of articles: ' + fromLS.length);
   $('#stats').append('<br/>Number of authors: ' + uniqueAuthors(fromLS).length);
   $('#stats').append('<br/>Number of categories: ' + uniqueCategories(fromLS).length);
   $('#stats').append('<br/>Number of words: ' + wordCount(fromLS));
@@ -263,7 +257,7 @@ blog.checkForEditArticle = function () {
   }
 };
 blog.initArticleEditorPage = function() {
-  $.get('template/template.handlebars', function(data, msg, xhr) {
+  $.get('template/template.handlebars.html', function(data, msg, xhr) {
     Article.prototype.handlebarTest = Handlebars.compile(data);
   });
   $('.tab-content').show();
@@ -275,7 +269,7 @@ blog.initArticleEditorPage = function() {
   // blog.watchNewForm();
 };
 blog.initNewArticlePage = function() {
-  $.get('template/template.handlebars', function(data, msg, xhr) {
+  $.get('template/template.handlebars.html', function(data, msg, xhr) {
     Article.prototype.handlebarTest = Handlebars.compile(data);
   });
 
@@ -345,6 +339,5 @@ blog.handleMainNav = function () {
   blog.getStats();
   blog.truncateArticles();
   blog.hamburgerHandler();
-  // blog.tabHandler();
   blog.filterHandler();
 };
