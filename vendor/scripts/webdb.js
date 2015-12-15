@@ -2,6 +2,7 @@ var webDB = {};
 webDB.sqlResult = null;
 
 webDB.verbose = function (verbose) {
+  console.log('-> webDB.verbose');
   var msg;
   if (verbose) {
     html5sql.logInfo = true;
@@ -17,6 +18,7 @@ webDB.verbose = function (verbose) {
   console.log(msg);
 };
 webDB.init = function() {
+  console.log('-> webDB.init');
   // Open and init DB
   try {
     if (openDatabase) {
@@ -30,25 +32,30 @@ webDB.init = function() {
   }
 };
 webDB.connect = function (database, title, size) {
+  console.log('-> webDB.connect');
   html5sql.openDatabase(database, title, size);
 };
 webDB.setupTables = function () {
-  console.log('Attempting to create table');
+  console.log('-> webDB.setupTables');
   html5sql.process(
     'CREATE TABLE IF NOT EXISTS articles (id INTEGER PRIMARY KEY, title VARCHAR(255) NOT NULL, author VARCHAR(255) NOT NULL, authorUrl VARCHAR (255), category VARCHAR(20), publishedOn DATETIME, markdown TEXT NOT NULL);',
     function() {}
   );
 };
 webDB.importArticlesFrom = function (path) {
+  console.log('-> webDB.importArticlesFrom');
   // Import articles from JSON file
   $.getJSON(path, webDB.insertAllRecords).done(function() {
-    blog.fetchFromDB(blog.truncateArticles);
+    // blog.fetchFromDB(blog.truncateArticles);
+    blog.fetchFromDB(blog.handleMainNav);
   });
 };
 webDB.insertAllRecords = function (articles) {
+  console.log('-> webDB.insertAllRecords');
   articles.forEach(webDB.insertRecord);
 };
 webDB.insertRecord = function (a) {
+  console.log('-> webDB.insertRecord');
   // insert article record into database
   html5sql.process(
     [
@@ -61,6 +68,7 @@ webDB.insertRecord = function (a) {
   );
 };
 webDB.execute = function (sql, callback) {
+  console.log('-> webDB.execute');
   callback = callback || function() {};
   html5sql.process(
     sql,

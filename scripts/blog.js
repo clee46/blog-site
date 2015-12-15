@@ -22,80 +22,80 @@ blog.truncateArticles = function() {
   });
 };
 blog.hamburgerHandler = function() {
-  $( ".cross" ).hide();
-  $( ".menu" ).hide();
+  $( '.cross' ).hide();
+  $( '.menu' ).hide();
 
-  $( ".hamburger" ).click(function() {
-    $( ".menu" ).slideToggle( "slow", function() {
-      $( ".hamburger" ).hide();
-      $( ".cross" ).show();
+  $( '.hamburger' ).click(function() {
+    $( '.menu' ).slideToggle( 'slow', function() {
+      $( '.hamburger' ).hide();
+      $( '.cross' ).show();
     });
-    $( "#filters" ).css('position', 'relative');
-    $( "#filters" ).css('margin-top', '49px');
-    $( "#filters" ).css('z-index', '1');
-    $( ".articlePosts").css('top', '12px');
+    $( '#filters' ).css('position', 'relative');
+    $( '#filters' ).css('margin-top', '49px');
+    $( '#filters' ).css('z-index', '1');
+    $( '.articlePosts').css('top', '12px');
   });
 
-  $( ".cross" ).click(function() {
-    $( ".menu" ).slideToggle( "slow", function() {
-      $( ".cross" ).hide();
-      $( ".hamburger" ).show();
-      $( "#filters" ).css('position', 'fixed');
-      $( "#filters" ).css('margin-top', '30px');
-      $( "#filters" ).css('z-index', '999999');
-      $( ".articlePosts").css('top', '100px');
+  $( '.cross' ).click(function() {
+    $( '.menu' ).slideToggle( 'slow', function() {
+      $( '.cross' ).hide();
+      $( '.hamburger' ).show();
+      $( '#filters' ).css('position', 'fixed');
+      $( '#filters' ).css('margin-top', '30px');
+      $( '#filters' ).css('z-index', '999999');
+      $( '.articlePosts').css('top', '100px');
     });
   });
   // event handler for hamburger menu
   $('.menu > ul > li > a').click(function(event){
-  		event.preventDefault();//stop browser to take action for clicked anchor
+    event.preventDefault();//stop browser to take action for clicked anchor
 
-  		//get displaying tab content jQuery selector
-  		var active_tab_selector = $('.nav-tabs > li.active > a').attr('href');
+    //get displaying tab content jQuery selector
+    var active_tab_selector = $('.nav-tabs > li.active > a').attr('href');
 
-  		//find actived navigation and remove 'active' css
-  		var actived_nav = $('.nav-tabs > li.active');
-  		actived_nav.removeClass('active');
+    //find actived navigation and remove 'active' css
+    var actived_nav = $('.nav-tabs > li.active');
+    actived_nav.removeClass('active');
 
-  		//add 'active' css into clicked navigation
-  		$(this).parents('li').addClass('active');
+    //add 'active' css into clicked navigation
+    $(this).parents('li').addClass('active');
 
-  		//hide displaying tab content
-  		$(active_tab_selector).removeClass('active');
-  		$(active_tab_selector).addClass('hide');
+    //hide displaying tab content
+    $(active_tab_selector).removeClass('active');
+    $(active_tab_selector).addClass('hide');
 
-  		//show target tab content
-  		var target_tab_selector = $(this).attr('href');
-  		$(target_tab_selector).removeClass('hide');
-  		$(target_tab_selector).addClass('active');
-      $( ".cross" ).hide();
-      $( ".hamburger" ).show();
-      $( ".menu" ).hide();
+    //show target tab content
+    var target_tab_selector = $(this).attr('href');
+    $(target_tab_selector).removeClass('hide');
+    $(target_tab_selector).addClass('active');
+    $( '.cross' ).hide();
+    $( '.hamburger' ).show();
+    $( '.menu' ).hide();
   });
 };
 blog.tabHandler = function() {
   // event handler for tab menu
   $('.nav-tabs > li > a').click(function(event){
-  		event.preventDefault();//stop browser to take action for clicked anchor
+    event.preventDefault();//stop browser to take action for clicked anchor
 
-  		//get displaying tab content jQuery selector
-  		var active_tab_selector = $('.nav-tabs > li.active > a').attr('href');
+    //get displaying tab content jQuery selector
+    var active_tab_selector = $('.nav-tabs > li.active > a').attr('href');
 
-  		//find actived navigation and remove 'active' css
-  		var actived_nav = $('.nav-tabs > li.active');
-  		actived_nav.removeClass('active');
+    //find actived navigation and remove 'active' css
+    var actived_nav = $('.nav-tabs > li.active');
+    actived_nav.removeClass('active');
 
-  		//add 'active' css into clicked navigation
-  		$(this).parents('li').addClass('active');
+    //add 'active' css into clicked navigation
+    $(this).parents('li').addClass('active');
 
-  		//hide displaying tab content
-  		$(active_tab_selector).removeClass('active');
-  		$(active_tab_selector).addClass('hide');
+    //hide displaying tab content
+    $(active_tab_selector).removeClass('active');
+    $(active_tab_selector).addClass('hide');
 
-  		//show target tab content
-  		var target_tab_selector = $(this).attr('href');
-  		$(target_tab_selector).removeClass('hide');
-  		$(target_tab_selector).addClass('active');
+    //show target tab content
+    var target_tab_selector = $(this).attr('href');
+    $(target_tab_selector).removeClass('hide');
+    $(target_tab_selector).addClass('active');
   });
 };
 blog.filterHandler = function() {
@@ -112,7 +112,7 @@ blog.filterHandler = function() {
     $('#category').find('option:first').attr('selected', 'selected'); // reset other menu
     $('main').find('article').show();
     if ($(this).val() !== 'none'){
-      $("article:not(:contains(" + $(this).val() + "))").hide();
+      $('article:not(:contains(' + $(this).val() + '))').hide();
     }
   });
 };
@@ -123,49 +123,49 @@ blog.isAdmin = function () {
   }
   return false;
 };
-
-// blog.loadArticles = function() {
-//   $.ajax({
-//     type: 'HEAD',
-//     url: 'data/hackerIpsum.json',
-//     success: blog.fetchArticles
-//   });
-//   // .done(function(data, msg, xhr) {
-//   //     if (forEach(xhr.responseHeader[‘eTag’])) {
-//   //       localStorage.articleTag = 'eTag';
-//   //       $.getJSON('scripts/hackerIpsum.json');
-//   //     }
-//   // })
-// }
-// blog.fetchArticles = function(data, message, xhr) {
-//   var eTag = xhr.getResponseHeader('eTag');
-//   if (typeof localStorage.articlesEtag == 'undefined' || localStorage.articlesEtag != eTag) {
-//     console.log('cache miss!');
-//     localStorage.articlesEtag = eTag;
-//
-//     // Remove all prior articles from the DB, and from blog:
-//     blog.articles = [];
-//     webDB.execute(
-//       // TODO: Add SQL here...
-//       , blog.fetchJSON);
-//   }
-//   else {
-//     console.log('cache hit!');
-//     blog.fetchFromDB();
-//   }
-// };
+blog.loadArticles = function() {
+  $.get('template/template.handlebars', function(data, message, xhr) {
+    Article.prototype.handlebarTest = Handlebars.compile(data);
+    $.ajax({
+      type: 'HEAD',
+      url: 'data/hackerIpsum.json',
+      success: blog.fetchArticles
+    });
+  });
+};
+blog.fetchArticles = function(data, message, xhr) {
+  console.log('fetching articles');
+  var eTag = xhr.getResponseHeader('eTag');
+  if (typeof localStorage.articlesEtag == 'undefined' || localStorage.articlesEtag != eTag) {
+    console.log('cache miss!');
+    localStorage.articlesEtag = eTag;
+    // Remove all prior articles from the DB, and from blog:
+    // blog.articles = [];
+    // webDB.execute(
+    //   // TODO: Add SQL here...
+    //   , blog.fetchJSON);
+  }
+  else {
+    console.log('cache hit!');
+    webDB.execute('DROP TABLE articles;', function() { // delete existing table
+      webDB.setupTables();
+      webDB.importArticlesFrom('data/hackerIpsum.json');
+    });
+  }
+};
 
 blog.exportJSON = function() {
   console.log('exportJSON');
   $('#export-field').show();
   var output = '';
   blog.rawData.forEach(function(article) {
-    output += JSON.stringify(article) + ",\n";
+    output += JSON.stringify(article) + ',\n';
   });
   $('#article-json').val('[' + output + '{"markdown":""}]');
 };
 blog.fetchFromDB = function(callback) {
   callback = callback || function() {};
+  console.log(callback);
   // Fetch all articles from db.
   webDB.execute(
     'SELECT * FROM articles ORDER BY publishedOn DESC;',
@@ -175,18 +175,25 @@ blog.fetchFromDB = function(callback) {
         blog.rawData.push(temp);
         temp.toHTML();
         temp.tagsDropDown();
-        // blog.truncateArticles();
       });
-      var fromLS = blog.rawData;
-      $('#stats').append('Number of articles: ' + fromLS.length);
-      $('#stats').append('<br/>Number of authors: ' + uniqueAuthors(fromLS).length);
-      $('#stats').append('<br/>Number of categories: ' + uniqueCategories(fromLS).length);
-      $('#stats').append('<br/>Number of words: ' + wordCount(fromLS));
-      $('#stats').append('<br/>Average characters per word: ' + averageWordLength(fromLS));
-      $('#stats').append('<br/>Average words per post per author: ' + getPostsByAuthor(fromLS));
+      // blog.getStats();
+      // blog.hamburgerHandler();
+      // blog.tabHandler();
+      // blog.filterHandler();
       callback();
-    }
-  );
+    });
+};
+blog.getStats = function() {
+  console.log('-> blog.getStats');
+  var fromLS = Article.all;
+  // var fromLS = blog.rawData;
+  console.log('length is: ' + fromLS.length);
+  $('#stats').append('Number of articles: ' + fromLS.length);
+  $('#stats').append('<br/>Number of authors: ' + uniqueAuthors(fromLS).length);
+  $('#stats').append('<br/>Number of categories: ' + uniqueCategories(fromLS).length);
+  $('#stats').append('<br/>Number of words: ' + wordCount(fromLS));
+  $('#stats').append('<br/>Average characters per word: ' + averageWordLength(fromLS));
+  $('#stats').append('<br/>Average words per post per author: ' + getPostsByAuthor(fromLS));
 };
 blog.clearAndFetch = function () {
   blog.rawData = [];
@@ -204,16 +211,16 @@ blog.buildArticle = function() {
 };
 blog.buildPreview = function() {
   $('#new-form').change(function() {
-      console.log('form updated');
-      var article = blog.buildArticle();
-      console.log(article);
-      $('#articles').empty().append(article.toHTML());
-      $('pre code').each(function (i, block){
-        hljs.highlightBlock(block);
-      });
+    console.log('form updated');
+    var article = blog.buildArticle();
+    console.log(article);
+    $('#articles').empty().append(article.toHTML());
+    $('pre code').each(function (i, block){
+      hljs.highlightBlock(block);
+    });
       // var newArticle = JSON.stringify(newEntry);
       // $('#article-json').val(newArticle);
-    });
+  });
     // var article = blog.buildArticle();
     // $('#articles').html(article.toHTML());
     // $('pre code').each(function (i, block){
@@ -259,12 +266,12 @@ blog.initArticleEditorPage = function() {
   $.get('template/template.handlebars', function(data, msg, xhr) {
     Article.prototype.handlebarTest = Handlebars.compile(data);
   });
-    $('.tab-content').show();
-    $('#export-field').hide();
-    $('#article-json').on('focus', function(){
-      this.select();
-    });
-    blog.checkForEditArticle();
+  $('.tab-content').show();
+  $('#export-field').hide();
+  $('#article-json').on('focus', function(){
+    this.select();
+  });
+  blog.checkForEditArticle();
   // blog.watchNewForm();
 };
 blog.initNewArticlePage = function() {
@@ -292,7 +299,7 @@ blog.handleAddButton = function () {
   console.log('add loaded correctly');
   $('#add-article-btn').on('click', function (e) {
     console.log('add button clicked');
-    var article = blog.buildArticle()
+    var article = blog.buildArticle();
     article.insertRecord(article);
     // Insert this new record into the DB, then callback to blog.clearAndFetch
 
@@ -321,9 +328,9 @@ blog.handleDeleteButton = function () {
     console.log('delete button works');
     var id = $(this).data('article-id');
     console.log(id);
-      var article = blog.buildArticle();
-        article.id = id;
-        article.deleteRecord(blog.clearAndFetch);
+    var article = blog.buildArticle();
+    article.id = id;
+    article.deleteRecord(blog.clearAndFetch);
 
     // Remove this record from the DB:
 
@@ -331,4 +338,13 @@ blog.handleDeleteButton = function () {
     //   , blog.clearAndFetch);
     blog.clearNewForm();
   });
+};
+blog.handleMainNav = function () {
+  console.log('executing handleMainNav');
+  // blog.createAll();
+  blog.getStats();
+  blog.truncateArticles();
+  blog.hamburgerHandler();
+  // blog.tabHandler();
+  blog.filterHandler();
 };
