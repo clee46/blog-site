@@ -11,10 +11,3 @@ repos.requestAll = function(callback) {
     }
   }).done(callback);
 };
-
-//   done(function(data) {
-//     console.log('data is: ');
-//     console.log(data);
-//     repos.all = data;
-//   }).done(callback);
-// };
