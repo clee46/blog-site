@@ -3,9 +3,13 @@ blog.library = [];
 
 blog.createAll = function() {
   this.rawData.sort(function (a, b) {
-  if (a.publishedOn > b.publishedOn) {return -1;}
-  if (a.publishedOn < b.publishedOn) {return 1;}
-  return 0;
+    if (a.publishedOn > b.publishedOn) {
+      return -1;
+    }
+    if (a.publishedOn < b.publishedOn) {
+      return 1;
+    }
+    return 0;
   });
   for (var i = 0; i < this.rawData.length; i++) {
     var temp = new Article(this.rawData[i]);
@@ -17,9 +21,9 @@ blog.createAll = function() {
 blog.truncateArticles = function() {
   $('article .postBody p:not(:first-child)').hide();  // hides all posts
   $('main').on('click', '.read-on', function(event) {
-   event.preventDefault();
-   $(this).parent().find('p:not(:first-child)').show();
- });
+    event.preventDefault();
+    $(this).parent().find('p:not(:first-child)').show();
+  });
 };
 
 $(document).ready(function() {
@@ -42,7 +46,7 @@ $(document).ready(function() {
     $('main').find('article').show();
     console.log($(this).val());
     if ($(this).val() !== 'none'){
-      $("article:not(:contains(" + $(this).val() + "))").hide();
+      $('article:not(:contains(' + $(this).val() + '))').hide();
     }
     // $('main').find('article:not(p.postAuthor:contains(' + $(this).val() + '))').hide;
   });
