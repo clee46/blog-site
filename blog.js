@@ -17,9 +17,9 @@ blog.createAll = function() {
 blog.truncateArticles = function() {
   $('article .postBody p:not(:first-child)').hide();  // hides all posts
   $('main').on('click', '.read-on', function(event) {
-   event.preventDefault();
-  $(this).siblings('.postBody').find('p:not(:first-child)').toggle();
- });
+    event.preventDefault();
+    $(this).siblings('.postBody').find('p:not(:first-child)').toggle();
+  });
 };
 
 $(document).ready(function() {
@@ -27,75 +27,75 @@ $(document).ready(function() {
   $('#post').remove();    // remove the original article template
   blog.truncateArticles();
 
-  $( ".cross" ).hide();
-  $( ".menu" ).hide();
+  $( '.cross' ).hide();
+  $( '.menu' ).hide();
 
-  $( ".hamburger" ).click(function() {
-    $( ".menu" ).slideToggle( "slow", function() {
-      $( ".hamburger" ).hide();
-      $( ".cross" ).show();
+  $( '.hamburger' ).click(function() {
+    $( '.menu' ).slideToggle( 'slow', function() {
+      $( '.hamburger' ).hide();
+      $( '.cross' ).show();
     });
   });
 
-  $( ".cross" ).click(function() {
-    $( ".menu" ).slideToggle( "slow", function() {
-      $( ".cross" ).hide();
-      $( ".hamburger" ).show();
+  $( '.cross' ).click(function() {
+    $( '.menu' ).slideToggle( 'slow', function() {
+      $( '.cross' ).hide();
+      $( '.hamburger' ).show();
     });
   });
 
   // event handler for hamburger menu
   $('.menu > ul > li > a').click(function(event){
-  		event.preventDefault();//stop browser to take action for clicked anchor
+    event.preventDefault();//stop browser to take action for clicked anchor
 
-  		//get displaying tab content jQuery selector
-  		var active_tab_selector = $('.nav-tabs > li.active > a').attr('href');
+    //get displaying tab content jQuery selector
+    var active_tab_selector = $('.nav-tabs > li.active > a').attr('href');
 
-  		//find actived navigation and remove 'active' css
-  		var actived_nav = $('.nav-tabs > li.active');
-  		actived_nav.removeClass('active');
+    //find actived navigation and remove 'active' css
+    var actived_nav = $('.nav-tabs > li.active');
+    actived_nav.removeClass('active');
 
-  		//add 'active' css into clicked navigation
-  		$(this).parents('li').addClass('active');
+    //add 'active' css into clicked navigation
+    $(this).parents('li').addClass('active');
 
-  		//hide displaying tab content
-  		$(active_tab_selector).removeClass('active');
-  		$(active_tab_selector).addClass('hide');
+    //hide displaying tab content
+    $(active_tab_selector).removeClass('active');
+    $(active_tab_selector).addClass('hide');
 
-  		//show target tab content
-  		var target_tab_selector = $(this).attr('href');
-  		$(target_tab_selector).removeClass('hide');
-  		$(target_tab_selector).addClass('active');
-      $( ".cross" ).hide();
-      $( ".hamburger" ).show();
-      $( ".menu" ).hide();
+    //show target tab content
+    var target_tab_selector = $(this).attr('href');
+    $(target_tab_selector).removeClass('hide');
+    $(target_tab_selector).addClass('active');
+    $( '.cross' ).hide();
+    $( '.hamburger' ).show();
+    $( '.menu' ).hide();
   });
 
   // event handler for tab menu
   $('.nav-tabs > li > a').click(function(event){
-  		event.preventDefault();//stop browser to take action for clicked anchor
+    event.preventDefault();//stop browser to take action for clicked anchor
 
-  		//get displaying tab content jQuery selector
-  		var active_tab_selector = $('.nav-tabs > li.active > a').attr('href');
+    //get displaying tab content jQuery selector
+    var active_tab_selector = $('.nav-tabs > li.active > a').attr('href');
 
-  		//find actived navigation and remove 'active' css
-  		var actived_nav = $('.nav-tabs > li.active');
-  		actived_nav.removeClass('active');
+    //find actived navigation and remove 'active' css
+    var actived_nav = $('.nav-tabs > li.active');
+    actived_nav.removeClass('active');
 
-  		//add 'active' css into clicked navigation
-  		$(this).parents('li').addClass('active');
+    //add 'active' css into clicked navigation
+    $(this).parents('li').addClass('active');
 
-  		//hide displaying tab content
-  		$(active_tab_selector).removeClass('active');
-  		$(active_tab_selector).addClass('hide');
+    //hide displaying tab content
+    $(active_tab_selector).removeClass('active');
+    $(active_tab_selector).addClass('hide');
 
-  		//show target tab content
-  		var target_tab_selector = $(this).attr('href');
-  		$(target_tab_selector).removeClass('hide');
-  		$(target_tab_selector).addClass('active');
+    //show target tab content
+    var target_tab_selector = $(this).attr('href');
+    $(target_tab_selector).removeClass('hide');
+    $(target_tab_selector).addClass('active');
   });
   // event handler for category filter menu
-  $('select[id="category"]').change(function(){
+  $('select[id=\'category\']').change(function(){
     $('#author').find('option:first').attr('selected', 'selected'); // reset other menu
     $('main').find('article').show();
     if ($(this).val() !== 'none'){
@@ -103,11 +103,11 @@ $(document).ready(function() {
     }
   });
   // event handler for author filter menu
-  $('select[id="author"]').change(function(){
+  $('select[id=\'author\']').change(function(){
     $('#category').find('option:first').attr('selected', 'selected'); // reset other menu
     $('main').find('article').show();
     if ($(this).val() !== 'none'){
-      $("article:not(:contains(" + $(this).val() + "))").hide();
+      $('article:not(:contains(' + $(this).val() + '))').hide();
     }
   });
 });
