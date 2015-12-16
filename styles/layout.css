@@ -49,7 +49,7 @@ img {
   margin-left: auto;
   min-width: 122px;
 }
-.articlePosts, .aboutMe, #stats{
+.articlePosts, #about, #stats{
   position: relative;
   top: 150px;
   z-index: 100;
