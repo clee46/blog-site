@@ -1,7 +1,6 @@
 var articlesView = {};
 
 articlesView.index = function() {
-  console.log('-> articlesView.index');
   var _renderAll = function() {
     $articles = $('#articles');
     $articles.show().siblings().hide();
@@ -11,7 +10,6 @@ articlesView.index = function() {
     });
     Article.truncateArticles();
     Article.filterHandler();
-    Article.hamburgerHandler();
   };
 
   if (articlesView.template) {

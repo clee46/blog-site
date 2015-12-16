@@ -19,10 +19,8 @@ blog.loadArticles = function() {
   });
 };
 blog.fetchArticles = function(data, message, xhr) {
-  console.log('fetching articles');
   var eTag = xhr.getResponseHeader('eTag');
   if (typeof localStorage.articlesEtag == 'undefined' || localStorage.articlesEtag != eTag) {
-    console.log('cache miss!');
     localStorage.articlesEtag = eTag;
     // Remove all prior articles from the DB, and from blog:
     // blog.articles = [];
@@ -31,7 +29,6 @@ blog.fetchArticles = function(data, message, xhr) {
     //   , blog.fetchJSON);
   }
   else {
-    console.log('cache hit!');
     webDB.execute('DROP TABLE articles;', function() { // delete existing table
       webDB.setupTables();
       webDB.importArticlesFrom('data/hackerIpsum.json');
@@ -40,7 +37,6 @@ blog.fetchArticles = function(data, message, xhr) {
 };
 
 blog.exportJSON = function() {
-  console.log('exportJSON');
   $('#export-field').show();
   var output = '';
   blog.rawData.forEach(function(article) {
@@ -50,7 +46,6 @@ blog.exportJSON = function() {
 };
 blog.fetchFromDB = function(callback) {
   callback = callback || function() {};
-  console.log(callback);
   // Fetch all articles from db.
   webDB.execute(
     'SELECT * FROM articles ORDER BY publishedOn DESC;',
@@ -80,9 +75,7 @@ blog.buildArticle = function() {
 };
 blog.buildPreview = function() {
   $('#new-form').change(function() {
-    console.log('form updated');
     var article = blog.buildArticle();
-    console.log(article);
     $('#articles').empty().append(article.toHTML());
     $('pre code').each(function (i, block){
       hljs.highlightBlock(block);
@@ -165,23 +158,16 @@ blog.initNewArticlePage = function() {
 
 //
 blog.handleAddButton = function () {
-  console.log('add loaded correctly');
   $('#add-article-btn').on('click', function (e) {
-    console.log('add button clicked');
     var article = blog.buildArticle();
     article.insertRecord(article);
     // Insert this new record into the DB, then callback to blog.clearAndFetch
-
-
   });
 };
 
 blog.handleUpdateButton = function () {
-  console.log('update loaded correctly');
   $('#update-article-btn').on('click', function () {
-    console.log('update button clicked');
     var id = $(this).data('article-id');
-    console.log(id);
     var article = blog.buildArticle();
     article.id = id;
     article.updateRecord();
@@ -192,15 +178,11 @@ blog.handleUpdateButton = function () {
 };
 
 blog.handleDeleteButton = function () {
-  console.log('delete loaded correctly');
   $('#delete-article-btn').on('click', function () {
-    console.log('delete button works');
     var id = $(this).data('article-id');
-    console.log(id);
     var article = blog.buildArticle();
     article.id = id;
     article.deleteRecord(blog.clearAndFetch);
-
     // Remove this record from the DB:
 
     // webDB.execute('DELETE FROM articles WHERE id=' + id

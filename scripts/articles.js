@@ -7,7 +7,6 @@ function Article (opts) {
   this.body = opts.body || marked(this.markdown);
 }
 Article.prototype.tagsDropDown = function() {
-  console.log('-> Article.tagsDropDown');
   var $categoryMenu = $('.catMenuItem').clone();
   $categoryMenu.removeAttr('class');  // essential so that you only clone the original template
   $categoryMenu.attr('value', this.category);
@@ -24,7 +23,6 @@ Article.prototype.tagsDropDown = function() {
   }
 };
 Article.prototype.postAge = function(date) {
-  console.log('-> Article.postAge');
   var d1 = parseInt(new Date().getDate());
   var m1 = parseInt(new Date().getMonth()+1); //January is 0!
   var y1 = parseInt(new Date().getFullYear());
@@ -34,7 +32,6 @@ Article.prototype.postAge = function(date) {
   return Math.round(Math.abs((new Date(y2,m2,d2).getTime() - new Date(y1,m1,d1).getTime())/(24*60*60*1000)));
 };
 Article.prototype.insertRecord = function(callback) {
-  console.log('-> Article.insertRecord');
   webDB.execute(
     [
       {
@@ -46,7 +43,6 @@ Article.prototype.insertRecord = function(callback) {
   );
 };
 Article.prototype.updateRecord = function(callback) {
-  console.log('-> Article.updateRecord');
   webDB.execute(
     'UPDATE articles SET title="' + this.title + '", author="' + this.author + '", authorUrl="' + this.authorUrl + '", category="' + this.category + '", publishedOn="' + this.publishedOn + '", markdown="' + this.markdown + '" WHERE id="' + this.id + '";'
     ,
@@ -54,7 +50,6 @@ Article.prototype.updateRecord = function(callback) {
   );
 };
 Article.prototype.deleteRecord = function(callback) {
-  console.log('-> Article.deleteRecord');
   webDB.execute(
     [{
       'sql': 'DELETE FROM articles WHERE id = ?;',
@@ -81,22 +76,16 @@ Article.prototype.deleteRecord = function(callback) {
 Article.all = [];
 
 Article.requestAll = function(next, callback) {
-  var count = 0;
-  console.log('-> Article.requestAll');
   $.getJSON('/data/hackerIpsum.json', function (data) {
     data.forEach(function(item) {
-
       var article = new Article(item);
       article.insertRecord();
-      count++;
-      console.log(count);
     });
     next(callback);
   });
 };
 
 Article.loadAll = function(callback) {
-  console.log('-> Article.loadAll');
   var callback = callback || function() {};
 
   if (Article.all.length === 0) {
@@ -109,6 +98,7 @@ Article.loadAll = function(callback) {
           rows.forEach(function(row) {
             Article.all.push(new Article(row));
           });
+          Article.hamburgerHandler();
           callback();
         }
       }
@@ -149,7 +139,9 @@ Article.hamburgerHandler = function() {
   $( '.menu' ).hide();
 
   $( '.hamburger' ).click(function() {
+    console.log('Hamburger activated');
     $( '.menu' ).slideToggle( 'slow', function() {
+      console.log('Showing cross');
       $( '.hamburger' ).hide();
       $( '.cross' ).show();
     });
@@ -160,18 +152,19 @@ Article.hamburgerHandler = function() {
   });
 
   $( '.cross' ).click(function() {
+    console.log('Cross activated');
     $( '.menu' ).slideToggle( 'slow', function() {
       $( '.cross' ).hide();
       $( '.hamburger' ).show();
-      $( '#filters' ).css('position', 'fixed');
-      $( '#filters' ).css('margin-top', '30px');
-      $( '#filters' ).css('z-index', '999999');
-      $( '.articlePosts').css('top', '100px');
     });
+    $( '#filters' ).css('position', 'fixed');
+    $( '#filters' ).css('margin-top', '30px');
+    $( '#filters' ).css('z-index', '999999');
+    $( '.articlePosts').css('top', '100px');
   });
   // event handler for hamburger menu
   $('.menu > ul > li > a').click(function(event){
-    event.preventDefault();//stop browser to take action for clicked anchor
+    // event.preventDefault();//stop browser to take action for clicked anchor
 
     //get displaying tab content jQuery selector
     var active_tab_selector = $('.nav-tabs > li.active > a').attr('href');
