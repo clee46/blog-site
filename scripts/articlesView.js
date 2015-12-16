@@ -5,12 +5,13 @@ articlesView.index = function() {
   var _renderAll = function() {
     $articles = $('#articles');
     $articles.show().siblings().hide();
-    // $('#spinner').hide();
     Article.all.forEach(function(article) {
       $articles.append(articlesView.render(article));
       article.tagsDropDown();
     });
-    blog.handleMainNav();
+    Article.truncateArticles();
+    Article.filterHandler();
+    Article.hamburgerHandler();
   };
 
   if (articlesView.template) {

@@ -6,23 +6,6 @@ function Article (opts) {
   this.age = this.postAge(this.publishedOn);
   this.body = opts.body || marked(this.markdown);
 }
-Article.prototype.postAge = function(date) {
-  console.log('-> Article.postAge');
-  var d1 = parseInt(new Date().getDate());
-  var m1 = parseInt(new Date().getMonth()+1); //January is 0!
-  var y1 = parseInt(new Date().getFullYear());
-  var d2 = parseInt(date.slice(8,10));
-  var m2 = parseInt(date.slice(5,7));
-  var y2 = parseInt(date.slice(0,4));
-  return Math.round(Math.abs((new Date(y2,m2,d2).getTime() - new Date(y1,m1,d1).getTime())/(24*60*60*1000)));
-};
-Article.prototype.toHTML = function () {
-  console.log('-> Article.toHTML');
-  var age = this.postAge(this.publishedOn);
-  var html = this.handlebarTest(this);
-  $('#app').append(html);
-  return html;
-};
 Article.prototype.tagsDropDown = function() {
   console.log('-> Article.tagsDropDown');
   var $categoryMenu = $('.catMenuItem').clone();
@@ -39,6 +22,16 @@ Article.prototype.tagsDropDown = function() {
   if ($('#authFilter select').find('option[value="' + this.author + '"]').length === 0) {
     $('#authFilter select').append($authorMenu);
   }
+};
+Article.prototype.postAge = function(date) {
+  console.log('-> Article.postAge');
+  var d1 = parseInt(new Date().getDate());
+  var m1 = parseInt(new Date().getMonth()+1); //January is 0!
+  var y1 = parseInt(new Date().getFullYear());
+  var d2 = parseInt(date.slice(8,10));
+  var m2 = parseInt(date.slice(5,7));
+  var y2 = parseInt(date.slice(0,4));
+  return Math.round(Math.abs((new Date(y2,m2,d2).getTime() - new Date(y1,m1,d1).getTime())/(24*60*60*1000)));
 };
 Article.prototype.insertRecord = function(callback) {
   console.log('-> Article.insertRecord');
@@ -123,4 +116,83 @@ Article.loadAll = function(callback) {
   } else {
     callback();
   }
+};
+Article.truncateArticles = function() {
+  $('.postBody h2:not(:first-child)').hide();  // hides all posts
+  $('.postBody p:not(:nth-child(2))').hide();  // hides all posts
+  $('.read-on').on('click', function(event) {
+    event.preventDefault();
+    $(this).siblings('.postBody').find('h2:not(:first-child)').toggle();
+    $(this).siblings('.postBody').find('p:not(:nth-child(2))').toggle();
+  });
+};
+Article.filterHandler = function() {
+  // event handler for category filter menu
+  $('select[id="category"]').change(function(){
+    $('#author').find('option:first').attr('selected', 'selected'); // reset other menu
+    $('main').find('article').show();
+    if ($(this).val() !== 'none'){
+      $('.postCategory:not(:contains(' + $(this).val() + '))').parent().hide();
+    }
+  });
+  // event handler for author filter menu
+  $('select[id="author"]').change(function(){
+    $('#category').find('option:first').attr('selected', 'selected'); // reset other menu
+    $('main').find('article').show();
+    if ($(this).val() !== 'none'){
+      $('article:not(:contains(' + $(this).val() + '))').hide();
+    }
+  });
+};
+Article.hamburgerHandler = function() {
+  $( '.cross' ).hide();
+  $( '.menu' ).hide();
+
+  $( '.hamburger' ).click(function() {
+    $( '.menu' ).slideToggle( 'slow', function() {
+      $( '.hamburger' ).hide();
+      $( '.cross' ).show();
+    });
+    $( '#filters' ).css('position', 'relative');
+    $( '#filters' ).css('margin-top', '49px');
+    $( '#filters' ).css('z-index', '1');
+    $( '.articlePosts').css('top', '12px');
+  });
+
+  $( '.cross' ).click(function() {
+    $( '.menu' ).slideToggle( 'slow', function() {
+      $( '.cross' ).hide();
+      $( '.hamburger' ).show();
+      $( '#filters' ).css('position', 'fixed');
+      $( '#filters' ).css('margin-top', '30px');
+      $( '#filters' ).css('z-index', '999999');
+      $( '.articlePosts').css('top', '100px');
+    });
+  });
+  // event handler for hamburger menu
+  $('.menu > ul > li > a').click(function(event){
+    event.preventDefault();//stop browser to take action for clicked anchor
+
+    //get displaying tab content jQuery selector
+    var active_tab_selector = $('.nav-tabs > li.active > a').attr('href');
+
+    //find actived navigation and remove 'active' css
+    var actived_nav = $('.nav-tabs > li.active');
+    actived_nav.removeClass('active');
+
+    //add 'active' css into clicked navigation
+    $(this).parents('li').addClass('active');
+
+    //hide displaying tab content
+    $(active_tab_selector).removeClass('active');
+    $(active_tab_selector).addClass('hide');
+
+    //show target tab content
+    var target_tab_selector = $(this).attr('href');
+    $(target_tab_selector).removeClass('hide');
+    $(target_tab_selector).addClass('active');
+    $( '.cross' ).hide();
+    $( '.hamburger' ).show();
+    $( '.menu' ).hide();
+  });
 };
