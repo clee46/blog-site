@@ -1,4 +1,3 @@
-// Article constructor creates a new article object from the blog raw data
 function Article (opts) {
   Object.keys(opts).forEach(function(e,index,keys) {
     this[e] = opts[e];
@@ -7,7 +6,6 @@ function Article (opts) {
   this.age = this.postAge(this.publishedOn);
   this.body = opts.body || marked(this.markdown);
 }
-// Article method to calculate age of blog post
 Article.prototype.postAge = function(date) {
   console.log('-> Article.postAge');
   var d1 = parseInt(new Date().getDate());
@@ -18,7 +16,6 @@ Article.prototype.postAge = function(date) {
   var y2 = parseInt(date.slice(0,4));
   return Math.round(Math.abs((new Date(y2,m2,d2).getTime() - new Date(y1,m1,d1).getTime())/(24*60*60*1000)));
 };
-// Article method to display a blog post to the DOM
 Article.prototype.toHTML = function () {
   console.log('-> Article.toHTML');
   var age = this.postAge(this.publishedOn);
@@ -26,11 +23,25 @@ Article.prototype.toHTML = function () {
   $('#app').append(html);
   return html;
 };
-
+Article.prototype.tagsDropDown = function() {
+  console.log('-> Article.tagsDropDown');
+  var $categoryMenu = $('.catMenuItem').clone();
+  $categoryMenu.removeAttr('class');  // essential so that you only clone the original template
+  $categoryMenu.attr('value', this.category);
+  $categoryMenu.text(this.category);
+  if ($('#catFilter select').find('option[value="' + this.category + '"]').length === 0) {
+    $('#catFilter select').append($categoryMenu);
+  }
+  var $authorMenu = $('.authMenuItem').clone();
+  $authorMenu.removeAttr('class');  // essential so that you only clone the original template
+  $authorMenu.attr('value', this.author);
+  $authorMenu.text(this.author);
+  if ($('#authFilter select').find('option[value="' + this.author + '"]').length === 0) {
+    $('#authFilter select').append($authorMenu);
+  }
+};
 Article.prototype.insertRecord = function(callback) {
   console.log('-> Article.insertRecord');
-  // insert article record into database
-  // webDB.insertRecord(this);
   webDB.execute(
     [
       {
@@ -43,21 +54,14 @@ Article.prototype.insertRecord = function(callback) {
 };
 Article.prototype.updateRecord = function(callback) {
   console.log('-> Article.updateRecord');
-  //update article record in databse
   webDB.execute(
     'UPDATE articles SET title="' + this.title + '", author="' + this.author + '", authorUrl="' + this.authorUrl + '", category="' + this.category + '", publishedOn="' + this.publishedOn + '", markdown="' + this.markdown + '" WHERE id="' + this.id + '";'
     ,
     callback
   );
 };
-// Article.getAll = function(callback) {
-//   webDB.execute('SELECT * FROM articles ORDER BY publishedOn;');
-//   callback
-// }
-
 Article.prototype.deleteRecord = function(callback) {
   console.log('-> Article.deleteRecord');
-  // Delete article record in database
   webDB.execute(
     [{
       'sql': 'DELETE FROM articles WHERE id = ?;',
@@ -67,6 +71,10 @@ Article.prototype.deleteRecord = function(callback) {
     callback
   );
 };
+// Article.getAll = function(callback) {
+//   webDB.execute('SELECT * FROM articles ORDER BY publishedOn;');
+//   callback
+// }
 //
 // Article.prototype.truncateTable = function(callback) {
 //   // Delete all records from given table.
@@ -76,27 +84,6 @@ Article.prototype.deleteRecord = function(callback) {
 //     callback
 //   );
 // };
-
-// Article method to populate drop down menu
-Article.prototype.tagsDropDown = function() {
-  console.log('-> Article.tagsDropDown');
-  // Populate the category menu
-  var $clonedMenuItem1 = $('.catMenuItem').clone();
-  $clonedMenuItem1.removeAttr('class');  // essential so that you only clone the original template
-  $clonedMenuItem1.attr('value', this.category);
-  $clonedMenuItem1.text(this.category);
-  if ($('#catFilter select').find('option[value="' + this.category + '"]').length === 0) {
-    $('#catFilter select').append($clonedMenuItem1);
-  }
-  // Populate the authors menu
-  var $clonedMenuItem2 = $('.authMenuItem').clone();
-  $clonedMenuItem2.removeAttr('class');  // essential so that you only clone the original template
-  $clonedMenuItem2.attr('value', this.author);
-  $clonedMenuItem2.text(this.author);
-  if ($('#authFilter select').find('option[value="' + this.author + '"]').length === 0) {
-    $('#authFilter select').append($clonedMenuItem2);
-  }
-};
 
 Article.all = [];
 
@@ -124,15 +111,11 @@ Article.loadAll = function(callback) {
       function(rows) {
         if (rows.length === 0) {
           // Request data from server, then try loading from db again:
-          console.log('calling requestAll');
           Article.requestAll(Article.loadAll, callback);
         } else {
-          console.log('pushing articles to Article.all');
-          console.log(rows.length);
           rows.forEach(function(row) {
             Article.all.push(new Article(row));
           });
-          console.log(Article.all);
           callback();
         }
       }

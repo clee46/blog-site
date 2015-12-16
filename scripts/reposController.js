@@ -1,6 +1,8 @@
 var reposController = {};
 
 reposController.index = function() {
-  // TODO: How would you like to setup your index action?
-  repos.requestAll(aboutView.index());
+  $('#about').show();
+  $('#stats').hide();
+  $('#articles').hide();
+  repos.requestAll(reposView.index());
 };
