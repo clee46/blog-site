@@ -28,7 +28,7 @@ Article.prototype.postAge = function(date) {
 
   var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
   return diffDays;
-}
+};
 // Article method to display a blog post to the DOM
 Article.prototype.toHTML = function () {
   var age = this.postAge(this.publishedOn);
@@ -38,7 +38,7 @@ Article.prototype.toHTML = function () {
   $clonedArticle.find('p.author').html('<p> By <a href="' + this.authorUrl + '">' + this.author + '</a>' + ' published on ' + this.publishedOn + ' (about ' + age + ' days ago)</p>');
   $clonedArticle.find('p.body').html(this.body);
   $('main').append($clonedArticle);
-}
+};
 // Blog object literal to store blog raw data and display methods
 var blog = {
   rawData: [
@@ -214,9 +214,9 @@ var blog = {
   ],
   createAll: function() {
     this.rawData.sort(function (a, b) {
-    if (a.publishedOn > b.publishedOn) {return -1;}
-    if (a.publishedOn < b.publishedOn) {return 1;}
-    return 0;
+      if (a.publishedOn > b.publishedOn) {return -1;}
+      if (a.publishedOn < b.publishedOn) {return 1;}
+      return 0;
     });
     for (var i = 0; i < this.rawData.length; i++) {
       var temp = new Article(this.rawData[i]);
