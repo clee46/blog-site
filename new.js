@@ -1,7 +1,5 @@
-
 var newEntry = {};
 var temp = new Article(newEntry);
-console.log(temp);
 
 $.get('template-handlebars.html', function(data) {
   Article.prototype.handlebarTest = Handlebars.compile(data);
@@ -13,7 +11,6 @@ $.get('template-handlebars.html', function(data) {
     temp.author = $('#article-author').val();
     temp.authorUrl = $('#article-author-url').val();
     temp.publishedOn = new Date();
-    // temp.age = temp.postAge(new Date());
     temp.body = marked($('#article-body').val());
 
     var previewTemplateScript = $('#entry-template').html();
@@ -29,5 +26,4 @@ $.get('template-handlebars.html', function(data) {
     $('#article-json').val(newArticle);
 
   });
-
 });

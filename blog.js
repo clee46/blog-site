@@ -19,90 +19,90 @@ blog.createAll = function() {
 blog.truncateArticles = function() {
   $('article .postBody p:not(:first-child)').hide();  // hides all posts
   $('main').on('click', '.read-on', function(event) {
-   event.preventDefault();
-  $(this).siblings('.postBody').find('p:not(:first-child)').toggle();
- });
+    event.preventDefault();
+    $(this).siblings('.postBody').find('p:not(:first-child)').toggle();
+  });
 };
 blog.hamburgerHandler = function() {
-  $( ".cross" ).hide();
-  $( ".menu" ).hide();
+  $( '.cross' ).hide();
+  $( '.menu' ).hide();
 
-  $( ".hamburger" ).click(function() {
-    $( ".menu" ).slideToggle( "slow", function() {
-      $( ".hamburger" ).hide();
-      $( ".cross" ).show();
+  $( '.hamburger' ).click(function() {
+    $( '.menu' ).slideToggle( 'slow', function() {
+      $( '.hamburger' ).hide();
+      $( '.cross' ).show();
     });
-    $( "#filters" ).css('position', 'relative');
-    $( "#filters" ).css('margin-top', '49px');
-    $( "#filters" ).css('z-index', '1');
-    $( ".articlePosts").css('top', '12px');
+    $( '#filters' ).css('position', 'relative');
+    $( '#filters' ).css('margin-top', '49px');
+    $( '#filters' ).css('z-index', '1');
+    $( '.articlePosts').css('top', '12px');
   });
 
-  $( ".cross" ).click(function() {
-    $( ".menu" ).slideToggle( "slow", function() {
-      $( ".cross" ).hide();
-      $( ".hamburger" ).show();
-      $( "#filters" ).css('position', 'fixed');
-      $( "#filters" ).css('margin-top', '30px');
-      $( "#filters" ).css('z-index', '999999');
-      $( ".articlePosts").css('top', '100px');
+  $( '.cross' ).click(function() {
+    $( '.menu' ).slideToggle( 'slow', function() {
+      $( '.cross' ).hide();
+      $( '.hamburger' ).show();
+      $( '#filters' ).css('position', 'fixed');
+      $( '#filters' ).css('margin-top', '30px');
+      $( '#filters' ).css('z-index', '999999');
+      $( '.articlePosts').css('top', '100px');
     });
   });
   // event handler for hamburger menu
   $('.menu > ul > li > a').click(function(event){
-  		event.preventDefault();//stop browser to take action for clicked anchor
+    event.preventDefault();//stop browser to take action for clicked anchor
 
-  		//get displaying tab content jQuery selector
-  		var active_tab_selector = $('.nav-tabs > li.active > a').attr('href');
+    //get displaying tab content jQuery selector
+    var active_tab_selector = $('.nav-tabs > li.active > a').attr('href');
 
-  		//find actived navigation and remove 'active' css
-  		var actived_nav = $('.nav-tabs > li.active');
-  		actived_nav.removeClass('active');
+    //find actived navigation and remove 'active' css
+    var actived_nav = $('.nav-tabs > li.active');
+    actived_nav.removeClass('active');
 
-  		//add 'active' css into clicked navigation
-  		$(this).parents('li').addClass('active');
+    //add 'active' css into clicked navigation
+    $(this).parents('li').addClass('active');
 
-  		//hide displaying tab content
-  		$(active_tab_selector).removeClass('active');
-  		$(active_tab_selector).addClass('hide');
+    //hide displaying tab content
+    $(active_tab_selector).removeClass('active');
+    $(active_tab_selector).addClass('hide');
 
-  		//show target tab content
-  		var target_tab_selector = $(this).attr('href');
-  		$(target_tab_selector).removeClass('hide');
-  		$(target_tab_selector).addClass('active');
-      $( ".cross" ).hide();
-      $( ".hamburger" ).show();
-      $( ".menu" ).hide();
+    //show target tab content
+    var target_tab_selector = $(this).attr('href');
+    $(target_tab_selector).removeClass('hide');
+    $(target_tab_selector).addClass('active');
+    $( '.cross' ).hide();
+    $( '.hamburger' ).show();
+    $( '.menu' ).hide();
   });
 };
 blog.tabHandler = function() {
   // event handler for tab menu
   $('.nav-tabs > li > a').click(function(event){
-  		event.preventDefault();//stop browser to take action for clicked anchor
+    event.preventDefault();//stop browser to take action for clicked anchor
 
-  		//get displaying tab content jQuery selector
-  		var active_tab_selector = $('.nav-tabs > li.active > a').attr('href');
+    //get displaying tab content jQuery selector
+    var active_tab_selector = $('.nav-tabs > li.active > a').attr('href');
 
-  		//find actived navigation and remove 'active' css
-  		var actived_nav = $('.nav-tabs > li.active');
-  		actived_nav.removeClass('active');
+    //find actived navigation and remove 'active' css
+    var actived_nav = $('.nav-tabs > li.active');
+    actived_nav.removeClass('active');
 
-  		//add 'active' css into clicked navigation
-  		$(this).parents('li').addClass('active');
+    //add 'active' css into clicked navigation
+    $(this).parents('li').addClass('active');
 
-  		//hide displaying tab content
-  		$(active_tab_selector).removeClass('active');
-  		$(active_tab_selector).addClass('hide');
+    //hide displaying tab content
+    $(active_tab_selector).removeClass('active');
+    $(active_tab_selector).addClass('hide');
 
-  		//show target tab content
-  		var target_tab_selector = $(this).attr('href');
-  		$(target_tab_selector).removeClass('hide');
-  		$(target_tab_selector).addClass('active');
+    //show target tab content
+    var target_tab_selector = $(this).attr('href');
+    $(target_tab_selector).removeClass('hide');
+    $(target_tab_selector).addClass('active');
   });
 };
 blog.filterHandler = function() {
   // event handler for category filter menu
-  $('select[id="category"]').change(function(){
+  $('select[id=\'category\']').change(function(){
     $('#author').find('option:first').attr('selected', 'selected'); // reset other menu
     $('main').find('article').show();
     if ($(this).val() !== 'none'){
@@ -110,11 +110,11 @@ blog.filterHandler = function() {
     }
   });
   // event handler for author filter menu
-  $('select[id="author"]').change(function(){
+  $('select[id=\'author\']').change(function(){
     $('#category').find('option:first').attr('selected', 'selected'); // reset other menu
     $('main').find('article').show();
     if ($(this).val() !== 'none'){
-      $("article:not(:contains(" + $(this).val() + "))").hide();
+      $('article:not(:contains(' + $(this).val() + '))').hide();
     }
   });
 };
@@ -123,9 +123,9 @@ blog.filterHandler = function() {
 //   $('#export-field').show();
 //   var output = '';
 //   blog.articles.forEach(function(article) {
-//     output += JSON.stringify(article) + ",\n";
+//     output += JSON.stringify(article) + ',\n';
 //   });
-//   $('#article-json').val('[' + output + '{"markdown":""}]');
+//   $('#article-json').val('[' + output + '{'markdown':''}]');
 // };
 blog.fetchFromDB = function(callback) {
   callback = callback || function() {};
@@ -233,72 +233,38 @@ blog.fetchFromDB = function(callback) {
 
 
 $(document).ready(function() {
-  // webDB.init(); // open database
-  // webDB.execute('DROP TABLE articles', function() { // delete existing table
-  //     // on success
-  //     console.log('Successfully deleted articles table.');
-  //   });
-  // webDB.setupTables();  // set up new empty table
-  // webDB.importArticlesFrom('hackerIpsum.json'); // populate empty table with articles
-
-
   $.get('template.handlebars', function(data) {
     console.log('1 template received!');
-      Article.prototype.handlebarTest = Handlebars.compile(data);
-    })
-    .done(function() {
-      console.log('2 Executing .init()');
-      webDB.init(); // open database
-      console.log('3 Database initialized');
-    })
-    .done(function() {
-      console.log('4 Beginning to delete articles table');
-      webDB.execute('DROP TABLE articles;', function() { // delete existing table
-          // on success
-          console.log('5 deleted table!');
-          console.log('6 Executing .setupTables()');
-          webDB.setupTables();
-          console.log('7 created table!');
-          console.log('8 executing importArticlesFrom');
-          webDB.importArticlesFrom('hackerIpsum.json');
-          console.log('9 imported articles!');
-          console.log('10 executing fetchFromDB');
-          // blog.fetchFromDB();
-          console.log('11 fetched articles from database!');
-          console.log('12 Rendering blog!');
-          // blog.createAll();
-          blog.truncateArticles();
-          blog.hamburgerHandler();
-          blog.tabHandler();
-          blog.filterHandler();
-        });
-      });
-    // .done(function() {
-    //     console.log('6 Executing .setupTables()');
-    //   webDB.setupTables();  // set up new empty table
-    //   console.log('7 created table!');
-    // })
-    // .done(function() {
-    //   console.log('8 executing importArticlesFrom');
-    //   webDB.importArticlesFrom('hackerIpsum.json'); // populate empty table with articles
-    //   console.log('9 imported articles!');
-    // })
-    // .done(function() {
-    //   console.log('10 executing fetchFromDB');
-    //   blog.fetchFromDB();
-    //   console.log('11 fetched articles from database!');
-    // })
-      // .done(function(){
-      //   console.log('12 Rendering blog!');
-      //   // blog.articles = blog.rawData;
-      //   blog.createAll();
-      //   blog.truncateArticles();
-      //   blog.hamburgerHandler();
-      //   blog.tabHandler();
-      //   blog.filterHandler();
-      // });
-
-
+    Article.prototype.handlebarTest = Handlebars.compile(data);
+  })
+  .done(function() {
+    console.log('2 Executing .init()');
+    webDB.init(); // open database
+    console.log('3 Database initialized');
+  })
+  .done(function() {
+    console.log('4 Beginning to delete articles table');
+    webDB.execute('DROP TABLE articles;', function() { // delete existing table
+    // on success
+      console.log('5 deleted table!');
+      console.log('6 Executing .setupTables()');
+      webDB.setupTables();
+      console.log('7 created table!');
+      console.log('8 executing importArticlesFrom');
+      webDB.importArticlesFrom('hackerIpsum.json');
+      console.log('9 imported articles!');
+      console.log('10 executing fetchFromDB');
+      // blog.fetchFromDB();
+      console.log('11 fetched articles from database!');
+      console.log('12 Rendering blog!');
+      // blog.createAll();
+      blog.truncateArticles();
+      blog.hamburgerHandler();
+      blog.tabHandler();
+      blog.filterHandler();
+    });
+  });
+});
       //  ETAG STUFF
       // $.get(templates/article.handlebars)
       // .done(checkForNewArticles)
@@ -313,31 +279,3 @@ $(document).ready(function() {
       // }
       // }
       // }
-
-
-
-
-
-
-
-
-  // blog.createAll();
-  // blog.truncateArticles();
-  // blog.hamburgerHandler();
-  // blog.tabHandler();
-  // blog.filterHandler();
-  // blog.fetchFromDB();
-  // $.get('hackerIpsum.json').done(function(data) {
-  //   blog.rawData = data;
-  //   localStorage.setItem('rawData', JSON.stringify(blog.rawData));
-  //   $.get('template.handlebars', function(data) {
-  //     Article.prototype.handlebarTest = Handlebars.compile(data);})
-  //     .done(function() {
-  //       blog.createAll();
-  //       blog.truncateArticles();
-  //       blog.hamburgerHandler();
-  //       blog.tabHandler();
-  //       blog.filterHandler();
-  //     });
-  //   });
-});

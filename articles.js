@@ -1,16 +1,3 @@
-// Article constructor creates a new article object from the blog raw data
-// function Article (props) {
-//   this.title = props.title;
-//   this.category = props.category;
-//   this.author = props.author;
-//   this.authorUrl = props.authorUrl;
-//   this.publishedOn = props.publishedOn;
-//   this.body = props.body;
-//   // this.template = function() {};
-//   // this.age = this.postAge(this.publishedOn);
-//   this.markdown = props.markdown;
-//   this.body = props.body || marked(this.markdown);
-// }
 function Article (opts) {
   Object.keys(opts).forEach(function(e,index,keys) {
     this[e] = opts[e];
@@ -26,13 +13,13 @@ Article.prototype.postAge = function(date) {
   var m2 = parseInt(date.slice(5,7));
   var y2 = parseInt(date.slice(0,4));
   return Math.round(Math.abs((new Date(y2,m2,d2).getTime() - new Date(y1,m1,d1).getTime())/(24*60*60*1000)));
-}
+};
 // Article method to display a blog post to the DOM
 Article.prototype.toHTML = function () {
   var age = this.postAge(this.publishedOn);
   var html = this.handlebarTest(this);
   $('#app').append(html);
-}
+};
 
 // Article.prototype.insertRecord = function(callback) {
 //   // insert article record into database
@@ -78,7 +65,7 @@ Article.prototype.tagsDropDown = function() {
   $clonedMenuItem1.removeAttr('class');  // essential so that you only clone the original template
   $clonedMenuItem1.attr('value', this.category);
   $clonedMenuItem1.text(this.category);
-  if ($("#catFilter select").find('option[value="' + this.category + '"]').length === 0) {
+  if ($('#catFilter select').find('option[value=\'' + this.category + '\']').length === 0) {
     $('#catFilter select').append($clonedMenuItem1);
   }
   // Populate the authors menu
@@ -86,7 +73,7 @@ Article.prototype.tagsDropDown = function() {
   $clonedMenuItem2.removeAttr('class');  // essential so that you only clone the original template
   $clonedMenuItem2.attr('value', this.author);
   $clonedMenuItem2.text(this.author);
-  if ($("#authFilter select").find('option[value="' + this.author + '"]').length === 0) {
+  if ($('#authFilter select').find('option[value=\'' + this.author + '\']').length === 0) {
     $('#authFilter select').append($clonedMenuItem2);
   }
-}
+};
