@@ -1,5 +1,14 @@
 var articlesView = {};
 
+articlesView.prepareRender = function(articles) {
+  $articles = $('#articles');
+  $articles.fadeIn().siblings().hide(); // hides about, stats pages
+  articles.forEach(function(article) {
+    $articles.append(articlesView.render(article)); // append each rendered article
+  });
+};
+
+
 articlesView.index = function() {
   var _renderAll = function() {
     $articles = $('#articles');
@@ -21,6 +30,10 @@ articlesView.index = function() {
     });
   }
 };
+
+
+
+
 
 articlesView.render = function(article) {
   // console.log('-> articlesView.render');

@@ -86,7 +86,18 @@ Article.requestAll = function(next, callback) {
     next(callback);
   });
 };
-
+Article.findByCategory = function(category, callback) {
+  webDB.execute(
+    [
+      {
+        'sql': 'SELECT * FROM articles WHERE category = ?;',
+        'data': [category]
+      }
+    ]
+    ,
+    callback
+  );
+};
 Article.loadAll = function(callback) {
   var callback = callback || function() {};
 
