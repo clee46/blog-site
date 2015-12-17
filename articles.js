@@ -17,7 +17,7 @@ Article.prototype.postAge = function(date) {
   var m2 = parseInt(date.slice(5,7));
   var y2 = parseInt(date.slice(0,4));
   return Math.round(Math.abs((new Date(y2,m2,d2).getTime() - new Date(y1,m1,d1).getTime())/(24*60*60*1000)));
-}
+};
 // Article method to display a blog post to the DOM
 Article.prototype.toHTML = function () {
   var age = this.postAge(this.publishedOn);
@@ -25,7 +25,7 @@ Article.prototype.toHTML = function () {
   var compiledTemplate = Handlebars.compile(appTemplate);
   var html = compiledTemplate(this);
   $('#app').append(html);
-}
+};
 // Article method to populate drop down menu
 Article.prototype.tagsDropDown = function() {
   // Populate the category menu
@@ -33,7 +33,7 @@ Article.prototype.tagsDropDown = function() {
   $clonedMenuItem1.removeAttr('class');  // essential so that you only clone the original template
   $clonedMenuItem1.attr('value', this.category);
   $clonedMenuItem1.text(this.category);
-  if ($("#catFilter select").find('option[value="' + this.category + '"]').length === 0) {
+  if ($('#catFilter select').find('option[value=\'' + this.category + '\']').length === 0) {
     $('#catFilter select').append($clonedMenuItem1);
   }
   // Populate the authors menu
@@ -41,7 +41,7 @@ Article.prototype.tagsDropDown = function() {
   $clonedMenuItem2.removeAttr('class');  // essential so that you only clone the original template
   $clonedMenuItem2.attr('value', this.author);
   $clonedMenuItem2.text(this.author);
-  if ($("#authFilter select").find('option[value="' + this.author + '"]').length === 0) {
+  if ($('#authFilter select').find('option[value=\'' + this.author + '\']').length === 0) {
     $('#authFilter select').append($clonedMenuItem2);
   }
-}
+};
