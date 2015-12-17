@@ -51,10 +51,12 @@ Article.prototype.updateRecord = function(callback) {
 };
 Article.prototype.deleteRecord = function(callback) {
   webDB.execute(
-    [{
-      'sql': 'DELETE FROM articles WHERE id = ?;',
-      'data': [this.id]
-    }]
+    [
+      {
+        'sql': 'DELETE FROM articles WHERE id = ?;',
+        'data': [this.id]
+      }
+    ]
     ,
     callback
   );
@@ -88,7 +90,7 @@ Article.requestAll = function(next, callback) {
 Article.loadAll = function(callback) {
   var callback = callback || function() {};
 
-  if (Article.all.length === 0) {
+  if (Article.all.length === 0) { // if articles not loaded before, fetch from DB
     webDB.execute('SELECT * FROM articles ORDER BY publishedOn;',
       function(rows) {
         if (rows.length === 0) {
@@ -103,7 +105,7 @@ Article.loadAll = function(callback) {
         }
       }
     );
-  } else {
+  } else {  // if articles already loaded, go straight to articlesView (callback)
     callback();
   }
 };
@@ -117,7 +119,6 @@ Article.truncateArticles = function() {
   });
 };
 Article.filterHandler = function() {
-  // event handler for category filter menu
   $('select[id="category"]').change(function(){
     $('#author').find('option:first').attr('selected', 'selected'); // reset other menu
     $('main').find('article').show();
@@ -125,7 +126,6 @@ Article.filterHandler = function() {
       $('.postCategory:not(:contains(' + $(this).val() + '))').parent().hide();
     }
   });
-  // event handler for author filter menu
   $('select[id="author"]').change(function(){
     $('#category').find('option:first').attr('selected', 'selected'); // reset other menu
     $('main').find('article').show();
@@ -139,9 +139,7 @@ Article.hamburgerHandler = function() {
   $( '.menu' ).hide();
 
   $( '.hamburger' ).click(function() {
-    console.log('Hamburger activated');
     $( '.menu' ).slideToggle( 'slow', function() {
-      console.log('Showing cross');
       $( '.hamburger' ).hide();
       $( '.cross' ).show();
     });
@@ -152,7 +150,6 @@ Article.hamburgerHandler = function() {
   });
 
   $( '.cross' ).click(function() {
-    console.log('Cross activated');
     $( '.menu' ).slideToggle( 'slow', function() {
       $( '.cross' ).hide();
       $( '.hamburger' ).show();
@@ -162,6 +159,7 @@ Article.hamburgerHandler = function() {
     $( '#filters' ).css('z-index', '999999');
     $( '.articlePosts').css('top', '100px');
   });
+
   // event handler for hamburger menu
   $('.menu > ul > li > a').click(function(event){
     // event.preventDefault();//stop browser to take action for clicked anchor
