@@ -23,9 +23,9 @@ function wordCount(collection) {
   var all = pluck('markdown', collection);
   var count = [];
   all.forEach(function(e) {
-    var div = document.createElement("div");
+    var div = document.createElement('div');
     div.innerHTML = e;
-    var text = div.textContent || div.innerText || "";
+    var text = div.textContent || div.innerText || '';
     count.push(text.split(' ').length);
   });
   var total = count.reduce(function(a,b) {return a + b;});
@@ -37,9 +37,9 @@ function averageWordLength(collection) {
   var count = [];
   var avgs = [];
   all.forEach(function(e) {
-    var div = document.createElement("div");
+    var div = document.createElement('div');
     div.innerHTML = e;
-    var text = div.textContent || div.innerText || "";
+    var text = div.textContent || div.innerText || '';
     count.push(text.split(' '));
   });
   // count inner array contains all words, outer array contains all posts
@@ -62,7 +62,7 @@ function getPostsByAuthor(collection) {
   var y = [];
   var msg = '';
   collection.forEach(function(e) {
-    var temp = []
+    var temp = [];
     var x = authors.indexOf(e.author);
     temp.push(e);
     if (authors.indexOf(e.author) === -1) {
@@ -73,10 +73,10 @@ function getPostsByAuthor(collection) {
   });
   var i = 0;
   objects.forEach(function(f) {
-      y = wordCount(f)/f.length;
-      msg += '<br/>' + authors[i] + ' averages ' + y + ' words per post!';
-      i++;
-    });
+    y = wordCount(f)/f.length;
+    msg += '<br/>' + authors[i] + ' averages ' + y + ' words per post!';
+    i++;
+  });
   return msg;
 }
 $(document).ready(function() {
