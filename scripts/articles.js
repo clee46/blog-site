@@ -18,7 +18,7 @@ Article.prototype.postAge = function(date) {
   var m2 = parseInt(date.slice(5,7));
   var y2 = parseInt(date.slice(0,4));
   return Math.round(Math.abs((new Date(y2,m2,d2).getTime() - new Date(y1,m1,d1).getTime())/(24*60*60*1000)));
-}
+};
 // Article method to display a blog post to the DOM
 Article.prototype.toHTML = function () {
   // console.log(this);
@@ -27,7 +27,7 @@ Article.prototype.toHTML = function () {
   // console.log(html);
   $('#app').append(html);
   return html;
-}
+};
 
 Article.prototype.insertRecord = function(callback) {
   // insert article record into database
@@ -44,7 +44,7 @@ Article.prototype.insertRecord = function(callback) {
 Article.prototype.updateRecord = function(callback) {
   //update article record in databse
   webDB.execute(
-    "UPDATE articles SET title='" + this.title + "', author='" + this.author + "', authorUrl='" + this.authorUrl + "', category='" + this.category + "', publishedOn='" + this.publishedOn + "', markdown='" + this.markdown + "' WHERE id='" + this.id + "';"
+    'UPDATE articles SET title=\'' + this.title + '\', author=\'' + this.author + '\', authorUrl=\'' + this.authorUrl + '\', category=\'' + this.category + '\', publishedOn=\'' + this.publishedOn + '\', markdown=\'' + this.markdown + '\' WHERE id=\'' + this.id + '\';'
     ,
     callback
   );
@@ -60,9 +60,9 @@ Article.prototype.deleteRecord = function(callback) {
   console.log('deleting record from database');
   webDB.execute(
     [{
-     'sql': 'DELETE FROM articles WHERE id = ?;',
-     'data': [this.id]
-   }]
+      'sql': 'DELETE FROM articles WHERE id = ?;',
+      'data': [this.id]
+    }]
     ,
     callback
   );
@@ -84,7 +84,7 @@ Article.prototype.tagsDropDown = function() {
   $clonedMenuItem1.removeAttr('class');  // essential so that you only clone the original template
   $clonedMenuItem1.attr('value', this.category);
   $clonedMenuItem1.text(this.category);
-  if ($("#catFilter select").find('option[value="' + this.category + '"]').length === 0) {
+  if ($('#catFilter select').find('option[value=\'' + this.category + '\']').length === 0) {
     $('#catFilter select').append($clonedMenuItem1);
   }
   // Populate the authors menu
@@ -92,7 +92,7 @@ Article.prototype.tagsDropDown = function() {
   $clonedMenuItem2.removeAttr('class');  // essential so that you only clone the original template
   $clonedMenuItem2.attr('value', this.author);
   $clonedMenuItem2.text(this.author);
-  if ($("#authFilter select").find('option[value="' + this.author + '"]').length === 0) {
+  if ($('#authFilter select').find('option[value=\'' + this.author + '\']').length === 0) {
     $('#authFilter select').append($clonedMenuItem2);
   }
-}
+};
