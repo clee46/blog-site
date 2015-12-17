@@ -16,8 +16,7 @@ webDB.verbose = function (verbose) {
   }
   console.log(msg);
 };
-webDB.init = function() {
-  // Open and init DB
+webDB.init = function() { // Open and init DB
   try {
     if (openDatabase) {
       webDB.verbose(true);
@@ -39,18 +38,15 @@ webDB.setupTables = function () {
     function() {}
   );
 };
-webDB.importArticlesFrom = function (path) {
-  // Import articles from JSON file
+webDB.importArticlesFrom = function (path) {  // Import articles from JSON file
   $.getJSON(path, webDB.insertAllRecords).done(function() {
-    // blog.fetchFromDB(blog.truncateArticles);
     blog.fetchFromDB(blog.handleMainNav);
   });
 };
 webDB.insertAllRecords = function (articles) {
   articles.forEach(webDB.insertRecord);
 };
-webDB.insertRecord = function (a) {
-  // insert article record into database
+webDB.insertRecord = function (a) { // insert article record into database
   html5sql.process(
     [
       {
