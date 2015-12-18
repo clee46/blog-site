@@ -87,7 +87,7 @@ Article.requestAll = function(next, callback) {
   });
 };
 Article.findByCategory = function(category, callback) {
-  category = category.slice(1);
+  // category = category.slice(1);
   webDB.execute(
     [
       {
