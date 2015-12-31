@@ -7,7 +7,8 @@ articlesView.loadTemplate = function(articles) {
   });
 };
 articlesView.renderGroup = function(articleList) {
-  $('#articles')
+  $('#blogArticles').empty();
+  $('#blogArticles')
     .fadeIn()
     .append(
       articleList.map( function(a) {
@@ -15,8 +16,8 @@ articlesView.renderGroup = function(articleList) {
         temp.tagsDropDown();
         return articlesView.render(a);
       })
-    )
-    .siblings().hide();
+    );
+    // .siblings().hide();
   Article.truncateArticles();
   Article.filterHandler();
 };
