@@ -86,7 +86,19 @@ Article.requestAll = function(next, callback) {
     next(callback);
   });
 };
-
+Article.findByCategory = function(category, callback) {
+  // category = category.slice(1);
+  webDB.execute(
+    [
+      {
+        'sql': 'SELECT * FROM articles WHERE category = ?;',
+        'data': [category]
+      }
+    ]
+    ,
+    callback
+  );
+};
 Article.loadAll = function(callback) {
   var callback = callback || function() {};
 
@@ -119,11 +131,21 @@ Article.truncateArticles = function() {
   });
 };
 Article.filterHandler = function() {
-  $('select[id="category"]').change(function(){
+
+  // $('.view').click(function(e){
+  // page('/user/12')
+  // e.preventDefault()
+// })
+  $('select[id="category"]').change(function(e){
     $('#author').find('option:first').attr('selected', 'selected'); // reset other menu
     $('main').find('article').show();
     if ($(this).val() !== 'none'){
-      $('.postCategory:not(:contains(' + $(this).val() + '))').parent().hide();
+      console.log($(this).val());
+      // $('.postCategory:not(:contains(' + $(this).val() + '))').parent().hide();
+      page('/category/' + $(this).val());
+      // page('/category/:' + $(this).val(), articlesController.category, articlesController.show);
+      // page.start();
+      e.preventDefault();
     }
   });
   $('select[id="author"]').change(function(){

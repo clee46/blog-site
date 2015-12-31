@@ -1,27 +1,28 @@
 var articlesView = {};
 
-articlesView.index = function() {
-  var _renderAll = function() {
-    $articles = $('#articles');
-    $articles.show().siblings().hide(); // hides about, stats pages
-    Article.all.forEach(function(article) {
-      $articles.append(articlesView.render(article)); // append each rendered article
-      article.tagsDropDown(); // populate dropdown menus
-    });
-    Article.truncateArticles(); // truncate articles
-    Article.filterHandler();    // event handlers for filter menus
-  };
-
-  if (articlesView.template) {  // handlebars template already retrieved
-    _renderAll();
-  } else {  // handlebars template not yet retrieved
-    $.get('template/template.handlebars.html', function(data, msg, xhr) {
-      articlesView.template = Handlebars.compile(data);
-      _renderAll();
-    });
-  }
+articlesView.loadTemplate = function(articles) {
+  $.get('/template/template.handlebars.html', function(data, msg, xhr) {
+    articlesView.template = Handlebars.compile(data);
+    articlesView.renderGroup(articles);
+  });
 };
-
+articlesView.renderGroup = function(articleList) {
+  $('#articles')
+    .fadeIn()
+    .append(
+      articleList.map( function(a) {
+        var temp = new Article(a);
+        temp.tagsDropDown();
+        return articlesView.render(a);
+      })
+    )
+    .siblings().hide();
+  Article.truncateArticles();
+  Article.filterHandler();
+};
+articlesView.index = function() {
+  articlesView.loadTemplate(Article.all);
+};
 articlesView.render = function(article) {
   // console.log('-> articlesView.render');
   // if (!blog.isAdmin() && !this.publishedOn) {
@@ -32,4 +33,7 @@ articlesView.render = function(article) {
   article.authorSlug = util.slug(article.author);
   article.categorySlug = util.slug(article.category);
   return articlesView.template(article);  // return the article in handlebars template form
+};
+articlesView.show = function(articles) {
+  articlesView.loadTemplate(articles);
 };
